@@ -1,6 +1,12 @@
-import type { CameraProps } from "@react-three/fiber";
+import { useRef } from 'react';
+import { type Group, Vector3 } from 'three';
 
-export const CAMERA_SETTINGS: CameraProps = {
-    position: [-10, 5, 30],
-    aspect: window.innerWidth / window.innerHeight,
+export const BOAT_MODEL_PATH = `/models/boat/scene-transformed.glb`;
+export const WATER_TEXTURE_PATH = '/models/ocean/waternormals.jpeg';
+
+export const getGameConfig = () => {
+	const boatRef = useRef<Group>(null);
+	const sunDirection = new Vector3(-1, 1, 1).normalize();
+
+	return { sunDirection, boatRef };
 };

@@ -1,27 +1,29 @@
+"use client";
+
 import { Suspense } from "react";
-import { OrbitControls } from "@react-three/drei";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/cannon";
+import { Camera } from "@/components/camera";
 import { Sky } from "@/components/sky";
-import { CAMERA_SETTINGS } from "@/config";
+import { Lights } from "@/components/lights";
+import { Ocean } from "@/components/ocean";
+import { Boat } from "@/components/boat";
+import { getGameConfig } from "@/config";
 
 const World = () => {
+  const { sunDirection, boatRef } = getGameConfig();
+
   return (
-    <Canvas camera={CAMERA_SETTINGS}>
+    <Canvas>
       <Suspense fallback={null}>
         <Physics>
           <Sky />
+          <Lights />
+          <Ocean boatRef={boatRef} sunDirection={sunDirection} />
+          <Boat ref={boatRef} />
+          <Camera boatRef={boatRef} />
         </Physics>
       </Suspense>
-      <OrbitControls
-        minDistance={500}
-        maxDistance={500}
-        enablePan={false}
-        enableZoom={false}
-        maxPolarAngle={Math.PI / 2.2}
-        minPolarAngle={1.3}
-        target={[0, 10, 0]}
-      />
     </Canvas>
   );
 };
