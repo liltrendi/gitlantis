@@ -1,0 +1,54 @@
+import {
+  Euler,
+  Matrix4,
+  Quaternion,
+  Vector3,
+  type Group,
+  type Object3D,
+} from "three";
+import { useFrame } from "@react-three/fiber";
+import type { RefObject } from "react";
+
+export const useCabinetMovement = ({
+  cabinetInstances,
+  boatRef,
+  cabinetsRef,
+}: {
+  boatRef: RefObject<Group | null>;
+  cabinetsRef: RefObject<Array<Object3D | null>>;
+  cabinetInstances: TCabinetInstances;
+}) => {
+  const FLOAT_AMPLITUDE = 2.0;
+  const FLOAT_SPEED = 3.0;
+
+  useFrame(({ clock }) => {
+    if (!boatRef.current) return;
+
+    const boatPos = boatRef.current.position.clone();
+    const time = clock.getElapsedTime();
+
+    cabinetsRef.current.forEach((cabinet, idx) => {
+      if (!cabinet || !cabinetInstances[idx]) return;
+
+      const instance = cabinetInstances[idx];
+
+      const floatOffset =
+        Math.sin(time * FLOAT_SPEED + instance.floatPhase) * FLOAT_AMPLITUDE;
+
+      cabinet.position.y = -instance.sinkOffset + floatOffset;
+
+      const from = cabinet.position.clone();
+      const to = boatPos.clone().setY(from.y);
+
+      const lookAtMatrix = new Matrix4().lookAt(from, to, new Vector3(0, 1, 0));
+      const targetQuat = new Quaternion().setFromRotationMatrix(lookAtMatrix);
+
+      const correction = new Quaternion().setFromEuler(
+        new Euler(0, -Math.PI / 2, 0)
+      );
+      targetQuat.multiply(correction);
+
+      cabinet.quaternion.slerp(targetQuat, 0.1);
+    });
+  });
+};

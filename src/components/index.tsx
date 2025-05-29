@@ -8,11 +8,11 @@ import { Camera } from "@/components/camera";
 import { Sky } from "@/components/sky";
 import { Ocean } from "@/components/ocean";
 import { Boat } from "@/components/boat";
-import { Cabinets } from "@/components/cabinet";
+import { Cabinets } from "@/components/cabinets";
 import { getGameConfig } from "@/config";
 
 const World = () => {
-  const { boatRef, oceanTilesRef, cabinetsRef, floatingOriginOffset } =
+  const { boatRef, oceanTilesRef, cabinetsRef, worldOffset } =
     getGameConfig();
 
   return (
@@ -22,7 +22,7 @@ const World = () => {
           boatRef={boatRef}
           cabinetsRef={cabinetsRef}
           oceanTilesRef={oceanTilesRef}
-          floatingOriginOffset={floatingOriginOffset}
+          worldOffset={worldOffset}
         />
         <Physics>
           <Sky />
@@ -32,7 +32,7 @@ const World = () => {
             cabinetCount={25}
             boatRef={boatRef}
             cabinetsRef={cabinetsRef}
-            floatingOriginOffset={floatingOriginOffset}
+            worldOffset={worldOffset}
           />
           <Camera boatRef={boatRef} />
         </Physics>

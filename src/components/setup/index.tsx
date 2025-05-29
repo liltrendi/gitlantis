@@ -7,20 +7,20 @@ import { useRecalibration } from "@/hooks/useRecalibration";
 export const Setup = ({
   boatRef,
   cabinetsRef,
-  floatingOriginOffset,
+  worldOffset,
   oceanTilesRef,
 }: {
   boatRef: TBoatRef;
   oceanTilesRef: RefObject<Array<Water | null>>;
   cabinetsRef: RefObject<Array<Object3D | null>>;
-  floatingOriginOffset: RefObject<Vector3>;
+  worldOffset: RefObject<Vector3>;
 }) => {
-  
+
   useRecalibration({
     boatRef,
     oceanTilesRef,
     cabinetsRef,
-    floatingOriginOffset,
+    worldOffset,
   });
 
   return (

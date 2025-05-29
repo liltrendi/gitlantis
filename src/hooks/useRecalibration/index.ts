@@ -7,12 +7,12 @@ export const useRecalibration = ({
   boatRef,
   oceanTilesRef,
   cabinetsRef,
-  floatingOriginOffset,
+  worldOffset,
 }: {
   boatRef: TBoatRef;
   oceanTilesRef: RefObject<Array<Water | null>>;
   cabinetsRef: RefObject<Array<Object3D | null>>;
-  floatingOriginOffset: RefObject<Vector3>;
+  worldOffset: RefObject<Vector3>;
 }) => {
   const { camera } = useThree();
   const origin = new Vector3();
@@ -29,7 +29,7 @@ export const useRecalibration = ({
       // reset boat position
       boat.position.sub(offset);
       camera.position.sub(offset);
-      floatingOriginOffset.current.add(offset);
+      worldOffset.current.add(offset);
 
       // reset ocean tiles
       for (const tileRef of oceanTilesRef.current) {
@@ -43,5 +43,5 @@ export const useRecalibration = ({
     }
   });
 
-  return { floatingOriginOffset };
+  return { worldOffset };
 };

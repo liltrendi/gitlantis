@@ -10,7 +10,7 @@ export const getGameConfig = () => {
   const boatRef = useRef<Group>(null);
   const oceanTilesRef = useRef<Array<Water | null>>([]);
   const cabinetsRef = useRef<Array<Object3D | null>>([]);
-  const floatingOriginOffset = useRef(new Vector3());
+  const worldOffset = useRef(new Vector3());
 
-  return { boatRef, oceanTilesRef, cabinetsRef, floatingOriginOffset };
+  return { boatRef, oceanTilesRef, cabinetsRef, worldOffset };
 };

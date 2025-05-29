@@ -10,4 +10,10 @@ declare module '@react-three/fiber' {
 
 declare global {
   type TBoatRef = RefObject<Group | null>;
+  type TCabinetInstances = Array<{
+    key: string;
+    position: Vector3;
+    sinkOffset: number;
+    floatPhase: number;
+  }>;
 }
