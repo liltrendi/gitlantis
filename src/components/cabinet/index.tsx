@@ -31,66 +31,37 @@ export const Cabinets = ({
   const FLOAT_AMPLITUDE = 2.0;
   const FLOAT_SPEED = 3.0;
 
-  const seededRandom = (seed: string) => {
-    let hash = 0;
-    for (let i = 0; i < seed.length; i++) {
-      const char = seed.charCodeAt(i);
-      hash = (hash << 5) - hash + char;
-      hash = hash & hash;
-    }
-    const x = Math.sin(hash * 12.9898) * 43758.5453;
-    return Math.abs(x - Math.floor(x));
-  };
-
   const generateFixedNumberCabinets = (boatPos: Vector3) => {
     const newPositions = [];
     const MIN_DISTANCE = 100;
     const MAX_ATTEMPTS = 50;
-
-    const isTooClose = (
-      pos: [number, number],
-      others: Array<[number, number]>
-    ) => {
-      return others.some(
-        ([x, z]) => Math.hypot(pos[0] - x, pos[1] - z) < MIN_DISTANCE
-      );
+  
+    const isTooClose = (pos: [number, number], others: Array<[number, number]>) => {
+      return others.some(([x, z]) => Math.hypot(pos[0] - x, pos[1] - z) < MIN_DISTANCE);
     };
-
+  
     for (let i = 0; i < cabinetCount; i++) {
       let attempts = 0;
       let posX: number, posZ: number;
-
+  
       do {
-        const randX = seededRandom(`cabinet_${i}_${attempts}_x`);
-        const randZ = seededRandom(`cabinet_${i}_${attempts}_z`);
+        const randX = Math.random();
+        const randZ = Math.random();
         posX = boatPos.x + (randX - 0.5) * TILE_SIZE * 3;
         posZ = boatPos.z + (randZ - 0.5) * TILE_SIZE * 3;
         attempts++;
         if (attempts > MAX_ATTEMPTS) break;
-      } while (
-        isTooClose(
-          [posX, posZ],
-          newPositions.map((p) => [p.position[0], p.position[2]]) as [
-            number,
-            number
-          ][]
-        )
-      );
-
-      const randSink = seededRandom(`cabinet_${i}_sink`);
-      const randFloat = seededRandom(`cabinet_${i}_float`);
-
-      const sinkOffset =
-        SINK_DEPTH_MIN + randSink * (SINK_DEPTH_MAX - SINK_DEPTH_MIN);
+      } while (isTooClose([posX, posZ], newPositions.map((p) => [p.position[0], p.position[2]]) as [number, number][]));
+  
+      const randSink = Math.random();
+      const randFloat = Math.random();
+  
+      const sinkOffset = SINK_DEPTH_MIN + randSink * (SINK_DEPTH_MAX - SINK_DEPTH_MIN);
       const floatPhase = randFloat * Math.PI * 2;
-
+  
       newPositions.push({
-        key: `cabinet-fixed-${i}`,
-        position: [
-          posX - floatingOriginOffset.current.x,
-          -sinkOffset,
-          posZ - floatingOriginOffset.current.z,
-        ],
+        key: `cabinet-random-${i}`,
+        position: [posX - floatingOriginOffset.current.x, -sinkOffset, posZ - floatingOriginOffset.current.z],
         sinkOffset,
         floatPhase,
       });
