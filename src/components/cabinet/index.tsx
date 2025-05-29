@@ -4,29 +4,28 @@ import { Object3D, Vector3, Group } from "three";
 import { Clone } from "@react-three/drei";
 import { useCabinetModel } from "@/hooks/useCabinet";
 
+type TCabinetInstances = Array<{
+  key: string;
+  position: Vector3;
+  sinkOffset: number;
+  floatPhase: number;
+}>;
+
 export const Cabinets = ({
   boatRef,
   floatingOriginOffset,
   cabinetsRef,
+  cabinetCount
 }: {
   floatingOriginOffset: RefObject<Vector3>;
   boatRef: RefObject<Group | null>;
   cabinetsRef: RefObject<Array<Object3D | null>>;
+  cabinetCount: number;
 }) => {
   const model = useCabinetModel();
-  const [instances, setInstances] = useState<
-    Array<{
-      key: string;
-      position: Vector3;
-      sinkOffset: number;
-      floatPhase: number;
-    }>
-  >([]);
+  const [instances, setInstances] = useState<TCabinetInstances>([]);
 
   const TILE_SIZE = 1000;
-  const SPAWN_RADIUS = 3;
-  const CABINETS_PER_TILE = 3;
-  const CULLING_DISTANCE = 1500;
   const SINK_DEPTH_MIN = 5.0;
   const SINK_DEPTH_MAX = 5.0;
   const FLOAT_AMPLITUDE = 2.0;
@@ -43,82 +42,72 @@ export const Cabinets = ({
     return Math.abs(x - Math.floor(x));
   };
 
-  const generateCabinetPositions = (boatPos: Vector3) => {
-    const tileX = Math.floor(boatPos.x / TILE_SIZE);
-    const tileZ = Math.floor(boatPos.z / TILE_SIZE);
-    const newPositions: any[] = [];
+  const generateFixedNumberCabinets = (boatPos: Vector3) => {
+    const newPositions = [];
+    const MIN_DISTANCE = 100;
+    const MAX_ATTEMPTS = 50;
 
-    for (let x = -SPAWN_RADIUS; x <= SPAWN_RADIUS; x++) {
-      for (let z = -SPAWN_RADIUS; z <= SPAWN_RADIUS; z++) {
-        const currentTileX = tileX + x;
-        const currentTileZ = tileZ + z;
+    const isTooClose = (
+      pos: [number, number],
+      others: Array<[number, number]>
+    ) => {
+      return others.some(
+        ([x, z]) => Math.hypot(pos[0] - x, pos[1] - z) < MIN_DISTANCE
+      );
+    };
 
-        for (let i = 0; i < CABINETS_PER_TILE; i++) {
-          const key = `cabinet-${currentTileX}-${currentTileZ}-${i}`;
+    for (let i = 0; i < cabinetCount; i++) {
+      let attempts = 0;
+      let posX: number, posZ: number;
 
-          const seedX = `${currentTileX}_${currentTileZ}_${i}_x`;
-          const seedZ = `${currentTileX}_${currentTileZ}_${i}_z`;
-          const seedSink = `${currentTileX}_${currentTileZ}_${i}_sink`;
-          const seedFloat = `${currentTileX}_${currentTileZ}_${i}_float`;
+      do {
+        const randX = seededRandom(`cabinet_${i}_${attempts}_x`);
+        const randZ = seededRandom(`cabinet_${i}_${attempts}_z`);
+        posX = boatPos.x + (randX - 0.5) * TILE_SIZE * 3;
+        posZ = boatPos.z + (randZ - 0.5) * TILE_SIZE * 3;
+        attempts++;
+        if (attempts > MAX_ATTEMPTS) break;
+      } while (
+        isTooClose(
+          [posX, posZ],
+          newPositions.map((p) => [p.position[0], p.position[2]]) as [
+            number,
+            number
+          ][]
+        )
+      );
 
-          const randX = seededRandom(seedX);
-          const randZ = seededRandom(seedZ);
-          const randSink = seededRandom(seedSink);
-          const randFloat = seededRandom(seedFloat);
+      const randSink = seededRandom(`cabinet_${i}_sink`);
+      const randFloat = seededRandom(`cabinet_${i}_float`);
 
-          const getCoordinate = (coord: number, rand: number) =>
-            coord * TILE_SIZE + rand * TILE_SIZE * 0.8 + TILE_SIZE * 0.1;
+      const sinkOffset =
+        SINK_DEPTH_MIN + randSink * (SINK_DEPTH_MAX - SINK_DEPTH_MIN);
+      const floatPhase = randFloat * Math.PI * 2;
 
-          const originalWorldX = getCoordinate(currentTileX, randX);
-          const originalWorldZ = getCoordinate(currentTileZ, randZ);
-
-          const currentWorldX = originalWorldX - floatingOriginOffset.current.x;
-          const currentWorldZ = originalWorldZ - floatingOriginOffset.current.z;
-
-          const distanceFromBoat = Math.sqrt(
-            Math.pow(currentWorldX - boatPos.x, 2) +
-              Math.pow(currentWorldZ - boatPos.z, 2)
-          );
-
-          if (distanceFromBoat > CULLING_DISTANCE) {
-            continue;
-          }
-
-          const sinkOffset =
-            SINK_DEPTH_MIN + randSink * (SINK_DEPTH_MAX - SINK_DEPTH_MIN);
-          const floatPhase = randFloat * Math.PI * 2;
-
-          newPositions.push({
-            key,
-            position: [currentWorldX, -sinkOffset, currentWorldZ],
-            sinkOffset,
-            floatPhase,
-          });
-        }
-      }
+      newPositions.push({
+        key: `cabinet-fixed-${i}`,
+        position: [
+          posX - floatingOriginOffset.current.x,
+          -sinkOffset,
+          posZ - floatingOriginOffset.current.z,
+        ],
+        sinkOffset,
+        floatPhase,
+      });
     }
     return newPositions;
   };
 
-  useFrame(({ clock }) => {
+  useEffect(() => {
     if (!boatRef.current) return;
-
     const boatPos = boatRef.current.position;
-    const newInstances = generateCabinetPositions(boatPos);
+    const newInstances = generateFixedNumberCabinets(
+      boatPos
+    ) as unknown as TCabinetInstances;
+    setInstances(newInstances);
+  }, [boatRef, cabinetCount, floatingOriginOffset]);
 
-    const currentKeys = instances
-      .map((i: any) => i.key)
-      .sort()
-      .join(",");
-    const newKeys = newInstances
-      .map((i) => i.key)
-      .sort()
-      .join(",");
-
-    if (currentKeys !== newKeys) {
-      setInstances(newInstances);
-    }
-
+  useFrame(({ clock }) => {
     const time = clock.getElapsedTime();
     cabinetsRef.current.forEach((cabinet, idx) => {
       if (cabinet && instances[idx]) {

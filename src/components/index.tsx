@@ -29,6 +29,7 @@ const World = () => {
           <Boat ref={boatRef} />
           <Ocean boatRef={boatRef} />
           <Cabinets
+            cabinetCount={14}
             boatRef={boatRef}
             cabinetsRef={cabinetsRef}
             floatingOriginOffset={floatingOriginOffset}
