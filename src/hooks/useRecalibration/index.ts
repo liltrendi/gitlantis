@@ -3,21 +3,20 @@ import { type RefObject } from "react";
 import { Object3D, Vector3 } from "three";
 import type { Water } from "three-stdlib";
 
-export const useFloatingOrigin = ({
+export const useRecalibration = ({
   boatRef,
   oceanTilesRef,
   cabinetsRef,
   floatingOriginOffset,
-  threshold = 500,
 }: {
   boatRef: TBoatRef;
   oceanTilesRef: RefObject<Array<Water | null>>;
   cabinetsRef: RefObject<Array<Object3D | null>>;
   floatingOriginOffset: RefObject<Vector3>;
-  threshold?: number;
 }) => {
   const { camera } = useThree();
   const origin = new Vector3();
+  const threshold = 500;
 
   useFrame(() => {
     const boat = boatRef.current;
@@ -27,17 +26,17 @@ export const useFloatingOrigin = ({
     if (distance > threshold) {
       const offset = boat.position.clone();
 
-      // Reset boat position
+      // reset boat position
       boat.position.sub(offset);
       camera.position.sub(offset);
       floatingOriginOffset.current.add(offset);
 
-      // Reset ocean tiles
+      // reset ocean tiles
       for (const tileRef of oceanTilesRef.current) {
         if (tileRef) tileRef.position.sub(offset);
       }
 
-      // Reset cabinet instances
+      // reset cabinet instances
       for (const cabinetRef of cabinetsRef.current ?? []) {
         if (cabinetRef) cabinetRef.position.sub(offset);
       }

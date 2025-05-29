@@ -1,18 +1,18 @@
-import { CABINET_FILE_PATH } from '@/config';
-import { useGLTF } from '@react-three/drei';
-import { useEffect } from 'react';
-import { Group } from 'three';
+import { CABINET_FILE_PATH } from "@/config";
+import { useGLTF } from "@react-three/drei";
+import { useEffect } from "react";
+import { Group } from "three";
 
 export const useCabinetModel = () => {
-  const gltf = useGLTF(CABINET_FILE_PATH);
+  const cabinet = useGLTF(CABINET_FILE_PATH);
   const wrapper = new Group();
-  wrapper.add(gltf.scene);
+  wrapper.add(cabinet.scene);
 
   useEffect(() => {
-    gltf.scene.scale.setScalar(20);
-    gltf.scene.updateMatrixWorld(true);
-    wrapper.add(gltf.scene);
-  }, [gltf.scene]);
+    cabinet.scene.scale.setScalar(20);
+    cabinet.scene.updateMatrixWorld(true);
+    wrapper.add(cabinet.scene);
+  }, [cabinet.scene]);
 
   return wrapper;
 };

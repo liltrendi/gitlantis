@@ -1,7 +1,8 @@
-import { useFloatingOrigin } from "@/hooks/useFloatingOrigin";
 import type { RefObject } from "react";
 import type { Object3D, Vector3 } from "three";
 import type { Water } from "three-stdlib";
+import { Lights } from "@/components/lights";
+import { useRecalibration } from "@/hooks/useRecalibration";
 
 export const Setup = ({
   boatRef,
@@ -14,12 +15,17 @@ export const Setup = ({
   cabinetsRef: RefObject<Array<Object3D | null>>;
   floatingOriginOffset: RefObject<Vector3>;
 }) => {
-  useFloatingOrigin({
+  
+  useRecalibration({
     boatRef,
     oceanTilesRef,
     cabinetsRef,
     floatingOriginOffset,
   });
 
-  return null;
+  return (
+    <>
+      <Lights />
+    </>
+  )
 };
