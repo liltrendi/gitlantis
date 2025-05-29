@@ -1,8 +1,8 @@
 import { useEffect, useState, type RefObject } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Object3D, Vector3, Group } from "three";
-import { useCabinetModel } from "@/hooks/useCabinet";
 import { Clone } from "@react-three/drei";
+import { useCabinetModel } from "@/hooks/useCabinet";
 
 export const Cabinets = ({
   boatRef,
@@ -15,12 +15,22 @@ export const Cabinets = ({
 }) => {
   const model = useCabinetModel();
   const [instances, setInstances] = useState<
-    Array<{ key: string; position: Vector3 }>
+    Array<{
+      key: string;
+      position: Vector3;
+      sinkOffset: number;
+      floatPhase: number;
+    }>
   >([]);
 
   const TILE_SIZE = 1000;
-  const SPAWN_RADIUS = 2;
-  const CABINETS_PER_TILE = 1;
+  const SPAWN_RADIUS = 3;
+  const CABINETS_PER_TILE = 3;
+  const CULLING_DISTANCE = 1500;
+  const SINK_DEPTH_MIN = 5.0;
+  const SINK_DEPTH_MAX = 5.0;
+  const FLOAT_AMPLITUDE = 2.0;
+  const FLOAT_SPEED = 3.0;
 
   const seededRandom = (seed: string) => {
     let hash = 0;
@@ -48,9 +58,13 @@ export const Cabinets = ({
 
           const seedX = `${currentTileX}_${currentTileZ}_${i}_x`;
           const seedZ = `${currentTileX}_${currentTileZ}_${i}_z`;
+          const seedSink = `${currentTileX}_${currentTileZ}_${i}_sink`;
+          const seedFloat = `${currentTileX}_${currentTileZ}_${i}_float`;
 
           const randX = seededRandom(seedX);
           const randZ = seededRandom(seedZ);
+          const randSink = seededRandom(seedSink);
+          const randFloat = seededRandom(seedFloat);
 
           const getCoordinate = (coord: number, rand: number) =>
             coord * TILE_SIZE + rand * TILE_SIZE * 0.8 + TILE_SIZE * 0.1;
@@ -61,9 +75,24 @@ export const Cabinets = ({
           const currentWorldX = originalWorldX - floatingOriginOffset.current.x;
           const currentWorldZ = originalWorldZ - floatingOriginOffset.current.z;
 
+          const distanceFromBoat = Math.sqrt(
+            Math.pow(currentWorldX - boatPos.x, 2) +
+              Math.pow(currentWorldZ - boatPos.z, 2)
+          );
+
+          if (distanceFromBoat > CULLING_DISTANCE) {
+            continue;
+          }
+
+          const sinkOffset =
+            SINK_DEPTH_MIN + randSink * (SINK_DEPTH_MAX - SINK_DEPTH_MIN);
+          const floatPhase = randFloat * Math.PI * 2;
+
           newPositions.push({
             key,
-            position: [currentWorldX, 0, currentWorldZ],
+            position: [currentWorldX, -sinkOffset, currentWorldZ],
+            sinkOffset,
+            floatPhase,
           });
         }
       }
@@ -71,7 +100,7 @@ export const Cabinets = ({
     return newPositions;
   };
 
-  useFrame(() => {
+  useFrame(({ clock }) => {
     if (!boatRef.current) return;
 
     const boatPos = boatRef.current.position;
@@ -89,6 +118,16 @@ export const Cabinets = ({
     if (currentKeys !== newKeys) {
       setInstances(newInstances);
     }
+
+    const time = clock.getElapsedTime();
+    cabinetsRef.current.forEach((cabinet, idx) => {
+      if (cabinet && instances[idx]) {
+        const instance = instances[idx];
+        const floatOffset =
+          Math.sin(time * FLOAT_SPEED + instance.floatPhase) * FLOAT_AMPLITUDE;
+        cabinet.position.y = -instance.sinkOffset + floatOffset;
+      }
+    });
   });
 
   useEffect(() => {
