@@ -1,18 +1,22 @@
-import { useEffect, useRef, useState, type RefObject } from "react";
+import { useEffect, useState, type RefObject } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Object3D, Vector3, Group } from "three";
 import { useCabinetModel } from "@/hooks/useCabinet";
+import { Clone } from "@react-three/drei";
 
-export const CabinetSpawner = ({
+export const Cabinets = ({
   boatRef,
+  floatingOriginOffset,
   cabinetsRef,
 }: {
+  floatingOriginOffset: RefObject<Vector3>;
   boatRef: RefObject<Group | null>;
   cabinetsRef: RefObject<Array<Object3D | null>>;
 }) => {
   const model = useCabinetModel();
-  const [instances, setInstances] = useState<any>([]);
-  const floatingOriginOffset = useRef(new Vector3());
+  const [instances, setInstances] = useState<
+    Array<{ key: string; position: Vector3 }>
+  >([]);
 
   const TILE_SIZE = 1000;
   const SPAWN_RADIUS = 2;
@@ -48,24 +52,18 @@ export const CabinetSpawner = ({
           const randX = seededRandom(seedX);
           const randZ = seededRandom(seedZ);
 
-          // calculate world position based on original tile coordinates
-          const originalWorldX =
-            currentTileX * TILE_SIZE +
-            randX * TILE_SIZE * 0.8 +
-            TILE_SIZE * 0.1;
-          const originalWorldZ =
-            currentTileZ * TILE_SIZE +
-            randZ * TILE_SIZE * 0.8 +
-            TILE_SIZE * 0.1;
+          const getCoordinate = (coord: number, rand: number) =>
+            coord * TILE_SIZE + rand * TILE_SIZE * 0.8 + TILE_SIZE * 0.1;
 
-          // apply floating origin offset to get current position
+          const originalWorldX = getCoordinate(currentTileX, randX);
+          const originalWorldZ = getCoordinate(currentTileZ, randZ);
+
           const currentWorldX = originalWorldX - floatingOriginOffset.current.x;
           const currentWorldZ = originalWorldZ - floatingOriginOffset.current.z;
 
           newPositions.push({
             key,
             position: [currentWorldX, 0, currentWorldZ],
-            originalPosition: [originalWorldX, 0, originalWorldZ],
           });
         }
       }
@@ -99,9 +97,16 @@ export const CabinetSpawner = ({
 
   return (
     <>
-      {instances.map((inst: any, idx: number) => (
-        // @ts-ignore
-        <group key={inst.key} position={inst.position} ref={(el: Object3D | null) => (cabinetsRef.current[idx] = el)}><mesh><boxGeometry args={[50, 50, 50]} /><meshBasicMaterial color="red" /></mesh><primitive object={model.clone()} /></group>
+      {instances.map((instance, idx) => (
+        <Clone
+          key={instance.key}
+          ref={(el) => {
+            cabinetsRef.current[idx] = el;
+          }}
+          position={instance.position}
+          object={model}
+          scale={2.5}
+        />
       ))}
     </>
   );

@@ -1,24 +1,20 @@
-import { useRef, useState, type RefObject } from "react";
+import { useRef, useState } from "react";
 import { Water } from "three-stdlib";
 import { extend, useFrame, useLoader } from "@react-three/fiber";
 import {
-  Object3D,
   PlaneGeometry,
   RepeatWrapping,
   TextureLoader,
   Vector3,
 } from "three";
 import { WATER_TEXTURE_PATH } from "@/config";
-import { useFloatingOrigin } from "@/hooks/useFloatingOrigin";
 
 extend({ Water });
 
 export const Ocean = ({
   boatRef,
-  cabinetsRef,
 }: {
   boatRef: TBoatRef;
-  cabinetsRef: RefObject<Array<Object3D | null>>;
 }) => {
   const tilesRef = useRef<Array<Water | null>>([]);
   const [tiles, setTiles] = useState<
@@ -94,12 +90,6 @@ export const Ocean = ({
   });
 
   const planeGeometry = new PlaneGeometry(TILE_SIZE, TILE_SIZE);
-
-  useFloatingOrigin({
-    boatRef,
-    oceanTilesRef: tilesRef,
-    cabinetsRef,
-  });
 
   return (
     <>

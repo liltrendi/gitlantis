@@ -3,32 +3,36 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/cannon";
+import { Setup } from "@/components/setup";
 import { Camera } from "@/components/camera";
 import { Sky } from "@/components/sky";
-import { Lights } from "@/components/lights";
 import { Ocean } from "@/components/ocean";
 import { Boat } from "@/components/boat";
-import { CabinetSpawner } from "@/components/cabinet";
+import { Cabinets } from "@/components/cabinet";
 import { getGameConfig } from "@/config";
 
 const World = () => {
-  const { boatRef, cabinetsRef } = getGameConfig();
+  const { boatRef, oceanTilesRef, cabinetsRef, floatingOriginOffset } =
+    getGameConfig();
 
   return (
     <Canvas>
       <Suspense fallback={null}>
+        <Setup
+          boatRef={boatRef}
+          cabinetsRef={cabinetsRef}
+          oceanTilesRef={oceanTilesRef}
+          floatingOriginOffset={floatingOriginOffset}
+        />
         <Physics>
           <Sky />
-          <Lights />
-          <Ocean
-            boatRef={boatRef}
-            cabinetsRef={cabinetsRef}
-          />
-          <CabinetSpawner
-            boatRef={boatRef}
-            cabinetsRef={cabinetsRef}
-          />
           <Boat ref={boatRef} />
+          <Ocean boatRef={boatRef} />
+          <Cabinets
+            boatRef={boatRef}
+            cabinetsRef={cabinetsRef}
+            floatingOriginOffset={floatingOriginOffset}
+          />
           <Camera boatRef={boatRef} />
         </Physics>
       </Suspense>
