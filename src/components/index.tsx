@@ -8,10 +8,11 @@ import { Sky } from "@/components/sky";
 import { Lights } from "@/components/lights";
 import { Ocean } from "@/components/ocean";
 import { Boat } from "@/components/boat";
+import { CabinetSpawner } from "@/components/cabinet";
 import { getGameConfig } from "@/config";
 
 const World = () => {
-  const { sunDirection, boatRef } = getGameConfig();
+  const { boatRef, cabinetsRef } = getGameConfig();
 
   return (
     <Canvas>
@@ -19,7 +20,14 @@ const World = () => {
         <Physics>
           <Sky />
           <Lights />
-          <Ocean boatRef={boatRef} sunDirection={sunDirection} />
+          <Ocean
+            boatRef={boatRef}
+            cabinetsRef={cabinetsRef}
+          />
+          <CabinetSpawner
+            boatRef={boatRef}
+            cabinetsRef={cabinetsRef}
+          />
           <Boat ref={boatRef} />
           <Camera boatRef={boatRef} />
         </Physics>

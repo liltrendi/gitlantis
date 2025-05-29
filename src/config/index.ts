@@ -1,12 +1,13 @@
 import { useRef } from 'react';
-import { type Group, Vector3 } from 'three';
+import { type Group, Object3D, Vector3 } from 'three';
 
-export const BOAT_MODEL_PATH = `/models/boat/scene-transformed.glb`;
 export const WATER_TEXTURE_PATH = '/models/ocean/waternormals.jpeg';
+export const BOAT_MODEL_PATH = `/models/boat/scene-transformed.glb`;
+export const CABINET_FILE_PATH = `/models/cabinet/cabinet.glb`;
 
 export const getGameConfig = () => {
 	const boatRef = useRef<Group>(null);
-	const sunDirection = new Vector3(-1, 1, 1).normalize();
+	const cabinetsRef = useRef<Array<Object3D | null>>([]);
 
-	return { sunDirection, boatRef };
+	return { boatRef, cabinetsRef };
 };

@@ -1,5 +1,5 @@
 import { useGLTF } from '@react-three/drei';
-import { useAdvancedNavigation } from '@/hooks/useScene/useBoat/useNavigation';
+import { useAdvancedNavigation } from '@/hooks/useBoat/useNavigation';
 import { BOAT_MODEL_PATH } from '@/config';
 
 export const useBoat = (

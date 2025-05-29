@@ -1,52 +1,24 @@
-import { useRef, useState } from "react";
+import { useRef, useState, type RefObject } from "react";
 import { Water } from "three-stdlib";
-import { extend, useFrame, useLoader, useThree } from "@react-three/fiber";
-import { PlaneGeometry, RepeatWrapping, TextureLoader, Vector3 } from "three";
+import { extend, useFrame, useLoader } from "@react-three/fiber";
+import {
+  Object3D,
+  PlaneGeometry,
+  RepeatWrapping,
+  TextureLoader,
+  Vector3,
+} from "three";
 import { WATER_TEXTURE_PATH } from "@/config";
+import { useFloatingOrigin } from "@/hooks/useFloatingOrigin";
 
 extend({ Water });
 
-// this prevents the user from entering dark zones
-const useFloatingOrigin = ({
-  boatRef,
-  floatingRefs,
-  threshold = 500,
-}: {
-  boatRef: TBoatRef;
-  floatingRefs: Array<TBoatRef>;
-  threshold?: number;
-}) => {
-  const { camera } = useThree();
-  const worldOffset = useRef(new Vector3());
-  const origin = new Vector3();
-
-  useFrame(() => {
-    const boat = boatRef.current;
-    if (!boat) return;
-
-    const distance = boat.position.distanceTo(origin);
-    if (distance > threshold) {
-      const offset = boat.position.clone();
-
-      boat.position.sub(offset);
-      camera.position.sub(offset);
-      worldOffset.current.add(offset);
-
-      for (const ref of floatingRefs) {
-        if (ref.current) ref.current.position.sub(offset);
-      }
-    }
-  });
-
-  return worldOffset;
-};
-
 export const Ocean = ({
-  sunDirection,
   boatRef,
+  cabinetsRef,
 }: {
-  sunDirection: Vector3;
   boatRef: TBoatRef;
+  cabinetsRef: RefObject<Array<Object3D | null>>;
 }) => {
   const tilesRef = useRef<Array<Water | null>>([]);
   const [tiles, setTiles] = useState<
@@ -60,14 +32,14 @@ export const Ocean = ({
   const TILES_RADIUS = 2;
 
   const sceneConfig = {
+    fog: true,
+    waterNormals,
     textureWidth: 512,
     textureHeight: 512,
-    waterNormals,
-    sunDirection,
     sunColor: 0xffffff,
     waterColor: 0x001e0f,
     distortionScale: 0.7,
-    fog: true,
+    sunDirection:  new Vector3(-1, 1, 1).normalize(),
   };
 
   const generateTiles = (boatPosition: Vector3) => {
@@ -125,7 +97,8 @@ export const Ocean = ({
 
   useFloatingOrigin({
     boatRef,
-    floatingRefs: tilesRef.current.map((tile) => ({ current: tile })),
+    oceanTilesRef: tilesRef,
+    cabinetsRef,
   });
 
   return (
