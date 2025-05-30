@@ -12,19 +12,18 @@ import { Cabinets } from "@/components/cabinets";
 import { getGameConfig } from "@/config";
 
 const World = () => {
-  const { boatRef, oceanTilesRef, cabinetsRef, worldOffset } =
-    getGameConfig();
+  const { boatRef, oceanTilesRef, cabinetsRef, worldOffset } = getGameConfig();
 
   return (
     <Canvas>
       <Suspense fallback={null}>
-        <Setup
-          boatRef={boatRef}
-          cabinetsRef={cabinetsRef}
-          oceanTilesRef={oceanTilesRef}
-          worldOffset={worldOffset}
-        />
         <Physics>
+          <Setup
+            boatRef={boatRef}
+            cabinetsRef={cabinetsRef}
+            oceanTilesRef={oceanTilesRef}
+            worldOffset={worldOffset}
+          />
           <Sky />
           <Boat ref={boatRef} />
           <Ocean boatRef={boatRef} />

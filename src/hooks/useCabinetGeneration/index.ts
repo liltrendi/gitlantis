@@ -21,37 +21,38 @@ export const useCabinetGeneration = ({
   const SINK_DEPTH_MAX = 5.0;
 
   const generateFixedNumberCabinets = (boatPos: Vector3) => {
-    const newPositions = [];
-    const MIN_DISTANCE = 100;
-    const MAX_ATTEMPTS = 50;
+    const positionsToPlaceCabinets: TCabinetInstances = [];
+    const MIN_DISTANCE_BETWEEN_CABINETS = 100;
+    const MAX_GENERATION_ATTEMPTS_IF_TOO_CLOSE = 50;
 
     const isTooClose = (
       pos: [number, number],
       others: Array<[number, number]>
     ) => {
       return others.some(
-        ([x, z]) => Math.hypot(pos[0] - x, pos[1] - z) < MIN_DISTANCE
+        ([x, z]) =>
+          Math.hypot(pos[0] - x, pos[1] - z) < MIN_DISTANCE_BETWEEN_CABINETS
       );
     };
 
     for (let i = 0; i < cabinetCount; i++) {
       let attempts = 0;
-      let posX: number, posZ: number;
+      let xPosition: number, zPosition: number;
 
       do {
         const randX = Math.random();
         const randZ = Math.random();
-        posX = boatPos.x + (randX - 0.5) * TILE_SIZE * 3;
-        posZ = boatPos.z + (randZ - 0.5) * TILE_SIZE * 3;
+        xPosition = boatPos.x + (randX - 0.5) * TILE_SIZE * 3;
+        zPosition = boatPos.z + (randZ - 0.5) * TILE_SIZE * 3;
         attempts++;
-        if (attempts > MAX_ATTEMPTS) break;
+        if (attempts > MAX_GENERATION_ATTEMPTS_IF_TOO_CLOSE) break;
       } while (
         isTooClose(
-          [posX, posZ],
-          newPositions.map((p) => [p.position[0], p.position[2]]) as [
-            number,
-            number
-          ][]
+          [xPosition, zPosition],
+          positionsToPlaceCabinets.map((p) => [
+            p.position[0],
+            p.position[2],
+          ]) as [number, number][]
         )
       );
 
@@ -62,27 +63,25 @@ export const useCabinetGeneration = ({
         SINK_DEPTH_MIN + randSink * (SINK_DEPTH_MAX - SINK_DEPTH_MIN);
       const floatPhase = randFloat * Math.PI * 2;
 
-      newPositions.push({
+      positionsToPlaceCabinets.push({
         key: `cabinet-random-${i}`,
         position: [
-          posX - worldOffset.current.x,
+          xPosition - worldOffset.current.x,
           -sinkOffset,
-          posZ - worldOffset.current.z,
+          zPosition - worldOffset.current.z,
         ],
         sinkOffset,
         floatPhase,
       });
     }
-    return newPositions;
+    return positionsToPlaceCabinets;
   };
 
   useEffect(() => {
     if (!boatRef.current) return;
-    const boatPos = boatRef.current.position;
-    const newInstances = generateFixedNumberCabinets(
-      boatPos
-    ) as unknown as TCabinetInstances;
-    setCabinetInstances(newInstances);
+    const boatPosition = boatRef.current.position;
+    const generatedCabinetInstances = generateFixedNumberCabinets(boatPosition);
+    setCabinetInstances(generatedCabinetInstances);
   }, [boatRef, cabinetCount, worldOffset]);
 
   useEffect(() => {
