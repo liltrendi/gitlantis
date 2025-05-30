@@ -72,7 +72,7 @@ export const useAdvancedNavigation = ({
 	const keys = useKeyboardState();
 
 	const config = {
-		maxSpeed: 1.5,
+		maxSpeed: 3.5,
 		momentum: 0.98,
 		acceleration: 0.02,
 		deceleration: 0.01,
