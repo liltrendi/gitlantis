@@ -4,6 +4,7 @@ import { Clone } from "@react-three/drei";
 import { useCabinetModel } from "@/hooks/useCabinet";
 import { useCabinetMovement } from "@/hooks/useCabinetMovement";
 import { useCabinetGeneration } from "@/hooks/useCabinetGeneration";
+import { useCabinetCollision } from "@/hooks/useCabinetCollision";
 
 export const Cabinets = ({
   boatRef,
@@ -26,6 +27,8 @@ export const Cabinets = ({
   });
 
   useCabinetMovement({ cabinetInstances, boatRef, cabinetsRef });
+
+  useCabinetCollision({ boatRef, cabinetsRef });
 
   return (
     <>
