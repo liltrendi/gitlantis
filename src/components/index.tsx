@@ -13,7 +13,7 @@ import { Cabinets } from "@/components/cabinets";
 
 const World = () => {
   return (
-    <Canvas>
+    <Canvas id="world">
       <Suspense fallback={null}>
         <GameContextProvider>
           <Physics>
@@ -25,8 +25,7 @@ const World = () => {
             <Camera />
           </Physics>
         </GameContextProvider>
-      </Suspense>
-    </Canvas>
+      </Suspense></Canvas>
   );
 };
 

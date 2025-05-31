@@ -70,7 +70,7 @@ export const useCabinetGeneration = ({
           zPosition - worldOffsetRef.current.z,
         ],
         sinkOffset,
-        floatPhase,
+        floatPhase
       });
     }
     return positionsToPlaceCabinets;

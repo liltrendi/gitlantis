@@ -6,6 +6,7 @@ export const GameContext = createContext<TGameConfig>({
   oceanRef: null,
   cabinetsRef: null,
   worldOffsetRef: null,
+  projectInfoRef: null
 });
 
 export const GameContextProvider: FC<{ children: ReactNode }> = ({

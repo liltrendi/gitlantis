@@ -14,7 +14,8 @@ declare global {
   type TBoatRef = RefObject<Group | null> | null;
   type TOceanRef = RefObject<TOcean> | null;
   type TCabinetsRef = RefObject<TCabinets> | null;
-  type TWorldOffsetRef = RefObject<Vector3> | null
+  type TWorldOffsetRef = RefObject<Vector3> | null;
+  type TProjectInfoRef = RefObject<any> | null;
 
   type TCabinetInstances = Array<{
     key: string;
@@ -28,5 +29,6 @@ declare global {
     oceanRef: TOceanRef;
     cabinetsRef: TCabinetsRef;
     worldOffsetRef: TWorldOffsetRef;
+    projectInfoRef: TProjectInfoRef;
   };
 }

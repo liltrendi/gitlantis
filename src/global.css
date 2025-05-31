@@ -1,9 +1,12 @@
 * {
   box-sizing: border-box;
-  max-width: 1280px;
   margin: 0;
   padding: 0;
-  min-height: 100vh;
-  min-width: 100vw;
   overflow: hidden;
+  height: 100%;
+}
+
+canvas#world {
+  min-width: 100vw !important;
+  min-height: 100vh !important;
 }
