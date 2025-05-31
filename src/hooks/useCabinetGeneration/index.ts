@@ -16,70 +16,175 @@ export const useCabinetGeneration = ({
   const SINK_DEPTH_MIN = 5.0;
   const SINK_DEPTH_MAX = 5.0;
   const CABINET_COUNT = 30;
+  const MIN_DISTANCE_FROM_BOAT = 200;
+  const MIN_DISTANCE_BETWEEN_CABINETS = 100;
+  const MAX_GENERATION_ATTEMPTS = 100;
 
-  const generateFixedNumberCabinets = (boatPos: Vector3) => {
+  const generateGridBasedCabinets = (boatPos: Vector3) => {
     if (!worldOffsetRef?.current) return [];
 
     const positionsToPlaceCabinets: TCabinetInstances = [];
-    const MIN_DISTANCE_BETWEEN_CABINETS = 100;
-    const MAX_GENERATION_ATTEMPTS_IF_TOO_CLOSE = 50;
 
-    const isTooClose = (
+    // create a grid-based approach for even distribution
+    const GENERATION_RADIUS = TILE_SIZE * 1.5; // total generation area
+    const GRID_SIZE = Math.ceil(Math.sqrt(CABINET_COUNT * 1.5)); // slightly larger grid for better distribution
+    const CELL_SIZE = (GENERATION_RADIUS * 2) / GRID_SIZE;
+
+    // create grid cells and shuffle them for random selection
+    const gridCells: Array<{ x: number; z: number }> = [];
+    for (let i = 0; i < GRID_SIZE; i++) {
+      for (let j = 0; j < GRID_SIZE; j++) {
+        gridCells.push({
+          x: (i - GRID_SIZE / 2) * CELL_SIZE + boatPos.x,
+          z: (j - GRID_SIZE / 2) * CELL_SIZE + boatPos.z,
+        });
+      }
+    }
+
+    // shuffle the grid cells for random selection
+    for (let i = gridCells.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [gridCells[i], gridCells[j]] = [gridCells[j], gridCells[i]];
+    }
+
+    const isValidPosition = (
       pos: [number, number],
-      others: Array<[number, number]>
+      boatPos: Vector3,
+      existingPositions: Array<[number, number]>
     ) => {
-      return others.some(
+      // check distance from boat
+      const distanceFromBoat = Math.hypot(
+        pos[0] - boatPos.x,
+        pos[1] - boatPos.z
+      );
+      if (distanceFromBoat < MIN_DISTANCE_FROM_BOAT) {
+        return false;
+      }
+
+      // check distance from other cabinets
+      return !existingPositions.some(
         ([x, z]) =>
           Math.hypot(pos[0] - x, pos[1] - z) < MIN_DISTANCE_BETWEEN_CABINETS
       );
     };
 
-    for (let i = 0; i < CABINET_COUNT; i++) {
+    let cabinetIndex = 0;
+
+    // try to place cabinets in shuffled grid cells
+    for (const cell of gridCells) {
+      if (cabinetIndex >= CABINET_COUNT) break;
+
       let attempts = 0;
-      let xPosition: number, zPosition: number;
+      let placed = false;
 
-      do {
-        const randX = Math.random();
-        const randZ = Math.random();
-        xPosition = boatPos.x + (randX - 0.5) * TILE_SIZE * 3;
-        zPosition = boatPos.z + (randZ - 0.5) * TILE_SIZE * 3;
+      while (attempts < MAX_GENERATION_ATTEMPTS && !placed) {
+        // add some randomness within the cell
+        const offsetX = (Math.random() - 0.5) * CELL_SIZE * 0.8;
+        const offsetZ = (Math.random() - 0.5) * CELL_SIZE * 0.8;
+
+        const xPosition = cell.x + offsetX;
+        const zPosition = cell.z + offsetZ;
+
+        const candidatePosition: [number, number] = [xPosition, zPosition];
+
+        if (
+          isValidPosition(
+            candidatePosition,
+            boatPos,
+            positionsToPlaceCabinets.map((p) => [
+              p.position[0] + worldOffsetRef.current!.x,
+              p.position[2] + worldOffsetRef.current!.z,
+            ])
+          )
+        ) {
+          const randSink = Math.random();
+          const randFloat = Math.random();
+
+          const sinkOffset =
+            SINK_DEPTH_MIN + randSink * (SINK_DEPTH_MAX - SINK_DEPTH_MIN);
+          const floatPhase = randFloat * Math.PI * 2;
+
+          positionsToPlaceCabinets.push({
+            key: `cabinet-grid-${cabinetIndex}`,
+            position: [
+              xPosition - worldOffsetRef.current.x,
+              -sinkOffset,
+              zPosition - worldOffsetRef.current.z,
+            ],
+            sinkOffset,
+            floatPhase,
+          });
+
+          placed = true;
+          cabinetIndex++;
+        }
+
         attempts++;
-        if (attempts > MAX_GENERATION_ATTEMPTS_IF_TOO_CLOSE) break;
-      } while (
-        isTooClose(
-          [xPosition, zPosition],
-          positionsToPlaceCabinets.map((p) => [
-            p.position[0],
-            p.position[2],
-          ]) as [number, number][]
-        )
-      );
-
-      const randSink = Math.random();
-      const randFloat = Math.random();
-
-      const sinkOffset =
-        SINK_DEPTH_MIN + randSink * (SINK_DEPTH_MAX - SINK_DEPTH_MIN);
-      const floatPhase = randFloat * Math.PI * 2;
-
-      positionsToPlaceCabinets.push({
-        key: `cabinet-random-${i}`,
-        position: [
-          xPosition - worldOffsetRef.current.x,
-          -sinkOffset,
-          zPosition - worldOffsetRef.current.z,
-        ],
-        sinkOffset,
-        floatPhase
-      });
+      }
     }
+
+    // if we still need more cabinets, use fallback random generation
+    // but still respect the boat distance constraint
+    while (positionsToPlaceCabinets.length < CABINET_COUNT) {
+      let attempts = 0;
+      let placed = false;
+
+      while (attempts < MAX_GENERATION_ATTEMPTS && !placed) {
+        const angle = Math.random() * Math.PI * 2;
+        const distance =
+          MIN_DISTANCE_FROM_BOAT +
+          Math.random() * (GENERATION_RADIUS - MIN_DISTANCE_FROM_BOAT);
+
+        const xPosition = boatPos.x + Math.cos(angle) * distance;
+        const zPosition = boatPos.z + Math.sin(angle) * distance;
+
+        const candidatePosition: [number, number] = [xPosition, zPosition];
+
+        if (
+          isValidPosition(
+            candidatePosition,
+            boatPos,
+            positionsToPlaceCabinets.map((p) => [
+              p.position[0] + worldOffsetRef.current!.x,
+              p.position[2] + worldOffsetRef.current!.z,
+            ])
+          )
+        ) {
+          const randSink = Math.random();
+          const randFloat = Math.random();
+
+          const sinkOffset =
+            SINK_DEPTH_MIN + randSink * (SINK_DEPTH_MAX - SINK_DEPTH_MIN);
+          const floatPhase = randFloat * Math.PI * 2;
+
+          positionsToPlaceCabinets.push({
+            key: `cabinet-fallback-${positionsToPlaceCabinets.length}`,
+            position: [
+              xPosition - worldOffsetRef.current.x,
+              -sinkOffset,
+              zPosition - worldOffsetRef.current.z,
+            ],
+            sinkOffset,
+            floatPhase,
+          });
+
+          placed = true;
+        }
+
+        attempts++;
+      }
+
+      // prevent infinite loop
+      if (!placed) break;
+    }
+
     return positionsToPlaceCabinets;
   };
 
   useEffect(() => {
     if (!boatRef?.current) return;
     const boatPosition = boatRef.current.position;
-    const generatedCabinetInstances = generateFixedNumberCabinets(boatPosition);
+    const generatedCabinetInstances = generateGridBasedCabinets(boatPosition);
     setCabinets(generatedCabinetInstances);
   }, [worldOffsetRef]);
 
