@@ -16,7 +16,7 @@ export const Ocean = () => {
   const waterNormals = useLoader(TextureLoader, WATER_TEXTURE_PATH);
   waterNormals.wrapS = waterNormals.wrapT = RepeatWrapping;
 
-  const TILE_SIZE = 1000;
+  const TILE_SIZE = 10000;
   const TILES_RADIUS = 2;
 
   const sceneConfig = {
