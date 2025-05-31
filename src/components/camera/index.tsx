@@ -2,14 +2,16 @@ import { useFrame, useThree } from "@react-three/fiber";
 import { useRef } from "react";
 import { Quaternion, Vector3 } from "three";
 import { PerspectiveCamera } from "@react-three/drei";
+import { useGameContext } from "@/hooks/useGameContext";
 
-export const Camera = ({ boatRef }: { boatRef: TBoatRef }) => {
+export const Camera = () => {
+  const { boatRef } = useGameContext();
   const { camera } = useThree();
   const idealCameraPosition = useRef(new Vector3());
   const idealLookAt = useRef(new Vector3());
 
   useFrame(() => {
-    if (!boatRef.current) return;
+    if (!boatRef?.current) return;
 
     const boatPosition = new Vector3();
     const boatQuaternion = new Quaternion();

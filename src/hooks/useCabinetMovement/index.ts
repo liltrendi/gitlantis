@@ -1,36 +1,28 @@
-import {
-  Euler,
-  Matrix4,
-  Quaternion,
-  Vector3,
-  type Group,
-  type Object3D,
-} from "three";
+import { Euler, Matrix4, Quaternion, Vector3 } from "three";
 import { useFrame } from "@react-three/fiber";
-import type { RefObject } from "react";
 
 export const useCabinetMovement = ({
-  cabinetInstances,
+  cabinets,
   boatRef,
   cabinetsRef,
 }: {
-  boatRef: RefObject<Group | null>;
-  cabinetsRef: RefObject<Array<Object3D | null>>;
-  cabinetInstances: TCabinetInstances;
+  cabinets: TCabinetInstances;
+  boatRef: TBoatRef;
+  cabinetsRef: TCabinetsRef;
 }) => {
   const FLOAT_AMPLITUDE = 2.0;
   const FLOAT_SPEED = 3.0;
 
   useFrame(({ clock }) => {
-    if (!boatRef.current) return;
+    if (!boatRef?.current || !cabinetsRef?.current) return;
 
     const boatPos = boatRef.current.position.clone();
     const time = clock.getElapsedTime();
 
     cabinetsRef.current.forEach((cabinet, idx) => {
-      if (!cabinet || !cabinetInstances[idx]) return;
+      if (!cabinet || !cabinets[idx]) return;
 
-      const instance = cabinetInstances[idx];
+      const instance = cabinets[idx];
 
       const floatOffset =
         Math.sin(time * FLOAT_SPEED + instance.floatPhase) * FLOAT_AMPLITUDE;

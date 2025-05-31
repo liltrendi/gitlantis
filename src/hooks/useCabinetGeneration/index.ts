@@ -1,26 +1,25 @@
-import { useEffect, useState, type RefObject } from "react";
-import type { Group, Object3D, Vector3 } from "three";
+import { useEffect, useState } from "react";
+import { Vector3 } from "three";
 
 export const useCabinetGeneration = ({
   boatRef,
-  cabinetCount,
   cabinetsRef,
-  worldOffset,
+  worldOffsetRef,
 }: {
-  worldOffset: RefObject<Vector3>;
-  boatRef: RefObject<Group | null>;
-  cabinetsRef: RefObject<Array<Object3D | null>>;
-  cabinetCount: number;
+  boatRef: TBoatRef;
+  cabinetsRef: TCabinetsRef;
+  worldOffsetRef: TWorldOffsetRef;
 }) => {
-  const [cabinetInstances, setCabinetInstances] = useState<TCabinetInstances>(
-    []
-  );
+  const [cabinets, setCabinets] = useState<TCabinetInstances>([]);
 
   const TILE_SIZE = 1000;
   const SINK_DEPTH_MIN = 5.0;
   const SINK_DEPTH_MAX = 5.0;
+  const CABINET_COUNT = 30;
 
   const generateFixedNumberCabinets = (boatPos: Vector3) => {
+    if (!worldOffsetRef?.current) return [];
+
     const positionsToPlaceCabinets: TCabinetInstances = [];
     const MIN_DISTANCE_BETWEEN_CABINETS = 100;
     const MAX_GENERATION_ATTEMPTS_IF_TOO_CLOSE = 50;
@@ -35,7 +34,7 @@ export const useCabinetGeneration = ({
       );
     };
 
-    for (let i = 0; i < cabinetCount; i++) {
+    for (let i = 0; i < CABINET_COUNT; i++) {
       let attempts = 0;
       let xPosition: number, zPosition: number;
 
@@ -66,9 +65,9 @@ export const useCabinetGeneration = ({
       positionsToPlaceCabinets.push({
         key: `cabinet-random-${i}`,
         position: [
-          xPosition - worldOffset.current.x,
+          xPosition - worldOffsetRef.current.x,
           -sinkOffset,
-          zPosition - worldOffset.current.z,
+          zPosition - worldOffsetRef.current.z,
         ],
         sinkOffset,
         floatPhase,
@@ -78,15 +77,16 @@ export const useCabinetGeneration = ({
   };
 
   useEffect(() => {
-    if (!boatRef.current) return;
+    if (!boatRef?.current) return;
     const boatPosition = boatRef.current.position;
     const generatedCabinetInstances = generateFixedNumberCabinets(boatPosition);
-    setCabinetInstances(generatedCabinetInstances);
-  }, [cabinetCount, worldOffset]);
+    setCabinets(generatedCabinetInstances);
+  }, [worldOffsetRef]);
 
   useEffect(() => {
-    cabinetsRef.current = cabinetsRef.current.slice(0, cabinetInstances.length);
-  }, [cabinetInstances.length]);
+    if (!cabinetsRef?.current) return;
+    cabinetsRef.current = cabinetsRef.current.slice(0, cabinets.length);
+  }, [cabinets.length]);
 
-  return { cabinetInstances };
+  return { cabinets };
 };

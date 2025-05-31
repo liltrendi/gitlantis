@@ -1,16 +1,15 @@
 import { useFrame } from "@react-three/fiber";
-import type { RefObject } from "react";
-import { Group, Vector3, type Object3D } from "three";
+import { Vector3 } from "three";
 
 export const useCabinetCollision = ({
   boatRef,
   cabinetsRef,
 }: {
-  boatRef: RefObject<Group | null>;
-  cabinetsRef: RefObject<Array<Object3D | null>>;
+  boatRef: TBoatRef;
+  cabinetsRef: TCabinetsRef;
 }) => {
   useFrame(() => {
-    if (!boatRef.current) return;
+    if (!boatRef?.current || !cabinetsRef?.current) return;
 
     const boat = boatRef.current;
 

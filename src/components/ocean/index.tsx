@@ -1,25 +1,17 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { Water } from "three-stdlib";
 import { extend, useFrame, useLoader } from "@react-three/fiber";
-import {
-  PlaneGeometry,
-  RepeatWrapping,
-  TextureLoader,
-  Vector3,
-} from "three";
+import { PlaneGeometry, RepeatWrapping, TextureLoader, Vector3 } from "three";
 import { WATER_TEXTURE_PATH } from "@/config";
+import { useGameContext } from "@/hooks/useGameContext";
 
 extend({ Water });
 
-export const Ocean = ({
-  boatRef,
-}: {
-  boatRef: TBoatRef;
-}) => {
-  const tilesRef = useRef<Array<Water | null>>([]);
+export const Ocean = () => {
   const [tiles, setTiles] = useState<
     Array<{ key: string; position: [number, number, number] }>
   >([]);
+  const { boatRef, oceanRef } = useGameContext();
 
   const waterNormals = useLoader(TextureLoader, WATER_TEXTURE_PATH);
   waterNormals.wrapS = waterNormals.wrapT = RepeatWrapping;
@@ -35,7 +27,7 @@ export const Ocean = ({
     sunColor: 0xffffff,
     waterColor: 0x001e0f,
     distortionScale: 0.7,
-    sunDirection:  new Vector3(-1, 1, 1).normalize(),
+    sunDirection: new Vector3(-1, 1, 1).normalize(),
   };
 
   const generateTiles = (boatPosition: Vector3) => {
@@ -65,7 +57,9 @@ export const Ocean = ({
   };
 
   useFrame((_, delta) => {
-    tilesRef.current.forEach((waterRef) => {
+    if (!oceanRef?.current) return;
+
+    oceanRef.current.forEach((waterRef) => {
       if (waterRef?.material) {
         waterRef.material.uniforms.time.value += delta;
       }
@@ -101,7 +95,8 @@ export const Ocean = ({
           position={tile.position}
           rotation-x={-Math.PI / 2}
           ref={(el: Water | null) => {
-            tilesRef.current[index] = el;
+            if (!oceanRef?.current) return;
+            oceanRef.current[index] = el;
           }}
         />
       ))}

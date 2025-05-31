@@ -1,26 +1,24 @@
 import { useFrame, useThree } from "@react-three/fiber";
-import { type RefObject } from "react";
-import { Object3D, Vector3 } from "three";
-import type { Water } from "three-stdlib";
+import { Vector3 } from "three";
+import { useGameContext } from "@/hooks/useGameContext";
 
-export const useRecalibration = ({
-  boatRef,
-  oceanTilesRef,
-  cabinetsRef,
-  worldOffset,
-}: {
-  boatRef: TBoatRef;
-  oceanTilesRef: RefObject<Array<Water | null>>;
-  cabinetsRef: RefObject<Array<Object3D | null>>;
-  worldOffset: RefObject<Vector3>;
-}) => {
+export const useRecalibration = () => {
   const { camera } = useThree();
   const origin = new Vector3();
   const threshold = 500;
 
+  const { worldOffsetRef, boatRef, oceanRef, cabinetsRef } = useGameContext();
+
   useFrame(() => {
+    if (
+      !worldOffsetRef?.current ||
+      !boatRef?.current ||
+      !oceanRef?.current ||
+      !cabinetsRef?.current
+    )
+      return;
+
     const boat = boatRef.current;
-    if (!boat) return;
 
     const distance = boat.position.distanceTo(origin);
     if (distance > threshold) {
@@ -29,10 +27,10 @@ export const useRecalibration = ({
       // reset boat position
       boat.position.sub(offset);
       camera.position.sub(offset);
-      worldOffset.current.add(offset);
+      worldOffsetRef.current.add(offset);
 
       // reset ocean tiles
-      for (const tileRef of oceanTilesRef.current) {
+      for (const tileRef of oceanRef.current) {
         if (tileRef) tileRef.position.sub(offset);
       }
 
@@ -42,6 +40,4 @@ export const useRecalibration = ({
       }
     }
   });
-
-  return { worldOffset };
 };

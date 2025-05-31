@@ -1,41 +1,31 @@
-import { type RefObject } from "react";
-import { Object3D, Vector3, Group } from "three";
 import { Clone } from "@react-three/drei";
 import { useCabinetModel } from "@/hooks/useCabinet";
 import { useCabinetMovement } from "@/hooks/useCabinetMovement";
 import { useCabinetGeneration } from "@/hooks/useCabinetGeneration";
 import { useCabinetCollision } from "@/hooks/useCabinetCollision";
+import { useGameContext } from "@/hooks/useGameContext";
 
-export const Cabinets = ({
-  boatRef,
-  worldOffset,
-  cabinetsRef,
-  cabinetCount,
-}: {
-  worldOffset: RefObject<Vector3>;
-  boatRef: RefObject<Group | null>;
-  cabinetsRef: RefObject<Array<Object3D | null>>;
-  cabinetCount: number;
-}) => {
+export const Cabinets = () => {
   const model = useCabinetModel();
+  const { worldOffsetRef, boatRef, cabinetsRef } = useGameContext();
 
-  const { cabinetInstances } = useCabinetGeneration({
+  const { cabinets } = useCabinetGeneration({
     boatRef,
-    cabinetCount,
     cabinetsRef,
-    worldOffset,
+    worldOffsetRef,
   });
 
-  useCabinetMovement({ cabinetInstances, boatRef, cabinetsRef });
+  useCabinetMovement({ cabinets, boatRef, cabinetsRef });
 
   useCabinetCollision({ boatRef, cabinetsRef });
 
   return (
     <>
-      {cabinetInstances.map((instance, idx) => (
+      {cabinets.map((instance, idx) => (
         <Clone
           key={instance.key}
           ref={(el) => {
+            if (!cabinetsRef?.current) return;
             cabinetsRef.current[idx] = el;
           }}
           position={instance.position}
