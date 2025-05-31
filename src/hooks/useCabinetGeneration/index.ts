@@ -82,11 +82,11 @@ export const useCabinetGeneration = ({
     const boatPosition = boatRef.current.position;
     const generatedCabinetInstances = generateFixedNumberCabinets(boatPosition);
     setCabinetInstances(generatedCabinetInstances);
-  }, [boatRef, cabinetCount, worldOffset]);
+  }, [cabinetCount, worldOffset]);
 
   useEffect(() => {
     cabinetsRef.current = cabinetsRef.current.slice(0, cabinetInstances.length);
-  }, [cabinetInstances.length, cabinetsRef]);
+  }, [cabinetInstances.length]);
 
   return { cabinetInstances };
 };
