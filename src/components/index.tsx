@@ -5,8 +5,6 @@ import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/cannon";
 import { GameContextProvider } from "@/context";
 import { Setup } from "@/components/setup";
-import { Camera } from "@/components/camera";
-import { Sky } from "@/components/sky";
 import { Ocean } from "@/components/ocean";
 import { Boat } from "@/components/boat";
 import { Cabinets } from "@/components/cabinets";
@@ -18,14 +16,13 @@ const World = () => {
         <GameContextProvider>
           <Physics>
             <Setup />
-            <Sky />
-            <Boat />
             <Ocean />
+            <Boat />
             <Cabinets />
-            <Camera />
           </Physics>
         </GameContextProvider>
-      </Suspense></Canvas>
+      </Suspense>
+    </Canvas>
   );
 };
 
