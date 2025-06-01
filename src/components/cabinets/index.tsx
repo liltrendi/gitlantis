@@ -36,7 +36,7 @@ export const Cabinets = () => {
               }}
               position={instance.position}
               object={model}
-              scale={50}
+              scale={60}
             >
               {/* @ts-expect-error */}
               <group position={[0, 1.53, 0]}>

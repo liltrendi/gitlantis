@@ -1,11 +1,10 @@
 import { useFrame } from '@react-three/fiber';
 import { useRef } from 'react';
 
-export const useAdvancedFloating = ({
+export const useFloating = ({
 	boatRef,
 }: {
 	boatRef: TBoatRef
-	isBoatMoving: boolean;
 }) => {
 	// TODO: this hook affects the user's rotation left or right
 	// at some degree, the user can't rotate at all
@@ -19,8 +18,9 @@ export const useAdvancedFloating = ({
 	});
 
 	useFrame((_, delta) => {
+		if (!boatRef?.current) return;
+
 		const boat = boatRef.current;
-		if (!boat) return;
 
 		floatingState.current.time += delta * floatingState.current.waveSpeed;
 		const time = floatingState.current.time;
