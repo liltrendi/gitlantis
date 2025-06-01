@@ -21,7 +21,7 @@ export const Minimap = () => {
     gl.clearDepth();
     gl.setScissorTest(true);
 
-    const width = 200, height = 200;
+    const width = 150, height = 150;
     const x = size.width - width - 10;
     const y = size.height - height - 10
 
