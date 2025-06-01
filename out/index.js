@@ -33,24 +33,9 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getHashedAssetUri = getHashedAssetUri;
-exports.getWebviewUri = getWebviewUri;
-exports.getUri = getUri;
+exports.activate = activate;
 const vscode = __importStar(require("vscode"));
-const fs = __importStar(require("fs"));
-const path = __importStar(require("path"));
-function getHashedAssetUri(webview, extensionUri, assetFolder, filenamePrefix, extension) {
-    const dirPath = path.join(vscode.Uri.joinPath(extensionUri, assetFolder).fsPath, 'assets');
-    const files = fs.readdirSync(dirPath);
-    const targetFile = files.find(file => file.startsWith(filenamePrefix) && file.endsWith(extension));
-    if (!targetFile)
-        return undefined;
-    return webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, assetFolder, 'assets', targetFile));
-}
-function getWebviewUri(webview, extensionUri, relativePath) {
-    const diskPath = vscode.Uri.joinPath(extensionUri, "out", relativePath);
-    return webview.asWebviewUri(diskPath);
-}
-function getUri(webview, extensionUri, pathList) {
-    return webview.asWebviewUri(vscode.Uri.joinPath(extensionUri, ...pathList));
+const commands_1 = require("./commands");
+function activate(context) {
+    context.subscriptions.push(vscode.commands.registerCommand("gitlantis.openWebview", () => (0, commands_1.openWebView)(context)));
 }

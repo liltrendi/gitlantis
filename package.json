@@ -1,7 +1,7 @@
 {
   "name": "gitlantis",
   "displayName": "Gitlantis",
-  "main": "./out/extension.js",
+  "main": "./out/index.js",
   "engines": {
     "vscode": "^1.80.0"
   },

@@ -68,7 +68,7 @@ export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
   const keys = useKeyboardState();
 
   const config = {
-    maxSpeed: 3.5,
+    maxSpeed: 3.0,
     momentum: 0.98,
     acceleration: 0.02,
     deceleration: 0.01,
