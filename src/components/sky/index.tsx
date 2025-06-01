@@ -6,7 +6,7 @@ import type { Vector3 } from "three";
 export const Sky = () => {
   const { worldOffsetRef } = useGameContext();
 
-  const globalSunPosition = [500, 200, -500];
+  const globalSunPosition = [0, 1, 0];
 
   const sunPosition = useMemo(() => {
     const offset = worldOffsetRef?.current;
