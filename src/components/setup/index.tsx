@@ -14,7 +14,7 @@ export const Setup = () => {
       <Lights />
       <Sky />
       <Minimap />
-      <Stats />
+      <Stats showPanel={3} />
     </>
   );
 };
