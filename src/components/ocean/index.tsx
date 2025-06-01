@@ -7,13 +7,17 @@ import { useGameContext } from "@/hooks/useGameContext";
 
 extend({ Water });
 
+const modelUris = (window as any).__MODEL_URIS__ || {
+  water: WATER_TEXTURE_PATH
+};
+
 export const Ocean = () => {
   const [tiles, setTiles] = useState<
     Array<{ key: string; position: [number, number, number] }>
   >([]);
   const { boatRef, oceanRef } = useGameContext();
 
-  const waterNormals = useLoader(TextureLoader, WATER_TEXTURE_PATH);
+  const waterNormals = useLoader(TextureLoader, modelUris.water as string);
   waterNormals.wrapS = waterNormals.wrapT = RepeatWrapping;
 
   const TILE_SIZE = 10000;

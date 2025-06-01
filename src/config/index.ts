@@ -3,7 +3,7 @@ import { Vector3 } from "three";
 
 export const WATER_TEXTURE_PATH = "/models/ocean/waternormals.jpeg";
 export const BOAT_MODEL_PATH = `/models/boat/scene-transformed.glb`;
-export const CABINET_FILE_PATH = `/models/cabinet/cabinet.glb`;
+export const CABINET_MODEL_PATH = `/models/cabinet/cabinet.glb`;
 
 const PROJECT_INFO = {
   directories: [

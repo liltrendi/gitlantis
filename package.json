@@ -1,13 +1,29 @@
 {
   "name": "gitlantis",
+  "displayName": "Gitlantis",
+  "main": "./out/extension.js",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "gitlantis.openWebview",
+        "title": "Explore Gitlantis"
+      }
+    ]
+  },
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "vite",
-    "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "build:webview": "tsc -b && vite build",
+    "build:extension": "tsc -p tsconfig.extension.json",
+    "build": "npm run build:webview && npm run build:extension",
+    "watch": "tsc -watch -p tsconfig.extension.json"
   },
   "dependencies": {
     "@react-three/cannon": "^6.6.0",
@@ -24,6 +40,7 @@
     "@types/react": "^19.1.6",
     "@types/react-dom": "^19.1.5",
     "@types/three": "^0.176.0",
+    "@types/vscode": "^1.80.0",
     "@vitejs/plugin-react-swc": "^3.9.0",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
