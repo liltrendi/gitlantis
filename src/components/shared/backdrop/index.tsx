@@ -2,8 +2,21 @@ import { Text } from "@react-three/drei";
 import { useMemo } from "react";
 import { Shape } from "three";
 
-export const Backdrop = ({ text = "" }: { text: string }) => {
-  const width = text.length * 0.17;
+const widthCache = new Map<string, number>();
+
+const getEstimatedTextSize = (text: string) => {
+  if (widthCache.has(text)) return widthCache.get(text)!;
+
+  const averageCharWidth = 0.12;
+  const width = text.length * averageCharWidth;
+  widthCache.set(text, width);
+  return width;
+};
+
+export const Backdrop = ({ text }: { text: string }) => {
+  const paddingX = 0.12;
+  const width = getEstimatedTextSize(text) + paddingX * 2;
+
   const height = 0.5;
   const radius = 0.1;
 
