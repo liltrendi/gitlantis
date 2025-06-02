@@ -7,21 +7,21 @@ export const Folder = ({
   index,
   label,
   model,
-  modelRef,
+  nodeRef,
 }: {
   label: string;
   index: number;
   model: Group;
-  modelRef: TCabinetsRef;
-  instance: TCabinetInstance;
+  nodeRef: TNodeRef;
+  instance: TNodeInstance;
 }) => {
   return (
     // @ts-expect-error
     <group position-y={2.5}>
       <Clone
         ref={(el) => {
-          if (!modelRef?.current) return;
-          modelRef.current[index] = el;
+          if (!nodeRef?.current) return;
+          nodeRef.current[index] = el;
         }}
         position={instance.position}
         object={model}

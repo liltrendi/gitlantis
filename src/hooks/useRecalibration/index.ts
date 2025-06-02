@@ -7,14 +7,14 @@ export const useRecalibration = () => {
   const origin = new Vector3();
   const threshold = 500;
 
-  const { worldOffsetRef, boatRef, oceanRef, cabinetsRef } = useGameContext();
+  const { worldOffsetRef, boatRef, oceanRef, nodeRef } = useGameContext();
 
   useFrame(() => {
     if (
       !worldOffsetRef?.current ||
       !boatRef?.current ||
       !oceanRef?.current ||
-      !cabinetsRef?.current
+      !nodeRef?.current
     )
       return;
 
@@ -34,9 +34,9 @@ export const useRecalibration = () => {
         if (tileRef) tileRef.position.sub(offset);
       }
 
-      // reset cabinet instances
-      for (const cabinetRef of cabinetsRef.current ?? []) {
-        if (cabinetRef) cabinetRef.position.sub(offset);
+      // reset node instances
+      for (const ref of nodeRef.current ?? []) {
+        if (ref) ref.position.sub(offset);
       }
     }
   });

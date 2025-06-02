@@ -5,7 +5,7 @@ const modelUris = (window as any).__MODEL_URIS__ || {
   folder: FOLDER_MODEL_PATH
 };
 
-export const useCabinetModel = () => {
+export const useFolderModel = () => {
   const model = useGLTF(modelUris.folder as string);  
   return model.scene;
 };

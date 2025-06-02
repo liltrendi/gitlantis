@@ -11,11 +11,11 @@ declare module "@react-three/fiber" {
 
 declare global {
   type TOcean = Array<Water | null>;
-  type TCabinets = Array<Object3D | null>;
+  type TNodes = Array<Object3D | null>;
   type TBoatRef = RefObject<Group | null> | null;
   type TOceanRef = RefObject<TOcean> | null;
-  type TCabinetsRef = RefObject<TCabinets> | null;
-  type TCabinetInstance = {
+  type TNodeRef = RefObject<TNodes> | null;
+  type TNodeInstance = {
     key: string;
     position: [number, number, number];
     sinkOffset: number;
@@ -24,7 +24,7 @@ declare global {
   type TWorldOffsetRef = RefObject<Vector3> | null;
   type TProjectInfoRef = RefObject<{directories: TDirectoryContent[]}>
 
-  type TCabinetInstances = Array<{
+  type TNodeInstances = Array<{
     key: string;
     position: Vector3;
     sinkOffset: number;
@@ -35,7 +35,7 @@ declare global {
   type TGameConfig = {
     boatRef: TBoatRef;
     oceanRef: TOceanRef;
-    cabinetsRef: TCabinetsRef;
+    nodeRef: TNodeRef;
     worldOffsetRef: TWorldOffsetRef;
     projectInfoRef: TProjectInfoRef;
   };

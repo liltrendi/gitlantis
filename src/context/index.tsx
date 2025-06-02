@@ -5,15 +5,16 @@ import { createContext, type FC, type ReactNode } from "react";
 export const GameContext = createContext<TGameConfig>({
   boatRef: null,
   oceanRef: null,
-  cabinetsRef: null,
+  nodeRef: null,
   worldOffsetRef: null,
   // @ts-expect-error
-  projectInfoRef: []
+  projectInfoRef: [],
 });
 
-export const GameContextProvider: FC<{ children: ReactNode, directories: TDirectoryContent[] }> = ({
-  children, directories
-}) => {
+export const GameContextProvider: FC<{
+  children: ReactNode;
+  directories: TDirectoryContent[];
+}> = ({ children, directories }) => {
   const gameConfig = getGameConfig(directories);
   return (
     // @ts-expect-error

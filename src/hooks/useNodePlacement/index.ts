@@ -1,35 +1,35 @@
 import { useEffect, useState } from "react";
 import { Vector3 } from "three";
 
-export const useCabinetGeneration = ({
+export const useNodePlacement = ({
   boatRef,
-  cabinetsRef,
+  nodeRef,
   worldOffsetRef,
   projectInfoRef
 }: {
   boatRef: TBoatRef;
-  cabinetsRef: TCabinetsRef;
+  nodeRef: TNodeRef;
   worldOffsetRef: TWorldOffsetRef;
   projectInfoRef: TProjectInfoRef
 }) => {
-  const [cabinets, setCabinets] = useState<TCabinetInstances>([]);
+  const [nodes, setNodes] = useState<TNodeInstances>([]);
 
   const TILE_SIZE = 1000;
   const SINK_DEPTH_MIN = 5.0;
   const SINK_DEPTH_MAX = 5.0;
-  const CABINET_COUNT = projectInfoRef.current.directories.length ?? 0;
+  const NODE_COUNT = projectInfoRef.current.directories.length ?? 0;
   const MIN_DISTANCE_FROM_BOAT = 200;
-  const MIN_DISTANCE_BETWEEN_CABINETS = 100;
+  const MIN_DISTANCE_BETWEEN_NODES = 100;
   const MAX_GENERATION_ATTEMPTS = 100;
 
-  const generateGridBasedCabinets = (boatPos: Vector3) => {
+  const getRandomlyGeneratedNodes = (boatPos: Vector3) => {
     if (!worldOffsetRef?.current) return [];
 
-    const positionsToPlaceCabinets: TCabinetInstances = [];
+    const positionsToPlaceNodes: TNodeInstances = [];
 
     // create a grid-based approach for even distribution
     const GENERATION_RADIUS = TILE_SIZE * 1.5; // total generation area
-    const GRID_SIZE = Math.ceil(Math.sqrt(CABINET_COUNT * 1.5)); // slightly larger grid for better distribution
+    const GRID_SIZE = Math.ceil(Math.sqrt(NODE_COUNT * 1.5)); // slightly larger grid for better distribution
     const CELL_SIZE = (GENERATION_RADIUS * 2) / GRID_SIZE;
 
     // create grid cells and shuffle them for random selection
@@ -63,18 +63,18 @@ export const useCabinetGeneration = ({
         return false;
       }
 
-      // check distance from other cabinets
+      // check distance from other nodes
       return !existingPositions.some(
         ([x, z]) =>
-          Math.hypot(pos[0] - x, pos[1] - z) < MIN_DISTANCE_BETWEEN_CABINETS
+          Math.hypot(pos[0] - x, pos[1] - z) < MIN_DISTANCE_BETWEEN_NODES
       );
     };
 
-    let cabinetIndex = 0;
+    let nodeIndex = 0;
 
-    // try to place cabinets in shuffled grid cells
+    // try to place nodes in shuffled grid cells
     for (const cell of gridCells) {
-      if (cabinetIndex >= CABINET_COUNT) break;
+      if (nodeIndex >= NODE_COUNT) break;
 
       let attempts = 0;
       let placed = false;
@@ -93,7 +93,7 @@ export const useCabinetGeneration = ({
           isValidPosition(
             candidatePosition,
             boatPos,
-            positionsToPlaceCabinets.map((p) => [
+            positionsToPlaceNodes.map((p) => [
               p.position[0] + worldOffsetRef.current!.x,
               p.position[2] + worldOffsetRef.current!.z,
             ])
@@ -106,8 +106,8 @@ export const useCabinetGeneration = ({
             SINK_DEPTH_MIN + randSink * (SINK_DEPTH_MAX - SINK_DEPTH_MIN);
           const floatPhase = randFloat * Math.PI * 2;
 
-          positionsToPlaceCabinets.push({
-            key: `cabinet-grid-${cabinetIndex}`,
+          positionsToPlaceNodes.push({
+            key: `node-grid-${nodeIndex}`,
             position: [
               xPosition - worldOffsetRef.current.x,
               -sinkOffset,
@@ -115,31 +115,31 @@ export const useCabinetGeneration = ({
             ],
             sinkOffset,
             floatPhase,
-            data: projectInfoRef.current.directories[cabinetIndex]
+            data: projectInfoRef.current.directories[nodeIndex]
           });
 
           placed = true;
-          cabinetIndex++;
+          nodeIndex++;
         }
 
         attempts++;
       }
     }
 
-    return positionsToPlaceCabinets;
+    return positionsToPlaceNodes;
   };
 
   useEffect(() => {
     if (!boatRef?.current) return;
     const boatPosition = boatRef.current.position;
-    const generatedCabinetInstances = generateGridBasedCabinets(boatPosition);
-    setCabinets(generatedCabinetInstances);
+    const generatedNodes = getRandomlyGeneratedNodes(boatPosition);
+    setNodes(generatedNodes);
   }, [worldOffsetRef]);
 
   useEffect(() => {
-    if (!cabinetsRef?.current) return;
-    cabinetsRef.current = cabinetsRef.current.slice(0, cabinets.length);
-  }, [cabinets.length]);
+    if (!nodeRef?.current) return;
+    nodeRef.current = nodeRef.current.slice(0, nodes.length);
+  }, [nodes.length]);
 
-  return { cabinets };
+  return { nodes };
 };

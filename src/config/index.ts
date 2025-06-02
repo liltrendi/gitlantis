@@ -10,7 +10,7 @@ export const FILE_MODEL_PATH = `/models/file/file.glb`;
 export const getGameConfig = (directories: TDirectoryContent[]) => {
   const boatRef = useRef<TBoatRef>(null);
   const oceanRef = useRef<TOcean>([]);
-  const cabinetsRef = useRef<TCabinets>([]);
+  const nodeRef = useRef<TNodes>([]);
   const worldOffsetRef = useRef(new Vector3());
   // @ts-ignore
   const projectInfoRef = useRef<TProjectInfoRef>({directories});
@@ -19,7 +19,7 @@ export const getGameConfig = (directories: TDirectoryContent[]) => {
     worldOffsetRef,
     boatRef,
     oceanRef,
-    cabinetsRef,
+    nodeRef,
     projectInfoRef,
   };
 };

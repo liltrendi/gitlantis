@@ -5,7 +5,7 @@ import { GameContextProvider } from "@/context";
 import { Setup } from "@/components/setup";
 import { Ocean } from "@/components/ocean";
 import { Boat } from "@/components/boat";
-import { Cabinets } from "@/components/filesystem";
+import { Nodes } from "@/components/nodes";
 import { Button, Container, Icon, Text } from "@/components/styles";
 import { useDirectoryWalker } from "@/hooks/useDirectoryWalker";
 import { DIRECTORY_ERRORS } from "@/extension/config";
@@ -43,7 +43,7 @@ const World = () => {
             <Setup />
             <Ocean />
             <Boat />
-            <Cabinets />
+            <Nodes />
           </Physics>
         </GameContextProvider>
       </Suspense>
