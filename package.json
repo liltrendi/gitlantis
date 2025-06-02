@@ -9,7 +9,7 @@
     "commands": [
       {
         "command": "gitlantis.openWebview",
-        "title": "Explore Gitlantis"
+        "title": "Gitlantis"
       }
     ]
   },
@@ -52,7 +52,7 @@
     "vite": "^6.3.5"
   },
   "activationEvents": [
-    "onStartupFinished",
-    "workspaceContains:**"
+    "onCommand:gitlantis.openWebview",
+    "onStartupFinished"
   ]
 }

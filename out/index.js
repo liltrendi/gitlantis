@@ -38,8 +38,38 @@ const vscode = __importStar(require("vscode"));
 const commands_1 = require("./commands");
 const utils_1 = require("./utils");
 function activate(context) {
-    const panel = (0, utils_1.createPanel)(context);
-    (0, commands_1.restoreWebViewOnFolderChange)(panel, context);
-    const exploreGitlantis = vscode.commands.registerCommand("gitlantis.openWebview", () => (0, commands_1.openWebView)(panel, context));
+    let panel = null;
+    const exploreGitlantis = vscode.commands.registerCommand("gitlantis.openWebview", () => {
+        if (!panel) {
+            panel = (0, utils_1.createPanel)(context);
+            // When panel is disposed, clear the active state
+            panel.onDidDispose(() => {
+                panel = null;
+                context.globalState.update('gitlantisActive', false);
+            });
+        }
+        (0, commands_1.openWebView)(panel, context);
+        // Mark extension as active
+        context.globalState.update('gitlantisActive', true);
+    });
     context.subscriptions.push(exploreGitlantis);
+    // Check if we need to restore webview immediately (after folder change or startup)
+    const shouldRestore = context.globalState.get('gitlantisActive', false);
+    if (shouldRestore) {
+        // Delay to ensure workspace is loaded
+        setTimeout(() => {
+            vscode.commands.executeCommand('gitlantis.openWebview');
+        }, 500);
+    }
+    // Listen for workspace changes only when extension should be active
+    const workspaceListener = vscode.workspace.onDidChangeWorkspaceFolders(() => {
+        const isActive = context.globalState.get('gitlantisActive', false);
+        if (isActive) {
+            // Delay to ensure new workspace is loaded
+            setTimeout(() => {
+                vscode.commands.executeCommand('gitlantis.openWebview');
+            }, 300);
+        }
+    });
+    context.subscriptions.push(workspaceListener);
 }

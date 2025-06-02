@@ -73,7 +73,8 @@ export const onDidReceiveMessage = async ({
         return;
       }
 
-      context.globalState.update("shouldReopenWebview", true);
+      // mark that extension should reopen after folder change
+      context.globalState.update("gitlantisActive", true);
 
       await vscode.commands.executeCommand(
         "vscode.openFolder",

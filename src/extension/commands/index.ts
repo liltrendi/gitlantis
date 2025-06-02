@@ -16,15 +16,7 @@ export const openWebView = (
   panel.webview.onDidReceiveMessage((message) =>
     onDidReceiveMessage({ panel, context, message })
   );
-};
 
-export const restoreWebViewOnFolderChange = (
-  panel: vscode.WebviewPanel,
-  context: vscode.ExtensionContext
-) => {
-  const shouldReopenWebview = context.globalState.get("shouldReopenWebview");
-  if (shouldReopenWebview) {
-    openWebView(panel, context);
-    context.globalState.update("shouldReopenWebview", false);
-  }
+  // Show the panel
+  panel.reveal(vscode.ViewColumn.One);
 };
