@@ -36,6 +36,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.activate = activate;
 const vscode = __importStar(require("vscode"));
 const commands_1 = require("./commands");
+const utils_1 = require("./utils");
 function activate(context) {
-    context.subscriptions.push(vscode.commands.registerCommand("gitlantis.openWebview", () => (0, commands_1.openWebView)(context)));
+    const panel = (0, utils_1.createPanel)(context);
+    (0, commands_1.restoreWebViewOnFolderChange)(panel, context);
+    const exploreGitlantis = vscode.commands.registerCommand("gitlantis.openWebview", () => (0, commands_1.openWebView)(panel, context));
+    context.subscriptions.push(exploreGitlantis);
 }

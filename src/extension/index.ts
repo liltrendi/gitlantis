@@ -1,10 +1,16 @@
 import * as vscode from "vscode";
-import { openWebView } from "./commands";
+import { openWebView, restoreWebViewOnFolderChange } from "./commands";
+import { createPanel } from "./utils";
 
 export function activate(context: vscode.ExtensionContext) {
-  context.subscriptions.push(
-    vscode.commands.registerCommand("gitlantis.openWebview", () =>
-      openWebView(context)
-    )
+  const panel = createPanel(context);
+
+  restoreWebViewOnFolderChange(panel, context)
+
+  const exploreGitlantis = vscode.commands.registerCommand(
+    "gitlantis.openWebview",
+    () => openWebView(panel, context)
   );
+
+  context.subscriptions.push(exploreGitlantis);
 }

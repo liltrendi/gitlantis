@@ -50,13 +50,14 @@ export const getTranspiledScripts = (
     "index",
     ".css"
   );
+  const workspaceFoldersUri = vscode.workspace.workspaceFolders?.[0]?.uri.toString() ?? '';
 
   if (!scriptUri || !styleUri) {
-    vscode.window.showErrorMessage("Failed to load Gitlantis assets");
+    vscode.window.showErrorMessage("gitlantis::failed to load scripts");
     return null;
   }
 
-  return { scriptUri, styleUri };
+  return { scriptUri, styleUri, workspaceFoldersUri };
 };
 
 export const getModels = (
@@ -94,6 +95,7 @@ export const createPanel = (context: vscode.ExtensionContext) => {
     vscode.ViewColumn.One,
     {
       enableScripts: true,
+      retainContextWhenHidden: true,
       localResourceRoots: [
         vscode.Uri.joinPath(context.extensionUri, "out"),
         vscode.Uri.joinPath(context.extensionUri, "out", "assets"),
@@ -112,6 +114,7 @@ export const getWebviewPage = ({
   scripts: {
     scriptUri: vscode.Uri;
     styleUri: vscode.Uri;
+    workspaceFoldersUri: string
   };
   models: {
     boatUri: vscode.Uri;
@@ -136,9 +139,28 @@ export const getWebviewPage = ({
             cabinet: "${models.cabinetUri}",
             water: "${models.waterUri}"
           };
+          window.__GITLANTIS_ROOT__ = "${scripts.workspaceFoldersUri}";
         </script>
         <script type="module" src="${scripts.scriptUri}"></script>
       </body>
       </html>
     `;
 };
+
+let vscodeWeb: ReturnType<typeof acquireVsCodeApi> | undefined;
+
+export function getVSCodeAPI() {
+  if (typeof acquireVsCodeApi !== "undefined") {
+    if (!vscodeWeb) {
+      vscodeWeb = acquireVsCodeApi();
+    }
+    return vscodeWeb;
+  } else {
+    console.warn("acquireVsCodeApi is not available in this context.");
+    return {
+      postMessage: (_: any) => {
+        console.warn("postMessage called outside VSCode webview");
+      },
+    };
+  }
+}

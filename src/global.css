@@ -1,12 +1,11 @@
-* {
+html, body {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   overflow: hidden;
-  height: 100%;
 }
 
-canvas#world {
-  min-width: 100vw !important;
-  min-height: 100vh !important;
+#root #world > div:has(canvas)  {
+  min-width: 100vw;
+  min-height: 100vh;
 }

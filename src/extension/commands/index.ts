@@ -1,13 +1,11 @@
 import * as vscode from "vscode";
-import {
-  createPanel,
-  getModels,
-  getTranspiledScripts,
-  getWebviewPage,
-} from "../utils";
+import { getModels, getTranspiledScripts, getWebviewPage } from "../utils";
+import { onDidReceiveMessage } from "../handlers/onDidReceiveMessage";
 
-export const openWebView = (context: vscode.ExtensionContext) => {
-  const panel = createPanel(context);
+export const openWebView = (
+  panel: vscode.WebviewPanel,
+  context: vscode.ExtensionContext
+) => {
   const scripts = getTranspiledScripts(panel, context);
 
   if (!scripts) return;
@@ -15,4 +13,18 @@ export const openWebView = (context: vscode.ExtensionContext) => {
   const models = getModels(panel, context);
 
   panel.webview.html = getWebviewPage({ scripts, models });
+  panel.webview.onDidReceiveMessage((message) =>
+    onDidReceiveMessage({ panel, context, message })
+  );
+};
+
+export const restoreWebViewOnFolderChange = (
+  panel: vscode.WebviewPanel,
+  context: vscode.ExtensionContext
+) => {
+  const shouldReopenWebview = context.globalState.get("shouldReopenWebview");
+  if (shouldReopenWebview) {
+    openWebView(panel, context);
+    context.globalState.update("shouldReopenWebview", false);
+  }
 };

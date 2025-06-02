@@ -34,6 +34,7 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getWebviewPage = exports.createPanel = exports.getModels = exports.getTranspiledScripts = exports.getUri = exports.getHashedAssetUri = void 0;
+exports.getVSCodeAPI = getVSCodeAPI;
 const vscode = __importStar(require("vscode"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
@@ -53,11 +54,12 @@ exports.getUri = getUri;
 const getTranspiledScripts = (panel, context) => {
     const scriptUri = (0, exports.getHashedAssetUri)(panel.webview, context.extensionUri, "out", "index", ".js");
     const styleUri = (0, exports.getHashedAssetUri)(panel.webview, context.extensionUri, "out", "index", ".css");
+    const workspaceFoldersUri = vscode.workspace.workspaceFolders?.[0]?.uri.toString() ?? '';
     if (!scriptUri || !styleUri) {
-        vscode.window.showErrorMessage("Failed to load Gitlantis assets");
+        vscode.window.showErrorMessage("gitlantis::failed to load scripts");
         return null;
     }
-    return { scriptUri, styleUri };
+    return { scriptUri, styleUri, workspaceFoldersUri };
 };
 exports.getTranspiledScripts = getTranspiledScripts;
 const getModels = (panel, context) => {
@@ -85,6 +87,7 @@ exports.getModels = getModels;
 const createPanel = (context) => {
     const panel = vscode.window.createWebviewPanel("gitlantisWebView", "Gitlantis", vscode.ViewColumn.One, {
         enableScripts: true,
+        retainContextWhenHidden: true,
         localResourceRoots: [
             vscode.Uri.joinPath(context.extensionUri, "out"),
             vscode.Uri.joinPath(context.extensionUri, "out", "assets"),
@@ -113,6 +116,7 @@ const getWebviewPage = ({ scripts, models, }) => {
             cabinet: "${models.cabinetUri}",
             water: "${models.waterUri}"
           };
+          window.__GITLANTIS_ROOT__ = "${scripts.workspaceFoldersUri}";
         </script>
         <script type="module" src="${scripts.scriptUri}"></script>
       </body>
@@ -120,3 +124,20 @@ const getWebviewPage = ({ scripts, models, }) => {
     `;
 };
 exports.getWebviewPage = getWebviewPage;
+let vscodeWeb;
+function getVSCodeAPI() {
+    if (typeof acquireVsCodeApi !== "undefined") {
+        if (!vscodeWeb) {
+            vscodeWeb = acquireVsCodeApi();
+        }
+        return vscodeWeb;
+    }
+    else {
+        console.warn("acquireVsCodeApi is not available in this context.");
+        return {
+            postMessage: (_) => {
+                console.warn("postMessage called outside VSCode webview");
+            },
+        };
+    }
+}
