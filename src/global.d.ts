@@ -15,6 +15,12 @@ declare global {
   type TBoatRef = RefObject<Group | null> | null;
   type TOceanRef = RefObject<TOcean> | null;
   type TCabinetsRef = RefObject<TCabinets> | null;
+  type TCabinetInstance = {
+    key: string;
+    position: [number, number, number];
+    sinkOffset: number;
+    floatPhase: number;
+  }
   type TWorldOffsetRef = RefObject<Vector3> | null;
   type TProjectInfoRef = RefObject<{directories: TDirectoryContent[]}>
 
@@ -23,6 +29,7 @@ declare global {
     position: Vector3;
     sinkOffset: number;
     floatPhase: number;
+    data: TDirectoryContent
   }>;
 
   type TGameConfig = {

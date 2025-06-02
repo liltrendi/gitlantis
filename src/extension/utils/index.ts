@@ -64,28 +64,35 @@ export const getModels = (
   panel: vscode.WebviewPanel,
   context: vscode.ExtensionContext
 ) => {
+  const oceanUri = getUri(panel.webview, context.extensionUri, [
+    "out",
+    "models",
+    "ocean",
+    "ocean.jpeg",
+  ]);
+
   const boatUri = getUri(panel.webview, context.extensionUri, [
     "out",
     "models",
     "boat",
-    "scene-transformed.glb",
+    "boat.glb",
   ]);
 
-  const cabinetUri = getUri(panel.webview, context.extensionUri, [
+  const folderUri = getUri(panel.webview, context.extensionUri, [
     "out",
     "models",
-    "cabinet",
-    "cabinet.glb",
+    "folder",
+    "folder.glb",
   ]);
 
-  const waterUri = getUri(panel.webview, context.extensionUri, [
+  const fileUri = getUri(panel.webview, context.extensionUri, [
     "out",
     "models",
-    "ocean",
-    "waternormals.jpeg",
+    "file",
+    "file.glb",
   ]);
 
-  return { boatUri, cabinetUri, waterUri };
+  return { oceanUri, boatUri, folderUri, fileUri };
 };
 
 export const createPanel = (context: vscode.ExtensionContext) => {
@@ -100,7 +107,6 @@ export const createPanel = (context: vscode.ExtensionContext) => {
         vscode.Uri.joinPath(context.extensionUri, "out"),
         vscode.Uri.joinPath(context.extensionUri, "out", "assets"),
         vscode.Uri.joinPath(context.extensionUri, "out", "models"),
-        vscode.Uri.joinPath(context.extensionUri, "out", "music"),
       ],
     }
   );
@@ -117,9 +123,10 @@ export const getWebviewPage = ({
     workspaceFoldersUri: string
   };
   models: {
+    oceanUri: vscode.Uri;
     boatUri: vscode.Uri;
-    cabinetUri: vscode.Uri;
-    waterUri: vscode.Uri;
+    folderUri: vscode.Uri;
+    fileUri: vscode.Uri;
   };
 }) => {
   return `
@@ -135,9 +142,10 @@ export const getWebviewPage = ({
         <div id="root"></div>
         <script>
           window.__MODEL_URIS__ = {
+            ocean: "${models.oceanUri}",
             boat: "${models.boatUri}",
-            cabinet: "${models.cabinetUri}",
-            water: "${models.waterUri}"
+            folder: "${models.folderUri}",
+            file: "${models.fileUri}",
           };
           window.__GITLANTIS_ROOT__ = "${scripts.workspaceFoldersUri}";
         </script>
@@ -147,7 +155,7 @@ export const getWebviewPage = ({
     `;
 };
 
-let vscodeWeb: ReturnType<typeof acquireVsCodeApi> | undefined;
+let vscodeWeb: TAcquireVsCode | undefined;
 
 export function getVSCodeAPI() {
   if (typeof acquireVsCodeApi !== "undefined") {

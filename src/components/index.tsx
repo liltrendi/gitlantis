@@ -9,11 +9,18 @@ import { Cabinets } from "@/components/cabinets";
 import { Button, Container, Icon, Text } from "@/components/styles";
 import { useDirectoryWalker } from "@/hooks/useDirectoryWalker";
 import { DIRECTORY_ERRORS } from "@/extension/config";
+import { useEnvironment } from "@/hooks/useEnvironment";
 
 const World = () => {
-  const { walkerLoading, walkerError, walkerResponse, openFolder } = useDirectoryWalker();
+  const debug = true;
+  const {vscodeRef} = useEnvironment();
+  const { walkerLoading, walkerError, walkerResponse, openFolder } =
+    useDirectoryWalker({ vscodeRef });
 
-  if (walkerLoading) {
+
+  console.log("gitlantis::useEnvironment", walkerResponse, walkerError);
+
+  if (walkerLoading && !debug) {
     return (
       <Container>
         <Text>Loading...</Text>
@@ -21,11 +28,11 @@ const World = () => {
     );
   }
 
-  if (walkerError) {
+  if (walkerError && !debug) {
     return (
       <Container>
         <Text>{walkerError.message}</Text>
-        {walkerError.type === DIRECTORY_ERRORS.no_open_project? (
+        {walkerError.type === DIRECTORY_ERRORS.no_open_project ? (
           <Button onClick={openFolder}>
             <Icon />
             Open Folder
@@ -34,8 +41,6 @@ const World = () => {
       </Container>
     );
   }
-
-  console.log("gitlantis::walkerResponse", walkerResponse)
 
   return (
     <Canvas id="world">

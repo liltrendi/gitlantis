@@ -2,13 +2,13 @@ import { useState } from "react";
 import { Water } from "three-stdlib";
 import { extend, useFrame, useLoader } from "@react-three/fiber";
 import { PlaneGeometry, RepeatWrapping, TextureLoader, Vector3 } from "three";
-import { WATER_TEXTURE_PATH } from "@/config";
+import { OCEAN_MODEL_PATH } from "@/config";
 import { useGameContext } from "@/hooks/useGameContext";
 
 extend({ Water });
 
 const modelUris = (window as any).__MODEL_URIS__ || {
-  water: WATER_TEXTURE_PATH
+  ocean: OCEAN_MODEL_PATH
 };
 
 export const Ocean = () => {
@@ -17,7 +17,7 @@ export const Ocean = () => {
   >([]);
   const { boatRef, oceanRef } = useGameContext();
 
-  const waterNormals = useLoader(TextureLoader, modelUris.water as string);
+  const waterNormals = useLoader(TextureLoader, modelUris.ocean as string);
   waterNormals.wrapS = waterNormals.wrapT = RepeatWrapping;
 
   const TILE_SIZE = 10000;

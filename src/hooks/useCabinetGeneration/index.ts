@@ -5,17 +5,19 @@ export const useCabinetGeneration = ({
   boatRef,
   cabinetsRef,
   worldOffsetRef,
+  projectInfoRef
 }: {
   boatRef: TBoatRef;
   cabinetsRef: TCabinetsRef;
   worldOffsetRef: TWorldOffsetRef;
+  projectInfoRef: TProjectInfoRef
 }) => {
   const [cabinets, setCabinets] = useState<TCabinetInstances>([]);
 
   const TILE_SIZE = 1000;
   const SINK_DEPTH_MIN = 5.0;
   const SINK_DEPTH_MAX = 5.0;
-  const CABINET_COUNT = 30;
+  const CABINET_COUNT = projectInfoRef.current.directories.length ?? 0;
   const MIN_DISTANCE_FROM_BOAT = 200;
   const MIN_DISTANCE_BETWEEN_CABINETS = 100;
   const MAX_GENERATION_ATTEMPTS = 100;
@@ -113,6 +115,7 @@ export const useCabinetGeneration = ({
             ],
             sinkOffset,
             floatPhase,
+            data: projectInfoRef.current.directories[cabinetIndex]
           });
 
           placed = true;
@@ -121,61 +124,6 @@ export const useCabinetGeneration = ({
 
         attempts++;
       }
-    }
-
-    // if we still need more cabinets, use fallback random generation
-    // but still respect the boat distance constraint
-    while (positionsToPlaceCabinets.length < CABINET_COUNT) {
-      let attempts = 0;
-      let placed = false;
-
-      while (attempts < MAX_GENERATION_ATTEMPTS && !placed) {
-        const angle = Math.random() * Math.PI * 2;
-        const distance =
-          MIN_DISTANCE_FROM_BOAT +
-          Math.random() * (GENERATION_RADIUS - MIN_DISTANCE_FROM_BOAT);
-
-        const xPosition = boatPos.x + Math.cos(angle) * distance;
-        const zPosition = boatPos.z + Math.sin(angle) * distance;
-
-        const candidatePosition: [number, number] = [xPosition, zPosition];
-
-        if (
-          isValidPosition(
-            candidatePosition,
-            boatPos,
-            positionsToPlaceCabinets.map((p) => [
-              p.position[0] + worldOffsetRef.current!.x,
-              p.position[2] + worldOffsetRef.current!.z,
-            ])
-          )
-        ) {
-          const randSink = Math.random();
-          const randFloat = Math.random();
-
-          const sinkOffset =
-            SINK_DEPTH_MIN + randSink * (SINK_DEPTH_MAX - SINK_DEPTH_MIN);
-          const floatPhase = randFloat * Math.PI * 2;
-
-          positionsToPlaceCabinets.push({
-            key: `cabinet-fallback-${positionsToPlaceCabinets.length}`,
-            position: [
-              xPosition - worldOffsetRef.current.x,
-              -sinkOffset,
-              zPosition - worldOffsetRef.current.z,
-            ],
-            sinkOffset,
-            floatPhase,
-          });
-
-          placed = true;
-        }
-
-        attempts++;
-      }
-
-      // prevent infinite loop
-      if (!placed) break;
     }
 
     return positionsToPlaceCabinets;

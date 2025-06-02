@@ -63,25 +63,31 @@ const getTranspiledScripts = (panel, context) => {
 };
 exports.getTranspiledScripts = getTranspiledScripts;
 const getModels = (panel, context) => {
+    const oceanUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
+        "out",
+        "models",
+        "ocean",
+        "ocean.jpeg",
+    ]);
     const boatUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
         "out",
         "models",
         "boat",
-        "scene-transformed.glb",
+        "boat.glb",
     ]);
-    const cabinetUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
+    const folderUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
         "out",
         "models",
-        "cabinet",
-        "cabinet.glb",
+        "folder",
+        "folder.glb",
     ]);
-    const waterUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
+    const fileUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
         "out",
         "models",
-        "ocean",
-        "waternormals.jpeg",
+        "file",
+        "file.glb",
     ]);
-    return { boatUri, cabinetUri, waterUri };
+    return { oceanUri, boatUri, folderUri, fileUri };
 };
 exports.getModels = getModels;
 const createPanel = (context) => {
@@ -92,7 +98,6 @@ const createPanel = (context) => {
             vscode.Uri.joinPath(context.extensionUri, "out"),
             vscode.Uri.joinPath(context.extensionUri, "out", "assets"),
             vscode.Uri.joinPath(context.extensionUri, "out", "models"),
-            vscode.Uri.joinPath(context.extensionUri, "out", "music"),
         ],
     });
     return panel;
@@ -112,9 +117,10 @@ const getWebviewPage = ({ scripts, models, }) => {
         <div id="root"></div>
         <script>
           window.__MODEL_URIS__ = {
+            ocean: "${models.oceanUri}",
             boat: "${models.boatUri}",
-            cabinet: "${models.cabinetUri}",
-            water: "${models.waterUri}"
+            folder: "${models.folderUri}",
+            file: "${models.fileUri}",
           };
           window.__GITLANTIS_ROOT__ = "${scripts.workspaceFoldersUri}";
         </script>

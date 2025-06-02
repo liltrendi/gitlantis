@@ -4,21 +4,30 @@ import { Shape } from "three";
 
 const widthCache = new Map<string, number>();
 
-const getEstimatedTextSize = (text: string) => {
-  if (widthCache.has(text)) return widthCache.get(text)!;
+const getApproximateLabelWidth = (text: string, fontSize: number) => {
+  const cacheKey = `${text}-${fontSize}`;
+  if (widthCache.has(cacheKey)) return widthCache.get(cacheKey)!;
 
-  const averageCharWidth = 0.12;
-  const width = text.length * averageCharWidth;
-  widthCache.set(text, width);
+  const averageCharWidth = 0.6; // this value is in fontSize-relative units
+  const width = text.length * averageCharWidth * fontSize;
+  widthCache.set(cacheKey, width);
   return width;
-};
+}
 
-export const Backdrop = ({ text }: { text: string }) => {
-  const paddingX = 0.12;
-  const width = getEstimatedTextSize(text) + paddingX * 2;
+export const Backdrop = ({
+  label,
+  yPosition = 1.5,
+  fontSize = 0.2
+}: {
+  label: string;
+  yPosition?: number;
+  fontSize?: number;
+}) => {
+  const paddingX = 0.12 * fontSize;
+  const width = getApproximateLabelWidth(label, fontSize) + paddingX * 2;
 
-  const height = 0.5;
-  const radius = 0.1;
+  const height = fontSize * 2.5;
+  const radius = fontSize * 0.5;
 
   const shape = useMemo(() => {
     const shape = new Shape();
@@ -58,24 +67,24 @@ export const Backdrop = ({ text }: { text: string }) => {
 
   return (
     // @ts-expect-error
-    <group position={[0, 1.53, 0]}>
+    <group position={[0, yPosition, 0]}>
       {/* @ts-expect-error */}
       <mesh position={[0, 0, -0.01]} rotation-y={-Math.PI / 2}>
         {/* @ts-expect-error */}
         <shapeGeometry args={[shape]} />
         {/* @ts-expect-error */}
-        <meshBasicMaterial color="#302c29" transparent opacity={0.85} />
+        <meshBasicMaterial color="#222" transparent opacity={0.85} />
         {/* @ts-expect-error */}
       </mesh>
       <Text
-        fontSize={0.2}
+        fontSize={fontSize}
         color="#f2bc07"
         anchorX="center"
         anchorY="middle"
         rotation-y={-Math.PI / 2}
         position-x={-0.1}
       >
-        {text}
+        {label}
       </Text>
       {/* @ts-expect-error */}
     </group>

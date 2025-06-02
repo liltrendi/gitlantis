@@ -25,4 +25,6 @@ declare global {
     getState: () => any;
     setState: (state: any) => void;
   };
+
+  type TAcquireVsCode = ReturnType<typeof acquireVsCodeApi>
 }

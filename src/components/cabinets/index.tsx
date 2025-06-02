@@ -1,21 +1,24 @@
-import { Clone } from "@react-three/drei";
-import { useCabinetModel } from "@/hooks/useCabinet";
+import { Folder } from "@/components/folder";
+import { File } from "@/components/file";
+import { useCabinetModel } from "@/hooks/useCabinetModel";
 import { useCabinetMovement } from "@/hooks/useCabinetMovement";
 import { useCabinetGeneration } from "@/hooks/useCabinetGeneration";
 import { useCabinetCollision } from "@/hooks/useCabinetCollision";
 import { useGameContext } from "@/hooks/useGameContext";
-import { Backdrop } from "../shared/backdrop";
+import { useFileModel } from "@/hooks/useFileModel";
 
 export const Cabinets = () => {
   const { worldOffsetRef, boatRef, cabinetsRef, projectInfoRef } =
     useGameContext();
 
-  const model = useCabinetModel();
+  const cabinetModel = useCabinetModel();
+  const fileModel = useFileModel();
 
   const { cabinets } = useCabinetGeneration({
     boatRef,
     cabinetsRef,
     worldOffsetRef,
+    projectInfoRef,
   });
 
   useCabinetMovement({ cabinets, boatRef, cabinetsRef });
@@ -23,33 +26,21 @@ export const Cabinets = () => {
 
   return (
     <>
-      {cabinets
-        .filter(
-          (_, filterIndex) =>
-            projectInfoRef?.current?.directories?.[filterIndex]?.name?.length >
-            0
-        )
-        .map((instance, index) => {
-          const text = projectInfoRef?.current?.directories?.[index]
-            ?.name as string;
-          return (
-            // @ts-expect-error
-            <group key={`cabinet-${index}-${instance.key}`}>
-              <Clone
-                ref={(el) => {
-                  if (!cabinetsRef?.current) return;
-                  cabinetsRef.current[index] = el;
-                }}
-                position={instance.position}
-                object={model}
-                scale={60}
-              >
-                <Backdrop text={text} />
-              </Clone>
-              {/* @ts-expect-error */}
-            </group>
-          );
-        })}
+      {cabinets.map((instance, index) => {
+        const isFile = instance.data.type === "file";
+        const sharedProps = {
+          index,
+          instance,
+          modelRef: cabinetsRef,
+          label: instance.data.name,
+          model: isFile ? fileModel : cabinetModel,
+          key: `${instance.data.type}-${instance.key}`,
+        };
+        if (isFile) {
+          return <File {...sharedProps} />;
+        }
+        return <Folder {...sharedProps} />;
+      })}
     </>
   );
 };
