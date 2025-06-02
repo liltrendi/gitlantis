@@ -5,22 +5,15 @@ import { GameContextProvider } from "@/context";
 import { Setup } from "@/components/setup";
 import { Ocean } from "@/components/ocean";
 import { Boat } from "@/components/boat";
-import { Cabinets } from "@/components/cabinets";
+import { Cabinets } from "@/components/filesystem";
 import { Button, Container, Icon, Text } from "@/components/styles";
 import { useDirectoryWalker } from "@/hooks/useDirectoryWalker";
 import { DIRECTORY_ERRORS } from "@/extension/config";
-import { useEnvironment } from "@/hooks/useEnvironment";
 
 const World = () => {
-  const debug = true;
-  const {vscodeRef} = useEnvironment();
-  const { walkerLoading, walkerError, walkerResponse, openFolder } =
-    useDirectoryWalker({ vscodeRef });
+  const { walker, openFolder } = useDirectoryWalker();
 
-
-  console.log("gitlantis::useEnvironment", walkerResponse, walkerError);
-
-  if (walkerLoading && !debug) {
+  if (walker.loading) {
     return (
       <Container>
         <Text>Loading...</Text>
@@ -28,11 +21,11 @@ const World = () => {
     );
   }
 
-  if (walkerError && !debug) {
+  if (walker.error && walker.response.length === 0) {
     return (
       <Container>
-        <Text>{walkerError.message}</Text>
-        {walkerError.type === DIRECTORY_ERRORS.no_open_project ? (
+        <Text>{walker.error.message}</Text>
+        {walker.error.type === DIRECTORY_ERRORS.no_open_project ? (
           <Button onClick={openFolder}>
             <Icon />
             Open Folder
@@ -45,7 +38,7 @@ const World = () => {
   return (
     <Canvas id="world">
       <Suspense fallback={null}>
-        <GameContextProvider directories={walkerResponse}>
+        <GameContextProvider directories={walker.response}>
           <Physics>
             <Setup />
             <Ocean />

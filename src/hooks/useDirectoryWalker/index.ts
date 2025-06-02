@@ -1,4 +1,4 @@
-import { useEffect, useState, type RefObject } from "react";
+import { useEffect, useRef, useState } from "react";
 import {
   DIRECTORY_COMMANDS,
   DIRECTORY_ERRORS,
@@ -94,28 +94,34 @@ const SAMPLE_DATA = [
   },
 ];
 
-export const useDirectoryWalker = ({
-  path = ROOT_DIRECTORY_KEY,
-  vscodeRef,
-}: {
-  path?: string;
-  vscodeRef: RefObject<TAcquireVsCode | null>;
-}) => {
-  const [walkerLoading, setWalkerLoading] = useState(true);
-  const [walkerError, setWalkerError] = useState<null | TDirectoryErrorType>(
-    null
-  );
-  const [walkerResponse, setWalkerResponse] = useState<TDirectoryContent[]>(
-    vscodeRef?.current ? [] : SAMPLE_DATA
-  );
+export const useDirectoryWalker = (path = ROOT_DIRECTORY_KEY) => {
+  const [walker, setWalker] = useState<{
+    loading: boolean;
+    error: null | TDirectoryErrorType;
+    response: TDirectoryContent[];
+  }>({
+    loading: true,
+    error: null,
+    response: [],
+  });
+
+  const vscodeApi = useRef<TAcquireVsCode | null>(null);
 
   useEffect(() => {
-    if (!vscodeRef?.current) {
-      setWalkerError({
-        type: DIRECTORY_ERRORS.vscode_api_error,
-        message: "Failed to load native vscode api",
-      });
-      setWalkerLoading(false);
+    vscodeApi.current = window.acquireVsCodeApi
+      ? window.acquireVsCodeApi()
+      : null;
+
+    if (!vscodeApi?.current) {
+      setWalker((prev) => ({
+        ...prev,
+        error: {
+          type: DIRECTORY_ERRORS.vscode_api_error,
+          message: "Failed to load native vscode api",
+        },
+        loading: false,
+        response: SAMPLE_DATA,
+      }));
       return;
     }
 
@@ -126,18 +132,18 @@ export const useDirectoryWalker = ({
     }) => {
       switch (type) {
         case DIRECTORY_RESPONSE.children:
-          setWalkerResponse(children);
+          setWalker((prev) => ({ ...prev, response: children }));
           break;
         case DIRECTORY_RESPONSE.error:
-          setWalkerError(error);
+          setWalker((prev) => ({ ...prev, error }));
           break;
         default:
           break;
       }
-      setWalkerLoading(false);
+      setWalker((prev) => ({ ...prev, loading: false }));
     };
 
-    vscodeRef.current.postMessage({
+    vscodeApi.current.postMessage({
       type: DIRECTORY_COMMANDS.read,
       path: path,
     });
@@ -147,15 +153,15 @@ export const useDirectoryWalker = ({
     return () => {
       window.removeEventListener("message", handleWalkResponse);
     };
-  }, [vscodeRef?.current]);
+  }, []);
 
   const openFolder = () => {
-    if (!vscodeRef?.current) return;
+    if (!vscodeApi?.current) return;
 
-    vscodeRef.current.postMessage({
+    vscodeApi.current.postMessage({
       type: DIRECTORY_COMMANDS.open_file_explorer,
     });
   };
 
-  return { walkerLoading, walkerError, walkerResponse, openFolder };
+  return { walker, openFolder };
 };
