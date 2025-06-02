@@ -1,6 +1,7 @@
 import type { Object3DNode } from "@react-three/fiber";
 import type { RefObject, Group } from "react";
 import type { Water } from "three-stdlib";
+import type { TDirectoryContent } from "./extension/types";
 
 declare module "@react-three/fiber" {
   interface ThreeElements {
@@ -15,7 +16,7 @@ declare global {
   type TOceanRef = RefObject<TOcean> | null;
   type TCabinetsRef = RefObject<TCabinets> | null;
   type TWorldOffsetRef = RefObject<Vector3> | null;
-  type TProjectInfoRef = RefObject<any> | null;
+  type TProjectInfoRef = RefObject<{directories: TDirectoryContent[]}>
 
   type TCabinetInstances = Array<{
     key: string;

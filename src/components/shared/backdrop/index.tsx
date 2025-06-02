@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { Shape } from "three";
 
 export const Backdrop = ({ text = "" }: { text: string }) => {
-  const width = text.length * 0.13;
+  const width = text.length * 0.17;
   const height = 0.5;
   const radius = 0.1;
 

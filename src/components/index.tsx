@@ -11,7 +11,7 @@ import { useDirectoryWalker } from "@/hooks/useDirectoryWalker";
 import { DIRECTORY_ERRORS } from "@/extension/config";
 
 const World = () => {
-  const { walkerLoading, walkerError, openFolder } = useDirectoryWalker();
+  const { walkerLoading, walkerError, walkerResponse, openFolder } = useDirectoryWalker();
 
   if (walkerLoading) {
     return (
@@ -35,10 +35,12 @@ const World = () => {
     );
   }
 
+  console.log("gitlantis::walkerResponse", walkerResponse)
+
   return (
     <Canvas id="world">
       <Suspense fallback={null}>
-        <GameContextProvider>
+        <GameContextProvider directories={walkerResponse}>
           <Physics>
             <Setup />
             <Ocean />

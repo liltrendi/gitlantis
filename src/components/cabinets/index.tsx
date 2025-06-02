@@ -24,7 +24,7 @@ export const Cabinets = () => {
   return (
     <>
       {cabinets.map((instance, index) => {
-        const text = projectInfoRef?.current?.directories?.[index];
+        const text = projectInfoRef?.current?.directories?.[index]?.name as string;
         return (
           // @ts-expect-error
           <group key={instance.key}>
