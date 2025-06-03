@@ -1,75 +1,12 @@
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-
-const useKeyboardState = () => {
-  const keys = useRef({
-    forward: false,
-    backward: false,
-    left: false,
-    right: false,
-  });
-
-  useEffect(() => {
-    const handleKeyDown = (e: KeyboardEvent) => {
-      switch (e.key.toLowerCase()) {
-        case "arrowup":
-        case "w":
-          keys.current.forward = true;
-          break;
-        case "arrowdown":
-        case "s":
-          keys.current.backward = true;
-          break;
-        case "arrowleft":
-        case "a":
-          keys.current.left = true;
-          break;
-        case "arrowright":
-        case "d":
-          keys.current.right = true;
-          break;
-      }
-    };
-
-    const handleKeyUp = (e: KeyboardEvent) => {
-      switch (e.key.toLowerCase()) {
-        case "arrowup":
-        case "w":
-          keys.current.forward = false;
-          break;
-        case "arrowdown":
-        case "s":
-          keys.current.backward = false;
-          break;
-        case "arrowleft":
-        case "a":
-          keys.current.left = false;
-          break;
-        case "arrowright":
-        case "d":
-          keys.current.right = false;
-          break;
-      }
-    };
-
-    document.addEventListener("keydown", handleKeyDown);
-    document.addEventListener("keyup", handleKeyUp);
-
-    return () => {
-      document.removeEventListener("keydown", handleKeyDown);
-      document.removeEventListener("keyup", handleKeyUp);
-    };
-  }, []);
-
-  return keys.current;
-};
+import { useKeyboard } from "@/browser/hooks/useBoat/keyboard";
 
 export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
-  const keys = useKeyboardState();
+  const keys = useKeyboard();
 
   const config = {
     maxSpeed: 3.0,
-    momentum: 0.98,
     acceleration: 0.02,
     deceleration: 0.01,
     turnSpeed: 0.01,

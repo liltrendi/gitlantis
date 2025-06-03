@@ -5,7 +5,7 @@ import { useGameContext } from "@/browser/hooks/useGame/context";
 export const useReset = () => {
   const { camera } = useThree();
   const origin = new Vector3();
-  const threshold = 500;
+  const threshold = 400;
 
   const { worldOffsetRef, boatRef, oceanRef, nodeRef } = useGameContext();
 
