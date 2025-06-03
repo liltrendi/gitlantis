@@ -29,8 +29,8 @@ export const useNodeCollision = ({
 
     const boat = boatRef.current;
 
-    const AVOIDANCE_RADIUS = 150;
-    const PUSH_STRENGTH = 2.5;
+    const AVOIDANCE_RADIUS = 100;
+    const PUSH_STRENGTH = 5;
 
     let avoidanceVector = new Vector3(0, 0, 0);
 
