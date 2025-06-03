@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DIRECTORY_COMMANDS,
   DIRECTORY_ERRORS,
@@ -11,6 +11,7 @@ import type {
   TDirectoryErrorType,
 } from "@/extension/types";
 import { SAMPLE_DATA } from "@/browser/config";
+import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 
 export const useWalker = (path = ROOT_DIRECTORY_KEY) => {
   const [walker, setWalker] = useState<{
@@ -23,14 +24,14 @@ export const useWalker = (path = ROOT_DIRECTORY_KEY) => {
     response: [],
   });
 
-  const vscodeApi = useRef<TAcquireVsCode | null>(null);
+  const { vscodeApi } = useExtensionContext();
 
   useEffect(() => {
-    vscodeApi.current = window.acquireVsCodeApi
-      ? window.acquireVsCodeApi()
-      : null;
+    if (vscodeApi === undefined) {
+      return;
+    }
 
-    if (!vscodeApi?.current) {
+    if (!vscodeApi) {
       setWalker((prev) => ({
         ...prev,
         error: {
@@ -61,7 +62,7 @@ export const useWalker = (path = ROOT_DIRECTORY_KEY) => {
       setWalker((prev) => ({ ...prev, loading: false }));
     };
 
-    vscodeApi.current.postMessage({
+    vscodeApi.postMessage({
       type: DIRECTORY_COMMANDS.read,
       path: path,
     });
@@ -71,12 +72,12 @@ export const useWalker = (path = ROOT_DIRECTORY_KEY) => {
     return () => {
       window.removeEventListener("message", handleWalkResponse);
     };
-  }, []);
+  }, [vscodeApi, path]);
 
   const openFolder = () => {
-    if (!vscodeApi?.current) return;
+    if (!vscodeApi) return;
 
-    vscodeApi.current.postMessage({
+    vscodeApi.postMessage({
       type: DIRECTORY_COMMANDS.open_file_explorer,
     });
   };

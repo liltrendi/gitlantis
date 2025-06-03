@@ -1,7 +1,7 @@
 import { useFrame } from "@react-three/fiber";
 import { useCallback, useRef, useState } from "react";
 import { Vector3 } from "three";
-import { useNodeShortcuts } from "../shortcuts";
+import { useNodeShortcuts } from "@/browser/hooks/useNode/shortcuts";
 
 export const useNodeCollision = ({
   nodes,

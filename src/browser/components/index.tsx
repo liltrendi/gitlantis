@@ -1,54 +1,51 @@
 import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/cannon";
-import { GameContextProvider } from "@/browser/context";
+import { GameContextProvider } from "@/browser/context/game";
+import { ExtensionContextProvider } from "@/browser/context/extension";
+import { Loading } from "@/browser/components/shared/loading";
+import { NoOpenProject } from "@/browser/components/shared/no-open-project";
 import { Setup } from "@/browser/components/setup";
 import { Ocean } from "@/browser/components/ocean";
 import { Boat } from "@/browser/components/boat";
 import { Nodes } from "@/browser/components/nodes";
-import { Button, Container, Icon, Text } from "@/browser/components/styles";
 import { useWalker } from "@/browser/hooks/useWalker";
-import { DIRECTORY_ERRORS } from "@/extension/config";
 
-const World = () => {
+const WorldContent = () => {
   const { walker, openFolder } = useWalker();
 
-  if (walker.loading) {
-    return (
-      <Container>
-        <Text>Loading...</Text>
-      </Container>
-    );
-  }
-
+  if (walker.loading) return <Loading />;
   if (walker.error && walker.response.length === 0) {
     return (
-      <Container>
-        <Text>{walker.error.message}</Text>
-        {walker.error.type === DIRECTORY_ERRORS.no_open_project ? (
-          <Button onClick={openFolder}>
-            <Icon />
-            Open Folder
-          </Button>
-        ) : null}
-      </Container>
+      <NoOpenProject
+        type={walker.error.type}
+        message={walker.error.message}
+        action={openFolder}
+      />
     );
   }
 
   return (
-    <Canvas id="world">
-      <Suspense fallback={null}>
-        <GameContextProvider directories={walker.response}>
+    <GameContextProvider directories={walker.response}>
+      <Canvas id="world">
+        <Suspense fallback={null}>
           <Physics>
             <Setup />
             <Ocean />
             <Boat />
             <Nodes />
           </Physics>
-        </GameContextProvider>
-      </Suspense>
-    </Canvas>
+        </Suspense>
+      </Canvas>
+    </GameContextProvider>
   );
 };
 
+const World = () => {
+  return (
+    <ExtensionContextProvider>
+      <WorldContent />
+    </ExtensionContextProvider>
+  );
+};
 export default World;

@@ -17,6 +17,7 @@ export const Text = styled.span`
   color: #fff;
 `;
 
+
 export const Button = styled.button`
   padding: 12px 20px;
   margin-top: 30px;
@@ -34,7 +35,13 @@ export const Button = styled.button`
 `;
 
 export const Icon = styled(() => (
-  <svg viewBox="0 0 24 24" width={30} height={30} fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    viewBox="0 0 24 24"
+    width={30}
+    height={30}
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+  >
     <g id="SVGRepo_bgCarrier" strokeWidth="0"></g>
     <g
       id="SVGRepo_tracerCarrier"
@@ -52,6 +59,4 @@ export const Icon = styled(() => (
       ></path>{" "}
     </g>
   </svg>
-))`
-
-`;
+))``;

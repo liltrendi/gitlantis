@@ -1,7 +1,7 @@
 import type { Object3DNode } from "@react-three/fiber";
 import type { RefObject, Group } from "react";
 import type { Water } from "three-stdlib";
-import type { TDirectoryContent } from "../extension/types";
+import type { TDirectoryContent } from "@/extension/types";
 
 declare module "@react-three/fiber" {
   interface ThreeElements {

@@ -22,7 +22,7 @@ export const useNodeShortcuts = ({
     return collidingIndex >= 0 ? nodes[collidingIndex] : null;
   }, [nodes, collisionStateRef]);
 
-  const openNode = useCallback(({name, type}: TDirectoryContent) => {
+  const openNode = useCallback(({name}: TDirectoryContent) => {
     console.log("openNode::", name);
   }, [])
 
