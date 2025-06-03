@@ -1,11 +1,14 @@
 import { useFrame } from "@react-three/fiber";
 import { useCallback, useRef, useState } from "react";
 import { Vector3 } from "three";
+import { useNodeShortcuts } from "../shortcuts";
 
 export const useNodeCollision = ({
+  nodes,
   boatRef,
   nodeRef,
 }: {
+  nodes: TNodeInstances
   boatRef: TBoatRef;
   nodeRef: TNodeRef;
 }) => {
@@ -68,6 +71,8 @@ export const useNodeCollision = ({
 
     boat.position.add(avoidanceVector);
   });
+
+  useNodeShortcuts({nodes, collisionStateRef})
 
   return { trackedCollisions };
 };

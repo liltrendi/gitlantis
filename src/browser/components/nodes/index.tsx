@@ -10,19 +10,20 @@ export const Nodes = () => {
   const fileModel = useFileModel();
   const folderModel = useFolderModel();
 
-  const { nodes, boatRef, nodeRef } = useNodePlacement();
-  const { trackedCollisions } = useNodeCollision({ boatRef, nodeRef });
-  useNodeMovement({ nodes, boatRef, nodeRef });
+  const placementInfo = useNodePlacement();
+  const { trackedCollisions } = useNodeCollision(placementInfo);
+
+  useNodeMovement(placementInfo);
 
   return (
     <>
-      {nodes.map((instance, index) => {
+      {placementInfo.nodes.map((instance, index) => {
         const isFile = instance.data.type === "file";
         const isColliding = trackedCollisions[index] || false;
         const sharedProps = {
           index,
           instance,
-          nodeRef,
+          nodeRef: placementInfo.nodeRef,
           isColliding,
           label: instance.data.name,
           model: isFile ? fileModel : folderModel,

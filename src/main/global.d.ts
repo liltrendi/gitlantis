@@ -17,9 +17,10 @@ declare global {
   type TNodeRef = RefObject<TNodes> | null;
   type TNodeInstance = {
     key: string;
-    position: [number, number, number];
+    position: Vector3;
     sinkOffset: number;
     floatPhase: number;
+    data: TDirectoryContent
   }
   type TWorldOffsetRef = RefObject<Vector3> | null;
   type TProjectInfoRef = RefObject<{directories: TDirectoryContent[]}>

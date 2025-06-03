@@ -23,3 +23,7 @@ export const getGameConfig = (directories: TDirectoryContent[]) => {
     projectInfoRef,
   };
 };
+
+export const NODE_SHORTCUTS: Array<{label: string, keys: string[]}> = [
+  {label: "Shift+Enter to explore", keys: ["Shift", "Enter"]}
+]
