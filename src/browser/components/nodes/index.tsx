@@ -1,10 +1,10 @@
 import { Folder } from "@/browser/components/nodes/folder";
 import { File } from "@/browser/components/nodes/file";
-import { useFolderModel } from "@/browser/hooks/useFolderModel";
-import { useFileModel } from "@/browser/hooks/useFileModel";
-import { useNodeMovement } from "@/browser/hooks/useNodeMovement";
-import { useNodePlacement } from "@/browser/hooks/useNodePlacement";
-import { useNodeCollision } from "@/browser/hooks/useNodeCollision";
+import { useFolderModel } from "@/browser/hooks/useModels/folder";
+import { useFileModel } from "@/browser/hooks/useModels/file";
+import { useNodeMovement } from "@/browser/hooks/useNode/movement";
+import { useNodePlacement } from "@/browser/hooks/useNode/placement";
+import { useNodeCollision } from "@/browser/hooks/useNode/collision";
 
 export const Nodes = () => {
   const fileModel = useFileModel();

@@ -7,11 +7,11 @@ import { Ocean } from "@/browser/components/ocean";
 import { Boat } from "@/browser/components/boat";
 import { Nodes } from "@/browser/components/nodes";
 import { Button, Container, Icon, Text } from "@/browser/components/styles";
-import { useDirectoryWalker } from "@/browser/hooks/useDirectoryWalker";
+import { useWalker } from "@/browser/hooks/useWalker";
 import { DIRECTORY_ERRORS } from "@/extension/config";
 
 const World = () => {
-  const { walker, openFolder } = useDirectoryWalker();
+  const { walker, openFolder } = useWalker();
 
   if (walker.loading) {
     return (

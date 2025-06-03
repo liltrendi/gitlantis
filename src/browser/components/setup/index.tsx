@@ -3,10 +3,10 @@ import { Camera } from "@/browser/components/setup/camera";
 import { Lights } from "@/browser/components/setup/lights";
 import { Sky } from "@/browser/components/setup/sky";
 import { Minimap } from "@/browser/components/setup/minimap";
-import { useRecalibration } from "@/browser/hooks/useRecalibration";
+import { useReset } from "@/browser/hooks/useReset";
 
 export const Setup = () => {
-  useRecalibration();
+  useReset();
 
   return (
     <>

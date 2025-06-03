@@ -94,7 +94,7 @@ const SAMPLE_DATA = [
   },
 ];
 
-export const useDirectoryWalker = (path = ROOT_DIRECTORY_KEY) => {
+export const useWalker = (path = ROOT_DIRECTORY_KEY) => {
   const [walker, setWalker] = useState<{
     loading: boolean;
     error: null | TDirectoryErrorType;

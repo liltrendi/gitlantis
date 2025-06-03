@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Vector3 } from "three";
-import { useGameContext } from "@/browser/hooks/useGameContext";
+import { useGameContext } from "@/browser/hooks/useContext/game";
 
 export const useNodePlacement = () => {
   const { worldOffsetRef, boatRef, nodeRef, projectInfoRef } = useGameContext();

@@ -2,7 +2,7 @@ import { useRef } from "react";
 import { OrthographicCamera } from "three";
 import { useThree, useFrame } from "@react-three/fiber";
 import { OrthographicCamera as MinimapCamera } from "@react-three/drei";
-import { useGameContext } from "@/browser/hooks/useGameContext";
+import { useGameContext } from "@/browser/hooks/useContext/game";
 
 export const Minimap = () => {
   const { gl, scene, size } = useThree();

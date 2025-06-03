@@ -1,8 +1,8 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { Vector3 } from "three";
-import { useGameContext } from "@/browser/hooks/useGameContext";
+import { useGameContext } from "@/browser/hooks/useContext/game";
 
-export const useRecalibration = () => {
+export const useReset = () => {
   const { camera } = useThree();
   const origin = new Vector3();
   const threshold = 500;
