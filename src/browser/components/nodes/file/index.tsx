@@ -8,12 +8,14 @@ export const File = ({
   label,
   model,
   nodeRef,
+  isColliding,
 }: {
   label: string;
   index: number;
   model: Group;
   nodeRef: TNodeRef;
   instance: TNodeInstance;
+  isColliding: boolean;
 }) => {
   return (
     // @ts-expect-error
@@ -28,6 +30,16 @@ export const File = ({
         scale={27}
       >
         <Backdrop label={label} yPosition={2.68} fontSize={0.35} />
+        {isColliding ? (
+          <Backdrop
+            label={"SHIFT+ENTER to explore"}
+            color="white"
+            yPosition={0.8}
+            fontSize={0.25}
+            frontOffset={-1}
+            maxWidth={2.5}
+          />
+        ) : null}
       </Clone>
       {/* @ts-expect-error */}
     </group>

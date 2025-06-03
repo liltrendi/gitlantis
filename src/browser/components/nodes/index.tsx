@@ -7,22 +7,23 @@ import { useNodePlacement } from "@/browser/hooks/useNodePlacement";
 import { useNodeCollision } from "@/browser/hooks/useNodeCollision";
 
 export const Nodes = () => {
-  const folderModel = useFolderModel();
   const fileModel = useFileModel();
+  const folderModel = useFolderModel();
 
   const { nodes, boatRef, nodeRef } = useNodePlacement();
-
+  const { trackedCollisions } = useNodeCollision({ boatRef, nodeRef });
   useNodeMovement({ nodes, boatRef, nodeRef });
-  useNodeCollision({ boatRef, nodeRef });
 
   return (
     <>
       {nodes.map((instance, index) => {
         const isFile = instance.data.type === "file";
+        const isColliding = trackedCollisions[index] || false;
         const sharedProps = {
           index,
           instance,
           nodeRef,
+          isColliding,
           label: instance.data.name,
           model: isFile ? fileModel : folderModel,
           key: `${instance.data.type}-${instance.key}`,
