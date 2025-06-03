@@ -3,7 +3,7 @@ import { Water } from "three-stdlib";
 import { extend, useFrame, useLoader } from "@react-three/fiber";
 import { PlaneGeometry, RepeatWrapping, TextureLoader, Vector3 } from "three";
 import { OCEAN_MODEL_PATH } from "@/browser/config";
-import { useGameContext } from "@/browser/hooks/useContext/game";
+import { useGameContext } from "@/browser/hooks/useGame/context";
 
 extend({ Water });
 

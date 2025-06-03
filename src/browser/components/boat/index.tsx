@@ -2,7 +2,7 @@
 import { useGLTF } from "@react-three/drei";
 import { BOAT_MODEL_PATH } from "@/browser/config";
 import { useNavigation } from "@/browser/hooks/useBoat/navigation";
-import { useGameContext } from "@/browser/hooks/useContext/game";
+import { useGameContext } from "@/browser/hooks/useGame/context";
 
 const modelUris = (window as any).__MODEL_URIS__ || {
   boat: BOAT_MODEL_PATH,

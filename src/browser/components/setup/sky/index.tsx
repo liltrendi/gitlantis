@@ -1,4 +1,4 @@
-import { useGameContext } from "@/browser/hooks/useContext/game";
+import { useGameContext } from "@/browser/hooks/useGame/context";
 import { Sky as ThreeSky } from "@react-three/drei";
 import { useMemo } from "react";
 import type { Vector3 } from "three";

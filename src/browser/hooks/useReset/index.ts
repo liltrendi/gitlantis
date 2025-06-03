@@ -1,6 +1,6 @@
 import { useFrame, useThree } from "@react-three/fiber";
 import { Vector3 } from "three";
-import { useGameContext } from "@/browser/hooks/useContext/game";
+import { useGameContext } from "@/browser/hooks/useGame/context";
 
 export const useReset = () => {
   const { camera } = useThree();
