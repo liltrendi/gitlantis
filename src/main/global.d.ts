@@ -40,4 +40,17 @@ declare global {
     worldOffsetRef: TWorldOffsetRef;
     directories: TDirectoryContent[];
   };
+
+  type TGameStore = {
+    settings: {
+      showMinimap: boolean;
+      showBreadcrumbs: boolean;
+      showCompass: boolean;
+      boatSpeed: number
+    };
+    setShowMinimap: (showMinimap: boolean) => void;
+    setShowBreadcrumbs: (showBreadcrumbs: boolean) => void;
+    setShowCompass: (showCompass: boolean) => void;
+    setBoatSpeed: (boatSpeed: number) => void;
+  };
 }

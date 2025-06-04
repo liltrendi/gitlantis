@@ -9,8 +9,8 @@ import { Ocean } from "@/browser/components/ocean";
 import { Boat } from "@/browser/components/boat";
 import { Nodes } from "@/browser/components/nodes";
 import { Minimap } from "@/browser/components/setup/minimap";
-import { Breadcrumbs } from "@/browser/components/settings/breadcrumbs";
-import { Compass } from "@/browser/components/settings/compass";
+import { Breadcrumbs } from "@/browser/components/shared/breadcrumbs";
+import { Compass } from "@/browser/components/shared/compass";
 import { useWalker } from "@/browser/hooks/useWalker";
 import { useGameStore } from "@/browser/store";
 

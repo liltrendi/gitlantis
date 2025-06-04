@@ -1,21 +1,11 @@
 import { create } from "zustand";
 
-type TGameStore = {
-  settings: {
-    showMinimap: boolean;
-    showBreadcrumbs: boolean;
-    showCompass: boolean;
-  };
-  setShowMinimap: (showMinimap: boolean) => void;
-  setShowBreadcrumbs: (showBreadcrumbs: boolean) => void;
-  setShowCompass: (showCompass: boolean) => void;
-};
-
 export const useGameStore = create<TGameStore>((set) => ({
   settings: {
     showMinimap: false,
     showBreadcrumbs: false,
     showCompass: false,
+    boatSpeed: 3.0,
   },
   setShowMinimap: (showMinimap: boolean) =>
     set((state) => ({ settings: { ...state.settings, showMinimap } })),
@@ -23,4 +13,6 @@ export const useGameStore = create<TGameStore>((set) => ({
     set((state) => ({ settings: { ...state.settings, showBreadcrumbs } })),
   setShowCompass: (showCompass: boolean) =>
     set((state) => ({ settings: { ...state.settings, showCompass } })),
+  setBoatSpeed: (boatSpeed: number) =>
+    set((state) => ({ settings: { ...state.settings, boatSpeed } })),
 }));

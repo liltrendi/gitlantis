@@ -1,12 +1,14 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useKeyboard } from "@/browser/hooks/useBoat/keyboard";
+import { useGameStore } from "@/browser/store";
 
 export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
   const keys = useKeyboard();
+  const {settings} = useGameStore();
 
   const config = {
-    maxSpeed: 3.3,
+    maxSpeed: settings.boatSpeed,
     acceleration: 0.02,
     deceleration: 0.01,
     turnSpeed: 0.01,
