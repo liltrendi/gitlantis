@@ -21,7 +21,7 @@ export const Minimap = () => {
     gl.clearDepth();
     gl.setScissorTest(true);
 
-    const width = 150, height = 150;
+    const width = 120, height = 120;
     const x = size.width - width - 10;
     const y = size.height - height - 10
 
@@ -33,5 +33,5 @@ export const Minimap = () => {
     gl.setViewport(0, 0, size.width, size.height);
   });
 
-  return <MinimapCamera ref={virtualCam} makeDefault={false} zoom={5}  />;
+  return <MinimapCamera ref={virtualCam} makeDefault={false} zoom={3.5}  />;
 };
