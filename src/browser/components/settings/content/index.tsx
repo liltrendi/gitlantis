@@ -1,5 +1,5 @@
 import type { useGameSettings } from "@/browser/hooks/useGame/settings";
-import { SettingsDisplay } from "@/browser/components/settings/content/display";
+import { SettingsGeneral } from "@/browser/components/settings/content/general";
 import { SettingsMechanics } from "@/browser/components/settings/content/mechanics";
 
 export const SettingsContent = (
@@ -11,7 +11,7 @@ export const SettingsContent = (
         const label = gameProps.activeTab.label;
         switch (label) {
           case "General":
-            return <SettingsDisplay {...gameProps} />;
+            return <SettingsGeneral {...gameProps} />;
           case "Mechanics":
             return <SettingsMechanics {...gameProps} />;
           default:

@@ -17,7 +17,7 @@ export const SettingsClose = (
   return (
     <button
       onClick={() => gameProps.setIsOpen(false)}
-      className="absolute top-4 right-4 text-white hover:text-red-400 z-10"
+      className="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
     >
       ✕
     </button>

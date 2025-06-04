@@ -12,11 +12,9 @@ import { Minimap } from "@/browser/components/setup/minimap";
 import { Breadcrumbs } from "@/browser/components/shared/breadcrumbs";
 import { Compass } from "@/browser/components/shared/compass";
 import { useWalker } from "@/browser/hooks/useWalker";
-import { useGameStore } from "@/browser/store";
 
 export const World = () => {
-  const { walker, openExplorer } = useWalker();
-  const { settings } = useGameStore();
+  const { walker, openExplorer, settings } = useWalker();
 
   if (walker.loading) return <Loading />;
 
@@ -32,12 +30,12 @@ export const World = () => {
 
   return (
     <GameContextProvider directories={walker.response}>
-      {settings.showBreadcrumbs ? <Breadcrumbs /> : null}
-      {settings.showCompass ? <Compass /> : null}
+      {settings.breadcrumbs === "Show" ? <Breadcrumbs /> : null}
+      {settings.compass === "Show" ? <Compass /> : null}
       <Canvas id="world">
         <Suspense fallback={null}>
           <Physics>
-            {settings.showMinimap ? <Minimap /> : null}
+            {settings.minimap === "Show" ? <Minimap /> : null}
             <Setup />
             <Ocean />
             <Boat />

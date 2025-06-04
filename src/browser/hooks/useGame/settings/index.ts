@@ -2,8 +2,8 @@ import { useGameStore } from "@/browser/store";
 import { useEffect, useRef, useState } from "react";
 
 const tabs = [
-  { label: "General", description: "Navigation settings" },
-  { label: "Mechanics", description: "Boat mechanics" },
+  { label: "General", description: ["Display", "Navigation"] },
+  { label: "Mechanics", description: "Boat" },
 ] as const;
 
 type TSettingsTab = (typeof tabs)[number]["label"];
@@ -12,7 +12,7 @@ export const useGameSettings = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<{
     label: TSettingsTab;
-    description: string;
+    description: Readonly<string | string[]>;
   }>(tabs[0]);
   const modalRef = useRef<HTMLDivElement>(null);
 

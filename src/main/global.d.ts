@@ -41,20 +41,27 @@ declare global {
     directories: TDirectoryContent[];
   };
 
+  type TMinimap = "Show" | "Hide"
+  type TBreadcrumbs = "Show" | "Hide"
+  type TCompass = "Show" | "Hide"
+  type TNodesToShow = "Folders and files" | "Folders only" | "Files only"
+
   type TGameStore = {
     settings: {
-      showMinimap: boolean;
-      showBreadcrumbs: boolean;
-      showCompass: boolean;
+      minimap: TMinimap;
+      breadcrumbs: TBreadcrumbs;
+      compass: TCompass;
+      nodesToShow: TNodesToShow;
       boatSpeed: number;
       acceleration: number;
       deceleration: number;
       turnSpeed: number;
       turnDeceleration: number;
     };
-    setShowMinimap: (showMinimap: boolean) => void;
-    setShowBreadcrumbs: (showBreadcrumbs: boolean) => void;
-    setShowCompass: (showCompass: boolean) => void;
+    setMinimap: (value: TMinimap) => void;
+    setBreadcrumbs: (value: TBreadcrumbs) => void;
+    setCompass: (value: TCompass) => void;
+    setNodesToShow: (value: TNodesToShow) => void;
     setBoatSpeed: (boatSpeed: number) => void;
     setBoatAcceleration: (acceleration: number) => void;
     setBoatDeceleration: (deceleration: number) => void;

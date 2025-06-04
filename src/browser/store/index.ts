@@ -1,22 +1,25 @@
-import { create } from "zustand";
+import { create } from "zustand"; 
 
 export const useGameStore = create<TGameStore>((set) => ({
   settings: {
-    showMinimap: false,
-    showBreadcrumbs: false,
-    showCompass: false,
+    minimap: "Hide",
+    breadcrumbs: "Hide",
+    compass: "Hide",
+    nodesToShow: "Folders and files",
     boatSpeed: 3.0,
     acceleration: 0.02,
     deceleration: 0.01,
     turnSpeed: 0.02,
     turnDeceleration: 0.05,
   },
-  setShowMinimap: (showMinimap: boolean) =>
-    set((state) => ({ settings: { ...state.settings, showMinimap } })),
-  setShowBreadcrumbs: (showBreadcrumbs: boolean) =>
-    set((state) => ({ settings: { ...state.settings, showBreadcrumbs } })),
-  setShowCompass: (showCompass: boolean) =>
-    set((state) => ({ settings: { ...state.settings, showCompass } })),
+  setMinimap: (minimap) =>
+    set((state) => ({ settings: { ...state.settings, minimap } })),
+  setBreadcrumbs: (breadcrumbs) =>
+    set((state) => ({ settings: { ...state.settings, breadcrumbs } })),
+  setCompass: (compass) =>
+    set((state) => ({ settings: { ...state.settings, compass } })),
+  setNodesToShow: (nodesToShow) =>
+    set((state) => ({ settings: { ...state.settings, nodesToShow } })),
   setBoatSpeed: (boatSpeed: number) =>
     set((state) => ({ settings: { ...state.settings, boatSpeed } })),
   setBoatAcceleration: (acceleration: number) =>

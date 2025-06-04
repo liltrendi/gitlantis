@@ -12,6 +12,7 @@ import type {
 } from "@/extension/types";
 import { SAMPLE_DATA } from "@/browser/config";
 import { useExtensionContext } from "@/browser/hooks/useExtension/context";
+import { useGameStore } from "@/browser/store";
 
 export const useWalker = () => {
   const [walker, setWalker] = useState<{
@@ -25,6 +26,7 @@ export const useWalker = () => {
   });
 
   const { vscodeApi, currentPath, setCurrentPath } = useExtensionContext();
+  const { settings } = useGameStore();
 
   useEffect(() => {
     if (vscodeApi === undefined) return;
@@ -37,10 +39,20 @@ export const useWalker = () => {
           message: "Failed to load native vscode api",
         },
         loading: false,
-        response: SAMPLE_DATA as TDirectoryContent[],
+        response: (SAMPLE_DATA as TDirectoryContent[]).filter(child => {
+          if(settings.nodesToShow === "Folders and files") return child;
+          if(settings.nodesToShow === "Folders only") return child.type === "folder";
+          if(settings.nodesToShow === "Files only") return child.type === "file";
+          return child;
+        }),
       }));
       return;
     }
+
+    vscodeApi.postMessage({
+      type: DIRECTORY_COMMANDS.read_directory,
+      path: currentPath,
+    });
 
     const handleWalkResponse = ({ data }: { data: THandlerMessage }) => {
       const { type, label, children, error } = data;
@@ -49,7 +61,12 @@ export const useWalker = () => {
           if (currentPath === ROOT_DIRECTORY_KEY) {
             setCurrentPath(`Project: ${label}`);
           }
-          setWalker((prev) => ({ ...prev, response: children }));
+          setWalker((prev) => ({ ...prev, response: children.filter(child => {
+            if(settings.nodesToShow === "Folders and files") return child;
+            if(settings.nodesToShow === "Folders only") return child.type === "folder";
+            if(settings.nodesToShow === "Files only") return child.type === "file";
+            return child;
+          }) }));
           break;
         case DIRECTORY_RESPONSE.error:
           setWalker((prev) => ({ ...prev, error }));
@@ -60,17 +77,12 @@ export const useWalker = () => {
       setWalker((prev) => ({ ...prev, loading: false }));
     };
 
-    vscodeApi.postMessage({
-      type: DIRECTORY_COMMANDS.read_directory,
-      path: currentPath,
-    });
-
     window.addEventListener("message", handleWalkResponse);
 
     return () => {
       window.removeEventListener("message", handleWalkResponse);
     };
-  }, [vscodeApi, currentPath]);
+  }, [vscodeApi, currentPath, settings.nodesToShow]);
 
   const openExplorer = () => {
     if (!vscodeApi) return;
@@ -80,5 +92,5 @@ export const useWalker = () => {
     });
   };
 
-  return { walker, openExplorer };
+  return { walker, openExplorer, settings };
 };
