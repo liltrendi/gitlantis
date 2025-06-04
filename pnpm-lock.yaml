@@ -35,6 +35,9 @@ importers:
       three-stdlib:
         specifier: ^2.25.1
         version: 2.36.0(three@0.156.1)
+      zustand:
+        specifier: ^5.0.5
+        version: 5.0.5(@types/react@19.1.6)(react@18.2.0)(use-sync-external-store@1.5.0(react@18.2.0))
     devDependencies:
       '@eslint/js':
         specifier: ^9.25.0

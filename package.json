@@ -34,7 +34,8 @@
     "react-dom": "18.2.0",
     "styled-components": "^6.1.18",
     "three": "^0.156.1",
-    "three-stdlib": "^2.25.1"
+    "three-stdlib": "^2.25.1",
+    "zustand": "^5.0.5"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

@@ -3,12 +3,12 @@ import { createRoot } from 'react-dom/client'
 import { ExtensionContextProvider } from "@/browser/context/extension";
 import { World } from '@/browser/components/'
 import "@/main/global.css"
-import { Breadcrumb } from '@/browser/components/settings/breadcrumb';
+import { Settings } from '@/browser/components/settings';
 
 const App = () => {
   return (
     <ExtensionContextProvider>
-      <Breadcrumb />
+      <Settings  />
       <World />
     </ExtensionContextProvider>
   );

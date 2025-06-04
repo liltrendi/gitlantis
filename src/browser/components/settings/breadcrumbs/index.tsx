@@ -1,6 +1,6 @@
 import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 
-export const Breadcrumb = () => {
+export const Breadcrumbs = () => {
   const { currentPath, setCurrentPath } = useExtensionContext();
 
   if (currentPath.length === 0) return null;
