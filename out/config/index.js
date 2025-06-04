@@ -5,7 +5,7 @@ exports.ROOT_DIRECTORY_KEY = "__root__";
 exports.DIRECTORY_COMMANDS = {
     read_directory: "read_directory",
     open_file: "open_file",
-    open_file_explorer: "open_file_explorer",
+    open_explorer: "open_explorer",
 };
 exports.DIRECTORY_RESPONSE = {
     children: "directory_children",

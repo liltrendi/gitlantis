@@ -78,7 +78,7 @@ export const useWalker = (path = ROOT_DIRECTORY_KEY) => {
     if (!vscodeApi) return;
 
     vscodeApi.postMessage({
-      type: DIRECTORY_COMMANDS.open_file_explorer,
+      type: DIRECTORY_COMMANDS.open_explorer,
     });
   };
 

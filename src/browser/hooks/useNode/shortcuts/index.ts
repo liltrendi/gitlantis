@@ -28,12 +28,17 @@ export const useNodeShortcuts = ({
 
   const throttledOpenNode = useRef(
     throttle(
-      (nodeInfo: TDirectoryContent) => {
+      ({type, path}: TDirectoryContent) => {
         if (!vscodeApi) return;
-        if (nodeInfo.type === "file") {
+        if (type === "file") {
           vscodeApi.postMessage({
             type: DIRECTORY_COMMANDS.open_file,
-            path: nodeInfo.path.path,
+            path: path.path,
+          });
+        }else{
+          vscodeApi.postMessage({
+            type: DIRECTORY_COMMANDS.read_directory,
+            path: path.path,
           });
         }
       },
