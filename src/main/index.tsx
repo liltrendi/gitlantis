@@ -3,7 +3,7 @@ import { createRoot } from 'react-dom/client'
 import { ExtensionContextProvider } from "@/browser/context/extension";
 import { World } from '@/browser/components/'
 import "@/main/global.css"
-import { Breadcrumb } from '@/browser/components/shared/breadcrumb';
+import { Breadcrumb } from '@/browser/components/settings/breadcrumb';
 
 const App = () => {
   return (

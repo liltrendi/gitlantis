@@ -9,12 +9,13 @@ import { Ocean } from "@/browser/components/ocean";
 import { Boat } from "@/browser/components/boat";
 import { Nodes } from "@/browser/components/nodes";
 import { useWalker } from "@/browser/hooks/useWalker";
+import { Compass } from "./settings/compass";
 
 export const World = () => {
   const { walker, openExplorer } = useWalker();
 
   if (walker.loading) return <Loading />;
-  
+
   if (walker.error && walker.response.length === 0) {
     return (
       <NoOpenProject
@@ -27,6 +28,7 @@ export const World = () => {
 
   return (
     <GameContextProvider directories={walker.response}>
+      <Compass />
       <Canvas id="world">
         <Suspense fallback={null}>
           <Physics>
