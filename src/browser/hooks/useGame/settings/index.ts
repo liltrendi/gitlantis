@@ -5,8 +5,7 @@ const tabs = [
   { label: "General", description: ["Display", "Guides"] },
   { label: "Behavior", description: ["Navigation", "Collision"] },
   { label: "Keybindings", description: ["Basic controls", "Special keys"] },
-  { label: "About", description: [] },
-  { label: "Credits", description: [] },
+  { label: "About", description: ["Overview", "Attribution"] },
 ] as const;
 
 type TSettingsTab = (typeof tabs)[number]["label"];
