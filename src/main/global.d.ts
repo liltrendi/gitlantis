@@ -41,10 +41,10 @@ declare global {
     directories: TDirectoryContent[];
   };
 
-  type TMinimap = "Show" | "Hide"
-  type TBreadcrumbs = "Show" | "Hide"
-  type TCompass = "Show" | "Hide"
-  type TNodesToShow = "Folders and files" | "Folders only" | "Files only"
+  type TMinimap = "Show" | "Hide";
+  type TBreadcrumbs = "Show" | "Hide";
+  type TCompass = "Show" | "Hide";
+  type TNodesToShow = "Folders and files" | "Folders only" | "Files only";
 
   type TGameStore = {
     settings: {
@@ -57,6 +57,8 @@ declare global {
       deceleration: number;
       turnSpeed: number;
       turnDeceleration: number;
+      collisionRadius: number;
+      collisionPushStrength: number;
     };
     setMinimap: (value: TMinimap) => void;
     setBreadcrumbs: (value: TBreadcrumbs) => void;
@@ -67,5 +69,7 @@ declare global {
     setBoatDeceleration: (deceleration: number) => void;
     setBoatTurnSpeed: (turnSpeed: number) => void;
     setBoatTurnDeceleration: (turnDeceleration: number) => void;
+    setCollisionRadius: (collisionRadius: number) => void;
+    setCollisionPushStrength: (collisionPushStrength: number) => void;
   };
 }

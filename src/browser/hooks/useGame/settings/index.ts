@@ -8,12 +8,10 @@ const tabs = [
   { label: "About", description: ["Overview", "Attribution"] },
 ] as const;
 
-type TSettingsTab = (typeof tabs)[number]["label"];
-
 export const useGameSettings = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [activeTab, setActiveTab] = useState<{
-    label: TSettingsTab;
+    label: (typeof tabs)[number]["label"];
     description: Readonly<string | string[]>;
   }>(tabs[0]);
   const modalRef = useRef<HTMLDivElement>(null);

@@ -1,4 +1,4 @@
-import { create } from "zustand"; 
+import { create } from "zustand";
 
 export const useGameStore = create<TGameStore>((set) => ({
   settings: {
@@ -11,6 +11,8 @@ export const useGameStore = create<TGameStore>((set) => ({
     deceleration: 0.01,
     turnSpeed: 0.02,
     turnDeceleration: 0.05,
+    collisionRadius: 100,
+    collisionPushStrength: 5,
   },
   setMinimap: (minimap) =>
     set((state) => ({ settings: { ...state.settings, minimap } })),
@@ -30,4 +32,10 @@ export const useGameStore = create<TGameStore>((set) => ({
     set((state) => ({ settings: { ...state.settings, turnSpeed } })),
   setBoatTurnDeceleration: (turnDeceleration: number) =>
     set((state) => ({ settings: { ...state.settings, turnDeceleration } })),
+  setCollisionRadius: (collisionRadius: number) =>
+    set((state) => ({ settings: { ...state.settings, collisionRadius } })),
+  setCollisionPushStrength: (collisionPushStrength: number) =>
+    set((state) => ({
+      settings: { ...state.settings, collisionPushStrength },
+    })),
 }));

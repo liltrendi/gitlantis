@@ -35,9 +35,9 @@ export const Folder = ({
             label={"SHIFT+ENTER to explore"}
             color="white"
             yPosition={3.5}
-            fontSize={1}
+            fontSize={0.75}
             frontOffset={-5}
-            maxWidth={10}
+            maxWidth={7.8}
           />
         ) : null}
       </Clone>

@@ -2,6 +2,7 @@ import { useFrame } from "@react-three/fiber";
 import { useCallback, useRef, useState } from "react";
 import { Vector3 } from "three";
 import { useNodeShortcuts } from "@/browser/hooks/useNode/shortcuts";
+import { useGameStore } from "@/browser/store";
 
 export const useNodeCollision = ({
   nodes,
@@ -12,6 +13,8 @@ export const useNodeCollision = ({
   boatRef: TBoatRef;
   nodeRef: TNodeRef;
 }) => {
+  const {settings} = useGameStore();
+
   const [trackedCollisions, setTrackedCollisions] = useState<boolean[]>([]);
 
   const trackCollisions = useCallback((index: number, isColliding: boolean) => {
@@ -28,9 +31,6 @@ export const useNodeCollision = ({
     if (!boatRef?.current || !nodeRef?.current) return;
 
     const boat = boatRef.current;
-
-    const AVOIDANCE_RADIUS = 100;
-    const PUSH_STRENGTH = 5;
 
     let avoidanceVector = new Vector3(0, 0, 0);
 
@@ -54,7 +54,7 @@ export const useNodeCollision = ({
       toNode.y = 0;
       const distance = toNode.length();
 
-      const isColliding = distance < AVOIDANCE_RADIUS && distance > 0.01;
+      const isColliding = distance < settings.collisionRadius && distance > 0.01;
 
       // notify only when state changes
       if (previousState !== isColliding) {
@@ -63,8 +63,8 @@ export const useNodeCollision = ({
       }
 
       if (isColliding) {
-        const strength = (AVOIDANCE_RADIUS - distance) / AVOIDANCE_RADIUS;
-        toNode.normalize().multiplyScalar(strength * PUSH_STRENGTH);
+        const strength = (settings.collisionRadius - distance) / settings.collisionRadius;
+        toNode.normalize().multiplyScalar(strength * settings.collisionPushStrength);
         avoidanceVector.add(toNode);
       }
     }

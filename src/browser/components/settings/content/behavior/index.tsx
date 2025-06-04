@@ -48,6 +48,22 @@ export const SettingsBehavior = (
       <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[20px]">
         {gameProps.activeTab.description[1]}
       </h3>
+
+      <SharedSlider
+        label="Avoidance radius"
+        min={50}
+        max={300}
+        value={gameProps.settings.collisionRadius}
+        setter={gameProps.setCollisionRadius}
+      />
+
+      <SharedSlider
+        label="Deflection strength"
+        min={1}
+        max={10}
+        value={gameProps.settings.collisionPushStrength}
+        setter={gameProps.setCollisionPushStrength}
+      />
     </>
   );
 };
