@@ -20,17 +20,17 @@ declare global {
     position: Vector3;
     sinkOffset: number;
     floatPhase: number;
-    data: TDirectoryContent
-  }
+    data: TDirectoryContent;
+  };
   type TWorldOffsetRef = RefObject<Vector3> | null;
-  type TProjectInfoRef = RefObject<{directories: TDirectoryContent[]}>
+  type TProjectInfoRef = RefObject<{ directories: TDirectoryContent[] }>;
 
   type TNodeInstances = Array<{
     key: string;
     position: Vector3;
     sinkOffset: number;
     floatPhase: number;
-    data: TDirectoryContent
+    data: TDirectoryContent;
   }>;
 
   type TGameConfig = {
@@ -46,11 +46,19 @@ declare global {
       showMinimap: boolean;
       showBreadcrumbs: boolean;
       showCompass: boolean;
-      boatSpeed: number
+      boatSpeed: number;
+      acceleration: number;
+      deceleration: number;
+      turnSpeed: number;
+      turnDeceleration: number;
     };
     setShowMinimap: (showMinimap: boolean) => void;
     setShowBreadcrumbs: (showBreadcrumbs: boolean) => void;
     setShowCompass: (showCompass: boolean) => void;
     setBoatSpeed: (boatSpeed: number) => void;
+    setBoatAcceleration: (acceleration: number) => void;
+    setBoatDeceleration: (deceleration: number) => void;
+    setBoatTurnSpeed: (turnSpeed: number) => void;
+    setBoatTurnDeceleration: (turnDeceleration: number) => void;
   };
 }

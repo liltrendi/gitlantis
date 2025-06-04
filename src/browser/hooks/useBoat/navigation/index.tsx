@@ -5,15 +5,14 @@ import { useGameStore } from "@/browser/store";
 
 export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
   const keys = useKeyboard();
-  const {settings} = useGameStore();
+  const { settings } = useGameStore();
 
   const config = {
     maxSpeed: settings.boatSpeed,
-    acceleration: 0.02,
-    deceleration: 0.01,
-    turnSpeed: 0.01,
-    turnWhileMoving: 0.8,
-    turnDeceleration: 0.05,
+    acceleration: settings.acceleration,
+    deceleration: settings.deceleration,
+    turnSpeed: settings.turnSpeed,
+    turnDeceleration: settings.turnDeceleration,
   };
 
   const state = useRef({
@@ -23,8 +22,7 @@ export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
   });
 
   useFrame((_, delta) => {
-    if(!boatRef?.current) return;
-
+    if (!boatRef?.current) return;
     const boat = boatRef.current;
     if (!boat) return;
 
@@ -47,17 +45,12 @@ export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
     // handle turning
     let targetTurn = 0;
     const isMovingBackward = currentState.speed < 0;
-
     if (keys.left) {
       targetTurn = isMovingBackward ? -config.turnSpeed : config.turnSpeed;
     }
     if (keys.right) {
       targetTurn = isMovingBackward ? config.turnSpeed : -config.turnSpeed;
     }
-
-    // turn faster when moving forward (like real boats)
-    const speedFactor = Math.abs(currentState.speed) / config.maxSpeed;
-    targetTurn *= 1 + speedFactor * config.turnWhileMoving;
 
     // apply turning
     if (targetTurn !== 0) {

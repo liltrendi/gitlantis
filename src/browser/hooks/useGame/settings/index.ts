@@ -1,11 +1,19 @@
 import { useGameStore } from "@/browser/store";
 import { useEffect, useRef, useState } from "react";
 
-const tabs = [{label: "Display", description: "Display settings"}, {label: "Mechanics", description: "Game mechanics"}];
+const tabs = [
+  { label: "General", description: "Display settings" },
+  { label: "Mechanics", description: "Boat mechanics" },
+] as const;
+
+type TSettingsTab = (typeof tabs)[number]["label"];
 
 export const useGameSettings = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState(tabs[0]);
+  const [activeTab, setActiveTab] = useState<{
+    label: TSettingsTab;
+    description: string;
+  }>(tabs[0]);
   const modalRef = useRef<HTMLDivElement>(null);
 
   const { settings, ...setters } = useGameStore();
@@ -34,6 +42,6 @@ export const useGameSettings = () => {
     activeTab,
     settings,
     modalRef,
-    ...{setIsOpen, setActiveTab, ...setters },
+    ...{ setIsOpen, setActiveTab, ...setters },
   };
 };
