@@ -39,7 +39,7 @@ const config_1 = require("../../config");
 const utils_1 = require("../utils");
 const handleReadDirectory = async (panel, message) => {
     try {
-        const folderUri = (0, utils_1.getFolderUri)(message.path);
+        const { name: folderLabel, uri: folderUri } = (0, utils_1.getWorkspaceFolderFromPath)(message.path);
         const entries = await vscode.workspace.fs.readDirectory(folderUri);
         const children = entries.map(([name, type]) => ({
             name,
@@ -47,7 +47,8 @@ const handleReadDirectory = async (panel, message) => {
             type: type === vscode.FileType.Directory ? "folder" : "file",
         }));
         panel.webview.postMessage({
-            type: config_1.DIRECTORY_RESPONSE.children,
+            label: folderLabel,
+            type: config_1.DIRECTORY_RESPONSE.data,
             path: message.path,
             children,
         });

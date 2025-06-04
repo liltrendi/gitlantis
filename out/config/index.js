@@ -8,7 +8,7 @@ exports.DIRECTORY_COMMANDS = {
     open_explorer: "open_explorer",
 };
 exports.DIRECTORY_RESPONSE = {
-    children: "directory_children",
+    data: "data",
     error: "read_error",
 };
 exports.DIRECTORY_ERRORS = {

@@ -7,7 +7,7 @@ export const DIRECTORY_COMMANDS = {
 };
 
 export const DIRECTORY_RESPONSE = {
-  children: "directory_children",
+  data: "data",
   error: "read_error",
 };
 

@@ -1,20 +1,22 @@
 import { useExtensionContext } from "@/browser/hooks/useExtension/context";
-import { ROOT_DIRECTORY_KEY } from "@/extension/config";
 
 export const Breadcrumb = () => {
   const { currentPath, setCurrentPath } = useExtensionContext();
 
-  if (currentPath.length === 0 || currentPath === ROOT_DIRECTORY_KEY)
-    return null;
+  if (currentPath.length === 0) return null;
 
   const segments = currentPath.split("/")?.filter(Boolean);
 
   return (
     <div className="text-md text-gray-500 flex flex-col items-start absolute top-3 left-3 z-50 rounded-t-lg">
-      <span className="bg-[#f2bc07] px-2 py-[1px] text-md text-black rounded-tl-lg rounded-tr-lg border-t border-l border-r border-[#2d302f] border-l-4">
+      <span
+        className={`bg-[#f2bc07] px-2 py-[1px] text-md text-black rounded-tl-lg rounded-tr-lg rounded-br-sm border-t border-l border-r border-b border-[#2d302f] border-l-4`}
+      >
         File explorer
       </span>
-      <nav className="flex flex-wrap max-w-[30vw] break-words bg-[#2d302f] px-3 py-1 rounded-bl-lg rounded-br-lg rounded-tr-lg">
+      <nav
+        className={`flex flex-wrap max-w-[50vw] break-words bg-[#2d302f] px-3 py-1 rounded-bl-lg rounded-br-lg rounded-tr-lg`}
+      >
         {segments.map((segment, index) => {
           const fullPath = segments.slice(0, index + 1).join("/");
           return (

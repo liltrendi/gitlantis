@@ -1,14 +1,16 @@
 import * as vscode from "vscode";
 import { DIRECTORY_RESPONSE, DIRECTORY_ERRORS } from "../../config";
 import type { TDirectoryContent, THandlerMessage } from "../../types";
-import { getFolderUri, sendError } from "../utils";
+import { getWorkspaceFolderFromPath, sendError } from "../utils";
 
 export const handleReadDirectory = async (
   panel: vscode.WebviewPanel,
   message: THandlerMessage
 ) => {
   try {
-    const folderUri = getFolderUri(message.path);
+    const { name: folderLabel, uri: folderUri } = getWorkspaceFolderFromPath(
+      message.path
+    );
     const entries = await vscode.workspace.fs.readDirectory(folderUri);
     const children: TDirectoryContent[] = entries.map(([name, type]) => ({
       name,
@@ -17,7 +19,8 @@ export const handleReadDirectory = async (
     }));
 
     panel.webview.postMessage({
-      type: DIRECTORY_RESPONSE.children,
+      label: folderLabel,
+      type: DIRECTORY_RESPONSE.data,
       path: message.path,
       children,
     });

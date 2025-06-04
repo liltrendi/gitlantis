@@ -17,6 +17,7 @@ export type TDirectoryErrorType = {
 };
 
 export type THandlerMessage = {
+  label: string;
   type: TMessageType;
   path: string;
   children: Array<TDirectoryContent>;

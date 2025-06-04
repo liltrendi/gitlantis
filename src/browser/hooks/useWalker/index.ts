@@ -3,6 +3,7 @@ import {
   DIRECTORY_COMMANDS,
   DIRECTORY_ERRORS,
   DIRECTORY_RESPONSE,
+  ROOT_DIRECTORY_KEY,
 } from "@/extension/config";
 import type {
   TDirectoryContent,
@@ -23,7 +24,7 @@ export const useWalker = () => {
     response: [],
   });
 
-  const { vscodeApi, currentPath } = useExtensionContext();
+  const { vscodeApi, currentPath, setCurrentPath } = useExtensionContext();
 
   useEffect(() => {
     if (vscodeApi === undefined) return;
@@ -41,13 +42,13 @@ export const useWalker = () => {
       return;
     }
 
-    const handleWalkResponse = ({
-      data: { type, children, error },
-    }: {
-      data: THandlerMessage;
-    }) => {
+    const handleWalkResponse = ({ data }: { data: THandlerMessage }) => {
+      const { type, label, children, error } = data;
       switch (type) {
-        case DIRECTORY_RESPONSE.children:
+        case DIRECTORY_RESPONSE.data:
+          if (currentPath === ROOT_DIRECTORY_KEY) {
+            setCurrentPath(`Project: ${label}`);
+          }
           setWalker((prev) => ({ ...prev, response: children }));
           break;
         case DIRECTORY_RESPONSE.error:
