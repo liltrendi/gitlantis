@@ -2,7 +2,6 @@ import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import { Physics } from "@react-three/cannon";
 import { GameContextProvider } from "@/browser/context/game";
-import { ExtensionContextProvider } from "@/browser/context/extension";
 import { Loading } from "@/browser/components/shared/loading";
 import { NoOpenProject } from "@/browser/components/shared/no-open-project";
 import { Setup } from "@/browser/components/setup";
@@ -11,10 +10,11 @@ import { Boat } from "@/browser/components/boat";
 import { Nodes } from "@/browser/components/nodes";
 import { useWalker } from "@/browser/hooks/useWalker";
 
-const WorldContent = () => {
+export const World = () => {
   const { walker, openExplorer } = useWalker();
 
   if (walker.loading) return <Loading />;
+  
   if (walker.error && walker.response.length === 0) {
     return (
       <NoOpenProject
@@ -40,13 +40,3 @@ const WorldContent = () => {
     </GameContextProvider>
   );
 };
-
-const World = () => {
-  return (
-    <ExtensionContextProvider>
-      <WorldContent />
-    </ExtensionContextProvider>
-  );
-};
-
-export default World;
