@@ -13,7 +13,7 @@ export const SAMPLE_DATA = [
     type: "folder",
   },
   {
-    name: ".git",
+    name: "HeroicGamesLauncher",
     type: "folder",
   },
   {

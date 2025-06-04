@@ -37,6 +37,7 @@ export const Folder = ({
             yPosition={3.5}
             fontSize={1}
             frontOffset={-5}
+            maxWidth={10}
           />
         ) : null}
       </Clone>

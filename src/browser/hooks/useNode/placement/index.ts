@@ -11,7 +11,7 @@ export const useNodePlacement = () => {
   const SINK_DEPTH_MAX = 5.0;
   const NODE_COUNT = directories.length ?? 0;
   const MIN_DISTANCE_FROM_BOAT = 500;
-  const MIN_DISTANCE_BETWEEN_NODES = 200;
+  const MIN_DISTANCE_BETWEEN_NODES = 300;
   const MAX_GENERATION_ATTEMPTS = 100;
 
   const getRandomlyGeneratedNodes = (boatPos: Vector3) => {

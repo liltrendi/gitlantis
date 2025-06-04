@@ -4,7 +4,7 @@ import { Shape } from "three";
 
 const textDimensionsCache = new Map<string, { width: number; height: number; lines: number }>();
 
-const getTextDimensions = (text: string, fontSize: number, maxWidth: number) => {
+const getTextDimensions = (text: string, fontSize: number, maxWidth?: number) => {
   const cacheKey = `${text}-${fontSize}-${maxWidth || 'no-limit'}`;
   if (textDimensionsCache.has(cacheKey)) return textDimensionsCache.get(cacheKey)!;
   
@@ -59,7 +59,7 @@ export const Backdrop = ({
   fontSize = 0.2,
   color = "#f2bc07",
   frontOffset = 0,
-  maxWidth = 10,
+  maxWidth,
 }: {
   label: string;
   yPosition?: number;
