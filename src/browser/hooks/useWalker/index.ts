@@ -3,7 +3,6 @@ import {
   DIRECTORY_COMMANDS,
   DIRECTORY_ERRORS,
   DIRECTORY_RESPONSE,
-  ROOT_DIRECTORY_KEY,
 } from "@/extension/config";
 import type {
   TDirectoryContent,
@@ -13,7 +12,7 @@ import type {
 import { SAMPLE_DATA } from "@/browser/config";
 import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 
-export const useWalker = (path = ROOT_DIRECTORY_KEY) => {
+export const useWalker = () => {
   const [walker, setWalker] = useState<{
     loading: boolean;
     error: null | TDirectoryErrorType;
@@ -24,12 +23,10 @@ export const useWalker = (path = ROOT_DIRECTORY_KEY) => {
     response: [],
   });
 
-  const { vscodeApi } = useExtensionContext();
+  const { vscodeApi, currentPath } = useExtensionContext();
 
   useEffect(() => {
-    if (vscodeApi === undefined) {
-      return;
-    }
+    if (vscodeApi === undefined) return;
 
     if (!vscodeApi) {
       setWalker((prev) => ({
@@ -64,7 +61,7 @@ export const useWalker = (path = ROOT_DIRECTORY_KEY) => {
 
     vscodeApi.postMessage({
       type: DIRECTORY_COMMANDS.read_directory,
-      path: path,
+      path: currentPath,
     });
 
     window.addEventListener("message", handleWalkResponse);
@@ -72,9 +69,9 @@ export const useWalker = (path = ROOT_DIRECTORY_KEY) => {
     return () => {
       window.removeEventListener("message", handleWalkResponse);
     };
-  }, [vscodeApi, path]);
+  }, [vscodeApi, currentPath]);
 
-  const openFolder = () => {
+  const openExplorer = () => {
     if (!vscodeApi) return;
 
     vscodeApi.postMessage({
@@ -82,5 +79,5 @@ export const useWalker = (path = ROOT_DIRECTORY_KEY) => {
     });
   };
 
-  return { walker, openFolder };
+  return { walker, openExplorer };
 };

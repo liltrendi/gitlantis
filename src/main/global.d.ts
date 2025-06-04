@@ -38,6 +38,6 @@ declare global {
     oceanRef: TOceanRef;
     nodeRef: TNodeRef;
     worldOffsetRef: TWorldOffsetRef;
-    projectInfoRef: TProjectInfoRef;
+    directories: TDirectoryContent[];
   };
 }

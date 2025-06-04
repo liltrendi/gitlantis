@@ -15,7 +15,7 @@ export const useNodeShortcuts = ({
   nodes: TNodeInstance[];
   collisionStateRef: RefObject<boolean[]>;
 }) => {
-  const { vscodeApi } = useExtensionContext();
+  const { vscodeApi, setCurrentPath } = useExtensionContext();
   const pressedKeys = useRef<Set<string>>(new Set());
 
   const getCollidingNode = useCallback((): TNodeInstance | null => {
@@ -28,18 +28,15 @@ export const useNodeShortcuts = ({
 
   const throttledOpenNode = useRef(
     throttle(
-      ({type, path}: TDirectoryContent) => {
+      ({ type, path }: TDirectoryContent) => {
         if (!vscodeApi) return;
         if (type === "file") {
           vscodeApi.postMessage({
             type: DIRECTORY_COMMANDS.open_file,
             path: path.path,
           });
-        }else{
-          vscodeApi.postMessage({
-            type: DIRECTORY_COMMANDS.read_directory,
-            path: path.path,
-          });
+        } else {
+          setCurrentPath(path.path);
         }
       },
       500,

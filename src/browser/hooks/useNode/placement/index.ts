@@ -3,13 +3,13 @@ import { Vector3 } from "three";
 import { useGameContext } from "@/browser/hooks/useGame/context";
 
 export const useNodePlacement = () => {
-  const { worldOffsetRef, boatRef, nodeRef, projectInfoRef } = useGameContext();
+  const { worldOffsetRef, boatRef, nodeRef, directories } = useGameContext();
   const [nodes, setNodes] = useState<TNodeInstances>([]);
 
   const TILE_SIZE = 1000;
   const SINK_DEPTH_MIN = 5.0;
   const SINK_DEPTH_MAX = 5.0;
-  const NODE_COUNT = projectInfoRef.current.directories.length ?? 0;
+  const NODE_COUNT = directories.length ?? 0;
   const MIN_DISTANCE_FROM_BOAT = 500;
   const MIN_DISTANCE_BETWEEN_NODES = 200;
   const MAX_GENERATION_ATTEMPTS = 100;
@@ -107,7 +107,7 @@ export const useNodePlacement = () => {
             ],
             sinkOffset,
             floatPhase,
-            data: projectInfoRef.current.directories[nodeIndex]
+            data: directories[nodeIndex],
           });
 
           placed = true;
@@ -126,7 +126,7 @@ export const useNodePlacement = () => {
     const boatPosition = boatRef.current.position;
     const generatedNodes = getRandomlyGeneratedNodes(boatPosition);
     setNodes(generatedNodes);
-  }, [worldOffsetRef]);
+  }, [worldOffsetRef, directories]);
 
   useEffect(() => {
     if (!nodeRef?.current) return;

@@ -12,7 +12,7 @@ import { Nodes } from "@/browser/components/nodes";
 import { useWalker } from "@/browser/hooks/useWalker";
 
 const WorldContent = () => {
-  const { walker, openFolder } = useWalker();
+  const { walker, openExplorer } = useWalker();
 
   if (walker.loading) return <Loading />;
   if (walker.error && walker.response.length === 0) {
@@ -20,7 +20,7 @@ const WorldContent = () => {
       <NoOpenProject
         type={walker.error.type}
         message={walker.error.message}
-        action={openFolder}
+        action={openExplorer}
       />
     );
   }
@@ -48,4 +48,5 @@ const World = () => {
     </ExtensionContextProvider>
   );
 };
+
 export default World;

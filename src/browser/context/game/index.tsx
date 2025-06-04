@@ -7,15 +7,17 @@ export const GameContext = createContext<TGameConfig>({
   oceanRef: null,
   nodeRef: null,
   worldOffsetRef: null,
-  projectInfoRef: { current: { directories: [] } },
+  directories: [],
 });
 
 export const GameContextProvider: FC<{
   children: ReactNode;
   directories: TDirectoryContent[];
 }> = ({ children, directories }) => {
-  const gameConfig = useGameConfig(directories);
+  const gameConfig = useGameConfig();
   return (
-    <GameContext.Provider value={gameConfig}>{children}</GameContext.Provider>
+    <GameContext.Provider value={{ ...gameConfig, directories }}>
+      {children}
+    </GameContext.Provider>
   );
 };
