@@ -26,7 +26,10 @@ const SharedSlider = ({
         min={0}
         max={100}
         step={1}
-        className="w-full mt-3"
+        className="w-full mt-6 appearance-none h-[4px] bg-gray-700 rounded-lg outline-none accent-yellow-400"
+        style={{
+          background: `linear-gradient(to right, #f2bc07 0%, #f2bc07 ${percentValue}%, #3f3f46 ${percentValue}%, #3f3f46 100%)`,
+        }}
         value={percentValue}
         onChange={(e) => {
           const sliderPercent = Number(e.target.value) / 100;

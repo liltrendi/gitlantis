@@ -2,7 +2,7 @@ import { useGameStore } from "@/browser/store";
 import { useEffect, useRef, useState } from "react";
 
 const tabs = [
-  { label: "General", description: "Display settings" },
+  { label: "General", description: "Navigation settings" },
   { label: "Mechanics", description: "Boat mechanics" },
 ] as const;
 
