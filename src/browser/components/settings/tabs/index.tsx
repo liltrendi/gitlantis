@@ -2,7 +2,7 @@ import type { useGameSettings } from "@/browser/hooks/useGame/settings";
 
 export const SettingsTabs = (gameProps: ReturnType<typeof useGameSettings>) => {
   return (
-    <div className="w-1/3 bg-[#151515] p-0 border-r border-gray-700">
+    <div className="w-1/3 bg-[#151515] p-0 border-r border-gray-700 overflow-y-auto">
       {gameProps.tabs.map((tab) => (
         <button
           key={tab.label}

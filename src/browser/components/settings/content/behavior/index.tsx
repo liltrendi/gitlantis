@@ -1,7 +1,7 @@
 import { SharedSlider } from "@/browser/components/shared/slider";
 import type { useGameSettings } from "@/browser/hooks/useGame/settings";
 
-export const SettingsMechanics = (
+export const SettingsBehavior = (
   gameProps: ReturnType<typeof useGameSettings>
 ) => {
   return (

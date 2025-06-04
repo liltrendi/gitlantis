@@ -1,6 +1,6 @@
 import type { useGameSettings } from "@/browser/hooks/useGame/settings";
 import { SettingsGeneral } from "@/browser/components/settings/content/general";
-import { SettingsMechanics } from "@/browser/components/settings/content/mechanics";
+import { SettingsBehavior } from "@/browser/components/settings/content/behavior";
 import { SettingsControls } from "@/browser/components/settings/content/controls";
 
 export const SettingsContent = (
@@ -13,9 +13,9 @@ export const SettingsContent = (
         switch (label) {
           case "General":
             return <SettingsGeneral {...gameProps} />;
-          case "Mechanics":
-            return <SettingsMechanics {...gameProps} />;
-          case "Controls":
+          case "Behavior":
+            return <SettingsBehavior {...gameProps} />;
+          case "Keybindings":
             return <SettingsControls {...gameProps} />;
           default:
             return null;
