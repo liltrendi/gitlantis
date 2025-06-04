@@ -1,8 +1,9 @@
 export const ROOT_DIRECTORY_KEY = "__root__";
 
 export const DIRECTORY_COMMANDS = {
-  read: "read_directory",
-  open_file_explorer: "open_file_explorer"
+  read_directory: "read_directory",
+  open_file: "open_file",
+  open_file_explorer: "open_file_explorer",
 };
 
 export const DIRECTORY_RESPONSE = {

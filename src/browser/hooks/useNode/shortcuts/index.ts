@@ -1,6 +1,10 @@
-import { NODE_SHORTCUTS } from "@/browser/config";
+import { useCallback, useEffect, useRef } from "react";
+import throttle from "lodash.throttle";
+import type { RefObject } from "react";
+import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 import type { TDirectoryContent } from "@/extension/types";
-import { useEffect, useCallback, useRef, type RefObject } from "react";
+import { DIRECTORY_COMMANDS } from "@/extension/config";
+import { NODE_SHORTCUTS } from "@/browser/config";
 
 export const useNodeShortcuts = ({
   enabled = true,
@@ -11,43 +15,54 @@ export const useNodeShortcuts = ({
   nodes: TNodeInstance[];
   collisionStateRef: RefObject<boolean[]>;
 }) => {
+  const { vscodeApi } = useExtensionContext();
   const pressedKeys = useRef<Set<string>>(new Set());
 
   const getCollidingNode = useCallback((): TNodeInstance | null => {
     if (!collisionStateRef.current) return null;
-
     const collidingIndex = collisionStateRef.current.findIndex(
       (isColliding) => isColliding
     );
     return collidingIndex >= 0 ? nodes[collidingIndex] : null;
   }, [nodes, collisionStateRef]);
 
-  const openNode = useCallback(({name}: TDirectoryContent) => {
-    console.log("openNode::", name);
-  }, [])
+  const throttledOpenNode = useRef(
+    throttle(
+      (nodeInfo: TDirectoryContent) => {
+        if (!vscodeApi) return;
+        if (nodeInfo.type === "file") {
+          vscodeApi.postMessage({
+            type: DIRECTORY_COMMANDS.open_file,
+            path: nodeInfo.path.path,
+          });
+        }
+      },
+      500,
+      { trailing: false }
+    )
+  ).current;
 
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (!enabled) return;
 
-      const key = event.key;
-      pressedKeys.current.add(key);
+      pressedKeys.current.add(event.key);
 
       for (const shortcut of NODE_SHORTCUTS) {
         const combinationPressed = shortcut.keys.every((requiredKey) =>
           pressedKeys.current.has(requiredKey)
         );
 
-        if (!combinationPressed) return;
+        if (!combinationPressed) continue;
 
         const nodeInfo = getCollidingNode()?.data;
         if (nodeInfo) {
           event.preventDefault();
-          openNode(nodeInfo);
+          throttledOpenNode(nodeInfo);
         }
       }
     },
-    [enabled, getCollidingNode]
+    [enabled, getCollidingNode, throttledOpenNode]
   );
 
   const handleKeyUp = useCallback((event: KeyboardEvent) => {
@@ -63,14 +78,26 @@ export const useNodeShortcuts = ({
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
       window.removeEventListener("keyup", handleKeyUp);
+      throttledOpenNode.cancel();
     };
-  }, [handleKeyDown, handleKeyUp, enabled]);
+  }, [handleKeyDown, handleKeyUp, enabled, throttledOpenNode]);
 
   useEffect(() => {
     if (!enabled) {
       pressedKeys.current.clear();
     }
   }, [enabled]);
+
+  useEffect(() => {
+    const handleBlur = () => {
+      pressedKeys.current.clear();
+    };
+
+    window.addEventListener("blur", handleBlur);
+    return () => {
+      window.removeEventListener("blur", handleBlur);
+    };
+  }, []);
 
   return {
     getCollidingNode,

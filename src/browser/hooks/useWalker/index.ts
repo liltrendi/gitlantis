@@ -39,7 +39,7 @@ export const useWalker = (path = ROOT_DIRECTORY_KEY) => {
           message: "Failed to load native vscode api",
         },
         loading: false,
-        response: SAMPLE_DATA,
+        response: SAMPLE_DATA as TDirectoryContent[],
       }));
       return;
     }
@@ -63,7 +63,7 @@ export const useWalker = (path = ROOT_DIRECTORY_KEY) => {
     };
 
     vscodeApi.postMessage({
-      type: DIRECTORY_COMMANDS.read,
+      type: DIRECTORY_COMMANDS.read_directory,
       path: path,
     });
 
