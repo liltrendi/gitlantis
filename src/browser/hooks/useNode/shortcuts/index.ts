@@ -44,11 +44,30 @@ export const useNodeShortcuts = ({
     )
   ).current;
 
+  const throttledGoBackOneDirectory = useRef(
+    throttle(
+      () => {
+        if (!vscodeApi) return;
+        setCurrentPath(prevState => {
+          const newPath = prevState.split("/").slice(0, -1).join("/")
+          return newPath !== "" ? newPath : prevState
+        });
+      },
+      500,
+      { trailing: false }
+    )
+  ).current;
+
   const handleKeyDown = useCallback(
     (event: KeyboardEvent) => {
       if (!enabled) return;
 
       pressedKeys.current.add(event.key);
+
+      if(pressedKeys.current.has("Escape")){
+        throttledGoBackOneDirectory();
+        return
+      }
 
       for (const shortcut of NODE_SHORTCUTS) {
         const combinationPressed = shortcut.keys.every((requiredKey) =>
@@ -58,13 +77,12 @@ export const useNodeShortcuts = ({
         if (!combinationPressed) continue;
 
         const nodeInfo = getCollidingNode()?.data;
-        if (nodeInfo) {
-          event.preventDefault();
-          throttledOpenNode(nodeInfo);
-        }
+        if(!nodeInfo) return
+        event.preventDefault();
+        throttledOpenNode(nodeInfo);
       }
     },
-    [enabled, getCollidingNode, throttledOpenNode]
+    [enabled, getCollidingNode, throttledOpenNode, throttledGoBackOneDirectory]
   );
 
   const handleKeyUp = useCallback((event: KeyboardEvent) => {

@@ -2,8 +2,11 @@ import { useGameStore } from "@/browser/store";
 import { useEffect, useRef, useState } from "react";
 
 const tabs = [
-  { label: "General", description: ["Display", "Navigation"] },
-  { label: "Mechanics", description: "Boat" },
+  { label: "General", description: ["Display", "Helpers"] },
+  { label: "Mechanics", description: ["Movement", "Collision"] },
+  { label: "Controls", description: ["Movement keys", "Special keys"] },
+  { label: "About", description: [] },
+  { label: "Credits", description: [] },
 ] as const;
 
 type TSettingsTab = (typeof tabs)[number]["label"];

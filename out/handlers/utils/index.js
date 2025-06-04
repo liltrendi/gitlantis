@@ -33,39 +33,24 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendError = exports.getWorkspaceFolderFromPath = exports.getFolderUri = void 0;
+exports.sendError = exports.getWorkspaceFolderFromPath = void 0;
 const vscode = __importStar(require("vscode"));
 const path = __importStar(require("path"));
-const fs = __importStar(require("fs"));
 const config_1 = require("../../config");
-const getFolderUri = (path) => {
-    if (!path || path === config_1.ROOT_DIRECTORY_KEY) {
+const getWorkspaceFolderFromPath = (inputPath) => {
+    if (!inputPath || inputPath === config_1.ROOT_DIRECTORY_KEY) {
         const folders = vscode.workspace.workspaceFolders;
         if (!folders || folders.length === 0) {
             throw new Error("No workspace folder found.");
         }
-        return folders[0].uri;
-    }
-    return vscode.Uri.file(path);
-};
-exports.getFolderUri = getFolderUri;
-const getWorkspaceFolderFromPath = (inputPath) => {
-    const folders = vscode.workspace.workspaceFolders;
-    if (!folders || folders.length === 0) {
-        throw new Error("No workspace folder found.");
-    }
-    if (!inputPath || inputPath === config_1.ROOT_DIRECTORY_KEY) {
         return folders[0];
     }
-    const folderPath = fs.existsSync(inputPath) && fs.lstatSync(inputPath).isDirectory()
-        ? inputPath
-        : path.dirname(inputPath);
-    const folderUri = vscode.Uri.file(folderPath);
-    const folder = folders.find(folder => folder.uri.fsPath === folderUri.fsPath || folderUri.fsPath.startsWith(folder.uri.fsPath));
-    if (!folder) {
-        throw new Error(`No matching workspace folder found for path: ${inputPath}`);
-    }
-    return folder;
+    const folderUri = vscode.Uri.file(inputPath);
+    return {
+        name: path.basename(folderUri.path),
+        uri: folderUri,
+        index: 0,
+    };
 };
 exports.getWorkspaceFolderFromPath = getWorkspaceFolderFromPath;
 const sendError = (panel, path, errorType, message) => {

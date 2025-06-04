@@ -5,6 +5,7 @@ export const FILE_MODEL_PATH = `/models/file/file.glb`;
 
 export const NODE_SHORTCUTS: Array<{ label: string; keys: string[] }> = [
   { label: "Shift+Enter to explore", keys: ["Shift", "Enter"] },
+  { label: "Escape", keys: ["Escape"] },
 ];
 
 export const SAMPLE_DATA = [
