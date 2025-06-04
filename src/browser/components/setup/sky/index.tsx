@@ -35,47 +35,14 @@ export const Sky = () => {
     return sunWorldPosition.clone().sub(offset);
   }, [sunWorldPosition, worldOffsetRef?.current]);
 
-  const skyParams = useMemo(() => {
-    const sunY = sunWorldPosition.y;
-    const isDay = sunY > 0.15;
-    const isSunrise = sunY > 0.05 && sunY <= 0.25;
-    const isSunset = sunY > 0.05 && sunY <= 0.2 && sunWorldPosition.x < 0;
-    
-    if (isSunrise || isSunset) {
-      // Sunrise/Sunset - warm colors
-      return {
-        rayleigh: 2,
-        turbidity: 15,
-        mieDirectionalG: 0.8,
-        mieCoefficient: 0.1,
-      };
-    } else if (isDay) {
-      // Daytime - clear blue sky
-      return {
-        rayleigh: 4,
-        turbidity: 0.5,
-        mieDirectionalG: 0.7,
-        mieCoefficient: 0.05,
-      };
-    } else {
-      // Night/Early morning - deeper colors
-      return {
-        rayleigh: 6,
-        turbidity: 2,
-        mieDirectionalG: 0.9,
-        mieCoefficient: 0.01,
-      };
-    }
-  }, [sunWorldPosition]);
-
   return (
     <ThreeSky
       distance={450000}
       sunPosition={relativeSunPosition}
-      rayleigh={skyParams.rayleigh}
-      turbidity={skyParams.turbidity}
-      mieDirectionalG={skyParams.mieDirectionalG}
-      mieCoefficient={skyParams.mieCoefficient}
+      rayleigh={2}
+      turbidity={15}
+      mieDirectionalG={0.8}
+      mieCoefficient={0.01}
     />
   );
 };
