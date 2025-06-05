@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useKeyboard } from "@/browser/hooks/useBoat/keyboard";
-import { useGameStore } from "@/browser/store";
+import { useGameStore } from "@/browser/hooks/useGame/store";
 
 export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
   const keys = useKeyboard();

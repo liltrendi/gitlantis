@@ -2,7 +2,7 @@ import { useFrame } from "@react-three/fiber";
 import { useCallback, useRef, useState } from "react";
 import { Vector3 } from "three";
 import { useNodeShortcuts } from "@/browser/hooks/useNode/shortcuts";
-import { useGameStore } from "@/browser/store";
+import { useGameStore } from "@/browser/hooks/useGame/store";
 
 export const useNodeCollision = ({
   nodes,

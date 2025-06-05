@@ -1,4 +1,4 @@
-import { useGameStore } from "@/browser/store";
+import { useGameStore } from "@/browser/hooks/useGame/store";
 import { useEffect, useRef, useState } from "react";
 
 const tabs = [

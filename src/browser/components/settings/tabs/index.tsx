@@ -7,7 +7,7 @@ export const SettingsTabs = (gameProps: ReturnType<typeof useGameSettings>) => {
         <button
           key={tab.label}
           onClick={() => gameProps.setActiveTab(tab)}
-          className={`w-full text-left text-lg p-6 border-b border-gray-700 ${
+          className={`w-full text-left text-lg p-6 ${
             gameProps.activeTab === tab ? "bg-gray-800 font-semibold" : "hover:bg-gray-800"
           }`}
         >

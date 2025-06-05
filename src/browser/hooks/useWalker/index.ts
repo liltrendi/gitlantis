@@ -12,7 +12,7 @@ import type {
 } from "@/extension/types";
 import { SAMPLE_DATA } from "@/browser/config";
 import { useExtensionContext } from "@/browser/hooks/useExtension/context";
-import { useGameStore } from "@/browser/store";
+import { useGameStore } from "@/browser/hooks/useGame/store";
 
 export const useWalker = () => {
   const [walker, setWalker] = useState<{

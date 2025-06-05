@@ -2,9 +2,9 @@ import { create } from "zustand";
 
 export const useGameStore = create<TGameStore>((set) => ({
   settings: {
-    minimap: "Hide",
-    breadcrumbs: "Hide",
-    compass: "Hide",
+    minimap: "Show",
+    breadcrumbs: "Show",
+    compass: "Show",
     nodesToShow: "Folders and files",
     boatSpeed: 3.0,
     acceleration: 0.02,
