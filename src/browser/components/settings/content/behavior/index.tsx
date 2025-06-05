@@ -15,6 +15,7 @@ export const SettingsBehavior = (
         max={10}
         value={gameProps.settings.boatSpeed}
         setter={gameProps.setBoatSpeed}
+        tooltip="The boat's top speed"
       />
       <SharedSlider
         label="Acceleration"
@@ -22,6 +23,7 @@ export const SettingsBehavior = (
         max={1}
         value={gameProps.settings.acceleration}
         setter={gameProps.setBoatAcceleration}
+        tooltip="How quickly the boat speeds up"
       />
       <SharedSlider
         label="Deceleration"
@@ -29,6 +31,7 @@ export const SettingsBehavior = (
         max={1}
         value={gameProps.settings.deceleration}
         setter={gameProps.setBoatDeceleration}
+        tooltip="How quickly the boat slows down"
       />
       <SharedSlider
         label="Turn speed"
@@ -36,6 +39,7 @@ export const SettingsBehavior = (
         max={0.05}
         value={gameProps.settings.turnSpeed}
         setter={gameProps.setBoatTurnSpeed}
+        tooltip="How quickly the boat turns"
       />
       <SharedSlider
         label="Turn deceleration"
@@ -43,6 +47,7 @@ export const SettingsBehavior = (
         max={0.1}
         value={gameProps.settings.turnDeceleration}
         setter={gameProps.setBoatTurnDeceleration}
+        tooltip="How quickly turning slows"
       />
 
       <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[20px]">
@@ -55,6 +60,7 @@ export const SettingsBehavior = (
         max={300}
         value={gameProps.settings.collisionRadius}
         setter={gameProps.setCollisionRadius}
+        tooltip="Distance within which boat collides"
       />
 
       <SharedSlider
@@ -63,6 +69,7 @@ export const SettingsBehavior = (
         max={10}
         value={gameProps.settings.collisionPushStrength}
         setter={gameProps.setCollisionPushStrength}
+        tooltip="Force applied on collision"
       />
     </>
   );

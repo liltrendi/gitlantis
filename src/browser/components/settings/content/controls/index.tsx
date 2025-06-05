@@ -65,8 +65,8 @@ const SettingsCombinations = (
       <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[40px]">
         {gameProps.activeTab.description[1]}
       </h3>
-      <div className="flex flex-col items-start gap-2 text-xs text-gray-400">
-      <span className="text-sm mb-2">Open files and folders</span>
+      <div className="flex flex-col items-start gap-2 text-gray-400">
+      <span className="text-md mb-2">Open files and folders</span>
         <div className="flex items-center gap-1">
           <Key pad>Shift</Key>
           <span className="text-xl px-2">+</span>
@@ -74,8 +74,8 @@ const SettingsCombinations = (
         </div>
       </div>
 
-      <div className="flex flex-col items-start gap-2 text-xs text-gray-400 mt-6">
-      <span className="text-sm mb-2">Go back one directory</span>
+      <div className="flex flex-col items-start gap-2 text-gray-400 mt-6">
+      <span className="text-md mb-2">Go back one directory</span>
         <div className="flex items-center gap-1">
           <Key pad>Escape</Key>
         </div>

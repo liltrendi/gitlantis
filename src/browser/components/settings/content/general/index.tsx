@@ -16,6 +16,7 @@ export const SettingsGeneral = (
         onChange={(e) =>
           gameProps.setNodesToShow(e.target.value as TNodesToShow)
         }
+        tooltip="Show folders, files, or both"
       />
 
       <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[20px]">
@@ -26,12 +27,14 @@ export const SettingsGeneral = (
         value={gameProps.settings.minimap}
         options={["Show", "Hide"]}
         onChange={(e) => gameProps.setMinimap(e.target.value as TMinimap)}
+        tooltip="Toggle overhead view"
       />
       <SharedSelect
         label="Compass"
         value={gameProps.settings.compass}
         options={["Show", "Hide"]}
         onChange={(e) => gameProps.setCompass(e.target.value as TCompass)}
+        tooltip="Toggle compass visibility"
       />
       <SharedSelect
         label="Breadcrumbs"
@@ -40,6 +43,7 @@ export const SettingsGeneral = (
         onChange={(e) =>
           gameProps.setBreadcrumbs(e.target.value as TBreadcrumbs)
         }
+        tooltip="Toggle navigation visibility"
       />
     </>
   );

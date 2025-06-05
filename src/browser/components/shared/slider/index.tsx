@@ -1,14 +1,18 @@
+import { Tooltip } from "@/browser/components/shared/tooltip";
+
 export const SharedSlider = ({
   label,
   value,
   min,
   max,
+  tooltip,
   setter,
 }: {
   label: string;
   value: number;
   min: number;
   max: number;
+  tooltip?: string;
   setter: (value: number) => void;
 }) => {
   const percentValue = ((value - min) / (max - min)) * 100;
@@ -16,7 +20,12 @@ export const SharedSlider = ({
   return (
     <label className="block mb-[20px]">
       <span className="flex flex-row justify-between">
-        <span className="text-md text-gray-400">{label}</span>
+        <span className="text-md text-gray-400 flex items-center justify-center gap-[5px]">
+          {label}
+          <span>
+            <Tooltip tooltip={tooltip} />
+          </span>
+        </span>
         <span className="text-sm text-gray-400">{value.toFixed(2)}</span>
       </span>
       <input
@@ -24,7 +33,7 @@ export const SharedSlider = ({
         min={0}
         max={100}
         step={1}
-        className="w-full mt-3 appearance-none h-[4px] bg-gray-800 rounded-lg outline-none accent-yellow-400"
+        className="w-full mt-5 appearance-none h-[4px] bg-gray-800 rounded-lg outline-none accent-yellow-400"
         style={{
           background: `linear-gradient(to right, #f2bc07 0%, #f2bc07 ${percentValue}%, #3f3f46 ${percentValue}%, #3f3f46 100%)`,
         }}
