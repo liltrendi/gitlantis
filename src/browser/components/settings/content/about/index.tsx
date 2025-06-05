@@ -56,7 +56,7 @@ export const SettingsAbout = (
           href="https://buymeacoffee.com/liltrendi"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-md transition-colors duration-200"
+          className="inline-flex text-sm items-center px-4 py-2 bg-[#f2bc07] hover:bg-[#f2bc07] hover:text-gray-900 text-gray-900 font-semibold rounded-lg shadow-md transition-colors duration-200"
         >
           <Coffee className="w-5 h-5 mr-2" />
           Buy Me a Coffee
