@@ -8,7 +8,7 @@ export const SettingsContent = (
   gameProps: ReturnType<typeof useGameSettings>
 ) => {
   return (
-    <div className="w-2/3 p-6 overflow-y-auto">
+    <div className="w-4/5 p-6 overflow-y-auto">
       {(() => {
         const label = gameProps.activeTab.label;
         switch (label) {

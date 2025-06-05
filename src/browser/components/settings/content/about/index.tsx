@@ -1,5 +1,5 @@
 import type { useGameSettings } from "@/browser/hooks/useGame/settings";
-import { Sparkle } from "lucide-react";
+import { Coffee, Sparkle } from "lucide-react";
 
 const ATTRIBUTIONS = [
   {
@@ -40,6 +40,15 @@ export const SettingsAbout = (
             donating to help me keep improving it!
           </span>
         </p>
+        <a
+      href="https://buymeacoffee.com/liltrendi"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-md transition-colors duration-200"
+    >
+      <Coffee className="w-5 h-5 mr-2" />
+      Buy Me a Coffee
+    </a>
 
         {/* add social links here */}
       </div>
