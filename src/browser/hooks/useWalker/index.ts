@@ -49,7 +49,6 @@ export const useWalker = () => {
       return;
     }
 
-    console.log("gitlantis::post::currentPath", currentPath);
     vscodeApi.postMessage({
       type: DIRECTORY_COMMANDS.read_directory,
       path: currentPath,
@@ -57,7 +56,6 @@ export const useWalker = () => {
 
     const handleWalkResponse = ({ data }: { data: THandlerMessage }) => {
       const { type, label, children, error } = data;
-      console.log("gitlantis::walk::response", data.children, settings.nodesToShow);
       switch (type) {
         case DIRECTORY_RESPONSE.data:
           if (currentPath === ROOT_DIRECTORY_KEY) {

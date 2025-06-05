@@ -8,7 +8,6 @@ const Key = ({
   children: ReactNode;
   pad?: boolean;
 }) => {
-  console.log(children === " ");
   return (
     <div
       className={`w-8 h-8 rounded-md bg-[#1f1f1f] text-lg text-[#f2bc07] flex items-center justify-center shadow-inner border border-gray-600 ${
