@@ -3,16 +3,28 @@ import { Coffee, Sparkle } from "lucide-react";
 
 const ATTRIBUTIONS = [
   {
-    model: { name: "Tower", link: "#" },
-    creator: { name: "Erik M. Bray", link: "#" },
+    model: {
+      name: "Boat",
+      link: "https://sketchfab.com/3d-models/boat-c6694b9cafe74e7ba46f5612a3e9a7f0",
+    },
+    creator: { name: "4122", link: "https://sketchfab.com/4122" },
   },
   {
-    model: { name: "Boat", link: "#" },
-    creator: { name: "Henderson James", link: "#" },
+    model: {
+      name: "Buoy",
+      link: "https://sketchfab.com/3d-models/oceanographic-buoy-ems-toroidal-7b0b7cd7fee04717b3cd2183a96e39ad",
+    },
+    creator: {
+      name: "gerardllorach",
+      link: "https://sketchfab.com/gerardllorach",
+    },
   },
   {
-    model: { name: "Buoy", link: "#" },
-    creator: { name: "Bruyne de Jeong", link: "#" },
+    model: {
+      name: "Lighthouse",
+      link: "https://sketchfab.com/3d-models/sm--bld--lighthouse-07768c38fcf24560aa3520d9796592f5",
+    },
+    creator: { name: "kirasuinu", link: "https://sketchfab.com/kirasuinu" },
   },
 ];
 
@@ -41,16 +53,14 @@ export const SettingsAbout = (
           </span>
         </p>
         <a
-      href="https://buymeacoffee.com/liltrendi"
-      target="_blank"
-      rel="noopener noreferrer"
-      className="inline-flex items-center px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-md transition-colors duration-200"
-    >
-      <Coffee className="w-5 h-5 mr-2" />
-      Buy Me a Coffee
-    </a>
-
-        {/* add social links here */}
+          href="https://buymeacoffee.com/liltrendi"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center px-4 py-2 bg-yellow-400 hover:bg-yellow-500 text-black font-semibold rounded-lg shadow-md transition-colors duration-200"
+        >
+          <Coffee className="w-5 h-5 mr-2" />
+          Buy Me a Coffee
+        </a>
       </div>
 
       <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[20px]">
@@ -76,9 +86,9 @@ export const SettingsAbout = (
                   {item.model.name}
                 </a>
               </span>{" "}
-              - a creation by{" "}
+              - by{" "}
               <span>
-                <a className="" href={item.creator.link}>
+                <a className="underline text-gray-200" href={item.creator.link}>
                   {item.creator.name}
                 </a>
               </span>
