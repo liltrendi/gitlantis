@@ -42,34 +42,30 @@ function activate(context) {
     const exploreGitlantis = vscode.commands.registerCommand("gitlantis.openWebview", () => {
         if (!panel) {
             panel = (0, utils_1.createPanel)(context);
-            // When panel is disposed, clear the active state
             panel.onDidDispose(() => {
                 panel = null;
-                context.globalState.update('gitlantisActive', false);
+                context.globalState.update("gitlantisActive", false);
             });
         }
         (0, commands_1.openWebView)(panel, context);
-        // Mark extension as active
-        context.globalState.update('gitlantisActive', true);
+        context.globalState.update("gitlantisActive", true);
     });
     context.subscriptions.push(exploreGitlantis);
-    // Check if we need to restore webview immediately (after folder change or startup)
-    const shouldRestore = context.globalState.get('gitlantisActive', false);
-    if (shouldRestore) {
-        // Delay to ensure workspace is loaded
+    // Only reactivate if user manually triggered it before
+    const shouldRestore = context.globalState.get("gitlantisActive", false);
+    if (shouldRestore && vscode.workspace.workspaceFolders?.length) {
+        // Delay ensures workspace is fully loaded
         setTimeout(() => {
-            vscode.commands.executeCommand('gitlantis.openWebview');
+            vscode.commands.executeCommand("gitlantis.openWebview");
         }, 500);
     }
-    // Listen for workspace changes only when extension should be active
-    const workspaceListener = vscode.workspace.onDidChangeWorkspaceFolders(() => {
-        const isActive = context.globalState.get('gitlantisActive', false);
+    // Re-run when workspace folders change, if previously active
+    context.subscriptions.push(vscode.workspace.onDidChangeWorkspaceFolders(() => {
+        const isActive = context.globalState.get("gitlantisActive", false);
         if (isActive) {
-            // Delay to ensure new workspace is loaded
             setTimeout(() => {
-                vscode.commands.executeCommand('gitlantis.openWebview');
+                vscode.commands.executeCommand("gitlantis.openWebview");
             }, 300);
         }
-    });
-    context.subscriptions.push(workspaceListener);
+    }));
 }
