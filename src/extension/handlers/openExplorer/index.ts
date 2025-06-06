@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { DIRECTORY_ERRORS, ROOT_DIRECTORY_KEY } from "../../config";
 import { sendError } from "../utils";
+import { LAUNCH_MARKER } from "../../commands";
 
 export const handleOpenExplorer = async (
   context: vscode.ExtensionContext,
@@ -22,7 +23,7 @@ export const handleOpenExplorer = async (
       );
     }
 
-    await context.globalState.update("gitlantisActive", true);
+    await context.globalState.update(LAUNCH_MARKER, true);
     await vscode.commands.executeCommand(
       "vscode.openFolder",
       selected[0],

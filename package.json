@@ -8,7 +8,7 @@
   "contributes": {
     "commands": [
       {
-        "command": "gitlantis.openWebview",
+        "command": "gitlantis.start",
         "title": "Gitlantis"
       }
     ]

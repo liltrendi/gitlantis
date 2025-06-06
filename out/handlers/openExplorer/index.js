@@ -37,6 +37,7 @@ exports.handleOpenExplorer = void 0;
 const vscode = __importStar(require("vscode"));
 const config_1 = require("../../config");
 const utils_1 = require("../utils");
+const commands_1 = require("../../commands");
 const handleOpenExplorer = async (context, panel) => {
     try {
         const selected = await vscode.window.showOpenDialog({
@@ -47,7 +48,7 @@ const handleOpenExplorer = async (context, panel) => {
         if (!selected || selected.length === 0) {
             return (0, utils_1.sendError)(panel, config_1.ROOT_DIRECTORY_KEY, config_1.DIRECTORY_ERRORS.no_open_project, "You have no active project open at the moment.");
         }
-        await context.globalState.update("gitlantisActive", true);
+        await context.globalState.update(commands_1.LAUNCH_MARKER, true);
         await vscode.commands.executeCommand("vscode.openFolder", selected[0], false);
     }
     catch (err) {

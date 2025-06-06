@@ -33,18 +33,54 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.openWebView = void 0;
+exports.launchExtension = exports.registerCommands = exports.getLauncher = exports.LAUNCH_COMMAND = exports.LAUNCH_MARKER = void 0;
 const vscode = __importStar(require("vscode"));
 const utils_1 = require("../utils");
 const onDidReceiveMessage_1 = require("../handlers/onDidReceiveMessage");
-const openWebView = (panel, context) => {
+exports.LAUNCH_MARKER = "gitlantisActive";
+exports.LAUNCH_COMMAND = "gitlantis.start";
+const getLauncher = (context) => {
+    let panel = (0, utils_1.createPanel)(context);
+    panel.onDidDispose(() => {
+        panel = null;
+        context.globalState.update(exports.LAUNCH_MARKER, false);
+    });
     const scripts = (0, utils_1.getTranspiledScripts)(panel, context);
     if (!scripts)
         return;
     const models = (0, utils_1.getModels)(panel, context);
     panel.webview.html = (0, utils_1.getWebviewPage)({ scripts, models });
-    panel.webview.onDidReceiveMessage((message) => (0, onDidReceiveMessage_1.onDidReceiveMessage)({ panel, context, message }));
-    // Show the panel
+    panel.webview.onDidReceiveMessage((message) => (0, onDidReceiveMessage_1.onDidReceiveMessage)({
+        panel: panel,
+        context,
+        message,
+    }));
     panel.reveal(vscode.ViewColumn.One);
+    context.globalState.update(exports.LAUNCH_MARKER, true);
 };
-exports.openWebView = openWebView;
+exports.getLauncher = getLauncher;
+const registerCommands = (context) => {
+    const launchExtension = vscode.commands.registerCommand(exports.LAUNCH_COMMAND, () => (0, exports.getLauncher)(context));
+    context.subscriptions.push(launchExtension);
+};
+exports.registerCommands = registerCommands;
+const relaunchOnFolderChange = (context) => {
+    context.subscriptions.push(vscode.workspace.onDidChangeWorkspaceFolders(() => {
+        const isActive = context.globalState.get(exports.LAUNCH_MARKER, false);
+        if (isActive) {
+            setTimeout(() => {
+                vscode.commands.executeCommand(exports.LAUNCH_COMMAND);
+            }, 300);
+        }
+    }));
+};
+const launchExtension = (context) => {
+    const shouldRestore = context.globalState.get(exports.LAUNCH_MARKER, false);
+    if (shouldRestore && vscode.workspace.workspaceFolders?.length) {
+        setTimeout(() => {
+            vscode.commands.executeCommand(exports.LAUNCH_COMMAND);
+        }, 500);
+    }
+    relaunchOnFolderChange(context);
+};
+exports.launchExtension = launchExtension;
