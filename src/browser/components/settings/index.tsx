@@ -5,7 +5,7 @@ import { SettingsTabs } from "@/browser/components/settings/tabs";
 import { SettingsModal } from "@/browser/components/settings/modal";
 import { SettingsCog } from "@/browser/components/settings/buttons";
 
-export const Settings = () => {
+export const GlobalSettings = () => {
   const gameProps = useGameSettings();
 
   return (

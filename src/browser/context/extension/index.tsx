@@ -10,24 +10,29 @@ import {
 } from "react";
 
 type TExtensionConfig = {
-  vscodeApi: TAcquireVsCode | null | undefined;
+  rootLabel: string;
   currentPath: string;
+  vscodeApi: TAcquireVsCode | null | undefined;
   setCurrentPath: Dispatch<SetStateAction<string>>;
+  setRootLabel: Dispatch<SetStateAction<string>>;
 };
 
 export const ExtensionContext = createContext<TExtensionConfig>({
-  vscodeApi: undefined,
+  rootLabel: "",
   currentPath: "",
+  vscodeApi: undefined,
+  setRootLabel: () => {},
   setCurrentPath: () => {},
 });
 
 export const ExtensionContextProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
+  const [rootLabel, setRootLabel] = useState<string>(ROOT_DIRECTORY_KEY);
+  const [currentPath, setCurrentPath] = useState<string>(ROOT_DIRECTORY_KEY);
   const [vscodeApi, setVscodeApi] = useState<TAcquireVsCode | null | undefined>(
     undefined
   );
-  const [currentPath, setCurrentPath] = useState<string>(ROOT_DIRECTORY_KEY);
 
   useEffect(() => {
     setVscodeApi(window.acquireVsCodeApi?.() ?? null);
@@ -35,7 +40,7 @@ export const ExtensionContextProvider: FC<{
 
   return (
     <ExtensionContext.Provider
-      value={{ vscodeApi, currentPath, setCurrentPath }}
+      value={{ rootLabel, currentPath, vscodeApi, setRootLabel, setCurrentPath }}
     >
       {children}
     </ExtensionContext.Provider>

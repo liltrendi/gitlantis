@@ -25,11 +25,12 @@ export const handleReadDirectory = async (
       children,
     });
   } catch (error: unknown) {
+    console.log("::error::", error)
     sendError(
       panel,
       message.path,
       DIRECTORY_ERRORS.no_open_project,
-      "You have no active project open at the moment."
+      "Ooops, something went wrong."
     );
   }
 };

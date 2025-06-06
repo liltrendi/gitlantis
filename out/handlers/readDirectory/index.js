@@ -54,7 +54,8 @@ const handleReadDirectory = async (panel, message) => {
         });
     }
     catch (error) {
-        (0, utils_1.sendError)(panel, message.path, config_1.DIRECTORY_ERRORS.no_open_project, "You have no active project open at the moment.");
+        console.log("::error::", error);
+        (0, utils_1.sendError)(panel, message.path, config_1.DIRECTORY_ERRORS.no_open_project, "Ooops, something went wrong.");
     }
 };
 exports.handleReadDirectory = handleReadDirectory;

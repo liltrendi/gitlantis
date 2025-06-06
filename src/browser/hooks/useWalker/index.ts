@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import {
   DIRECTORY_COMMANDS,
   DIRECTORY_ERRORS,
@@ -25,8 +25,45 @@ export const useWalker = () => {
     response: [],
   });
 
-  const { vscodeApi, currentPath, setCurrentPath } = useExtensionContext();
+  const { vscodeApi, currentPath, setCurrentPath, setRootLabel } = useExtensionContext();
   const { settings } = useGameStore();
+
+  const getFilteredNodes = useCallback(
+    (nodes: TDirectoryContent[]) => {
+      return nodes.filter((child) => {
+        if (settings.nodesToShow === "Folders only")
+          return child.type === "folder";
+        if (settings.nodesToShow === "Files only") return child.type === "file";
+        return child;
+      });
+    },
+    [settings.nodesToShow]
+  );
+
+  const handleWalkResponse = useCallback(
+    ({ data }: { data: THandlerMessage }) => {
+      const { type, label, children, error } = data;
+      switch (type) {
+        case DIRECTORY_RESPONSE.data:
+          if (currentPath === ROOT_DIRECTORY_KEY) {
+            setRootLabel(label);
+          }
+          setWalker((prev) => ({
+            ...prev,
+            error: null,
+            loading: false,
+            response: getFilteredNodes(children),
+          }));
+          break;
+        case DIRECTORY_RESPONSE.error:
+          setWalker((prev) => ({ ...prev, loading: false, error }));
+          break;
+        default:
+          break;
+      }
+    },
+    [setRootLabel, setCurrentPath, getFilteredNodes, setWalker, settings.nodesToShow]
+  );
 
   useEffect(() => {
     if (vscodeApi === undefined) return;
@@ -39,12 +76,7 @@ export const useWalker = () => {
           message: "Failed to load native vscode api",
         },
         loading: false,
-        response: (SAMPLE_DATA as TDirectoryContent[]).filter(child => {
-          if(settings.nodesToShow === "Folders and files") return child;
-          if(settings.nodesToShow === "Folders only") return child.type === "folder";
-          if(settings.nodesToShow === "Files only") return child.type === "file";
-          return child;
-        }),
+        response: getFilteredNodes(SAMPLE_DATA as TDirectoryContent[]),
       }));
       return;
     }
@@ -53,29 +85,6 @@ export const useWalker = () => {
       type: DIRECTORY_COMMANDS.read_directory,
       path: currentPath,
     });
-
-    const handleWalkResponse = ({ data }: { data: THandlerMessage }) => {
-      const { type, label, children, error } = data;
-      switch (type) {
-        case DIRECTORY_RESPONSE.data:
-          if (currentPath === ROOT_DIRECTORY_KEY) {
-            setCurrentPath(`Project: ${label}`);
-          }
-          setWalker((prev) => ({ ...prev, response: children.filter(child => {
-            if(settings.nodesToShow === "Folders and files") return child;
-            if(settings.nodesToShow === "Folders only") return child.type === "folder";
-            if(settings.nodesToShow === "Files only") return child.type === "file";
-            return child;
-          }) }));
-          break;
-        case DIRECTORY_RESPONSE.error:
-          setWalker((prev) => ({ ...prev, error }));
-          break;
-        default:
-          break;
-      }
-      setWalker((prev) => ({ ...prev, loading: false }));
-    };
 
     window.addEventListener("message", handleWalkResponse);
 
