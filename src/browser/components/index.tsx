@@ -14,6 +14,7 @@ import { GlobalSettings } from "@/browser/components/settings";
 import { Minimap } from "@/browser/components/minimap";
 import { Breadcrumbs } from "@/browser/components/shared/breadcrumbs";
 import { Compass } from "@/browser/components/shared/compass";
+import { MinimapToggle } from "@/browser/components/minimap/toggle";
 
 export const World = () => {
   return (
@@ -22,6 +23,7 @@ export const World = () => {
       <GlobalSettings />
       <Breadcrumbs />
       <Compass />
+      <MinimapToggle />
       <GameCanvas>
         <Suspense fallback={null}>
           <Physics>
