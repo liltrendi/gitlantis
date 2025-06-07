@@ -61,7 +61,7 @@ export const getTranspiledScripts = (
   return { scriptUri, styleUri, workspaceFoldersUri };
 };
 
-export const getModels = (
+export const getPublicAssets = (
   panel: vscode.WebviewPanel,
   context: vscode.ExtensionContext
 ) => {
@@ -99,7 +99,13 @@ export const getModels = (
     "waves.mp3",
   ]);
 
-  return { oceanUri, boatUri, folderUri, fileUri, audioUri };
+  const faviconUri = getUri(panel.webview, context.extensionUri, [
+    "out",
+    "images",
+    "favicon.png",
+  ]);
+
+  return { oceanUri, boatUri, folderUri, fileUri, audioUri, faviconUri };
 };
 
 export const createPanel = (context: vscode.ExtensionContext) => {
@@ -114,28 +120,34 @@ export const createPanel = (context: vscode.ExtensionContext) => {
         vscode.Uri.joinPath(context.extensionUri, "out"),
         vscode.Uri.joinPath(context.extensionUri, "out", "assets"),
         vscode.Uri.joinPath(context.extensionUri, "out", "models"),
+        vscode.Uri.joinPath(context.extensionUri, "out", "music"),
+        vscode.Uri.joinPath(context.extensionUri, "out", "images"),
       ],
     }
   );
+  panel.iconPath = {
+    light: vscode.Uri.joinPath(
+      context.extensionUri,
+      "out",
+      "images",
+      "favicon.png"
+    ),
+    dark: vscode.Uri.joinPath(
+      context.extensionUri,
+      "out",
+      "images",
+      "favicon.png"
+    ),
+  };
   return panel;
 };
 
 export const getWebviewPage = ({
   scripts,
-  models,
+  publicAssets,
 }: {
-  scripts: {
-    scriptUri: vscode.Uri;
-    styleUri: vscode.Uri;
-    workspaceFoldersUri: string;
-  };
-  models: {
-    oceanUri: vscode.Uri;
-    boatUri: vscode.Uri;
-    folderUri: vscode.Uri;
-    fileUri: vscode.Uri;
-    audioUri: vscode.Uri;
-  };
+  scripts: ReturnType<typeof getTranspiledScripts>;
+  publicAssets: ReturnType<typeof getPublicAssets>;
 }) => {
   return `
       <!DOCTYPE html>
@@ -143,22 +155,24 @@ export const getWebviewPage = ({
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="${scripts.styleUri}" />
+        <link rel="icon" type="image/png" href="${publicAssets.faviconUri}" />
+        <link rel="stylesheet" href="${scripts?.styleUri}" />
         <title>Gitlantis</title>
       </head>
       <body>
         <div id="root"></div>
         <script>
-          window.__MODEL_URIS__ = {
-            ocean: "${models.oceanUri}",
-            boat: "${models.boatUri}",
-            folder: "${models.folderUri}",
-            file: "${models.fileUri}",
-            audio: "${models.audioUri}",
+          window.__GLOBAL_URIS__ = {
+            ocean: "${publicAssets.oceanUri}",
+            boat: "${publicAssets.boatUri}",
+            folder: "${publicAssets.folderUri}",
+            file: "${publicAssets.fileUri}",
+            audio: "${publicAssets.audioUri}",
+            favicon: "${publicAssets.faviconUri}",
           };
-          window.__GITLANTIS_ROOT__ = "${scripts.workspaceFoldersUri}";
+          window.__GITLANTIS_ROOT__ = "${scripts?.workspaceFoldersUri}";
         </script>
-        <script type="module" src="${scripts.scriptUri}"></script>
+        <script type="module" src="${scripts?.scriptUri}"></script>
       </body>
       </html>
     `;

@@ -4,12 +4,12 @@ import { BOAT_MODEL_PATH } from "@/browser/config";
 import { useNavigation } from "@/browser/hooks/useBoat/navigation";
 import { useGameContext } from "@/browser/hooks/useGame/context";
 
-const modelUris = (window as any).__MODEL_URIS__ || {
+const globalUris = (window as any).__GLOBAL_URIS__ || {
   boat: BOAT_MODEL_PATH,
 };
 
 export const Boat = () => {
-  const { nodes, materials } = useGLTF(modelUris.boat as string);
+  const { nodes, materials } = useGLTF(globalUris.boat as string);
   const { boatRef } = useGameContext();
   useNavigation({ boatRef });
 

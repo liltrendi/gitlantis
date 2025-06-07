@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import {
   createPanel,
-  getModels,
+  getPublicAssets,
   getTranspiledScripts,
   getWebviewPage,
 } from "../utils";
@@ -22,9 +22,9 @@ export const getLauncher = (context: vscode.ExtensionContext) => {
 
   if (!scripts) return;
 
-  const models = getModels(panel, context);
+  const publicAssets = getPublicAssets(panel, context);
 
-  panel.webview.html = getWebviewPage({ scripts, models });
+  panel.webview.html = getWebviewPage({ scripts, publicAssets });
   panel.webview.onDidReceiveMessage((message) =>
     onDidReceiveMessage({
       panel: panel as vscode.WebviewPanel,

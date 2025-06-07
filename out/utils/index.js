@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getWebviewPage = exports.createPanel = exports.getModels = exports.getTranspiledScripts = exports.getUri = exports.getHashedAssetUri = void 0;
+exports.getWebviewPage = exports.createPanel = exports.getPublicAssets = exports.getTranspiledScripts = exports.getUri = exports.getHashedAssetUri = void 0;
 exports.getVSCodeAPI = getVSCodeAPI;
 const vscode = __importStar(require("vscode"));
 const fs = __importStar(require("fs"));
@@ -62,7 +62,7 @@ const getTranspiledScripts = (panel, context) => {
     return { scriptUri, styleUri, workspaceFoldersUri };
 };
 exports.getTranspiledScripts = getTranspiledScripts;
-const getModels = (panel, context) => {
+const getPublicAssets = (panel, context) => {
     const oceanUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
         "out",
         "models",
@@ -92,9 +92,14 @@ const getModels = (panel, context) => {
         "music",
         "waves.mp3",
     ]);
-    return { oceanUri, boatUri, folderUri, fileUri, audioUri };
+    const faviconUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
+        "out",
+        "images",
+        "favicon.png",
+    ]);
+    return { oceanUri, boatUri, folderUri, fileUri, audioUri, faviconUri };
 };
-exports.getModels = getModels;
+exports.getPublicAssets = getPublicAssets;
 const createPanel = (context) => {
     const panel = vscode.window.createWebviewPanel("gitlantisWebView", "Gitlantis", vscode.ViewColumn.One, {
         enableScripts: true,
@@ -103,34 +108,42 @@ const createPanel = (context) => {
             vscode.Uri.joinPath(context.extensionUri, "out"),
             vscode.Uri.joinPath(context.extensionUri, "out", "assets"),
             vscode.Uri.joinPath(context.extensionUri, "out", "models"),
+            vscode.Uri.joinPath(context.extensionUri, "out", "music"),
+            vscode.Uri.joinPath(context.extensionUri, "out", "images"),
         ],
     });
+    panel.iconPath = {
+        light: vscode.Uri.joinPath(context.extensionUri, "out", "images", "favicon.png"),
+        dark: vscode.Uri.joinPath(context.extensionUri, "out", "images", "favicon.png"),
+    };
     return panel;
 };
 exports.createPanel = createPanel;
-const getWebviewPage = ({ scripts, models, }) => {
+const getWebviewPage = ({ scripts, publicAssets, }) => {
     return `
       <!DOCTYPE html>
       <html lang="en">
       <head>
         <meta charset="UTF-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <link rel="stylesheet" href="${scripts.styleUri}" />
+        <link rel="icon" type="image/png" href="${publicAssets.faviconUri}" />
+        <link rel="stylesheet" href="${scripts?.styleUri}" />
         <title>Gitlantis</title>
       </head>
       <body>
         <div id="root"></div>
         <script>
-          window.__MODEL_URIS__ = {
-            ocean: "${models.oceanUri}",
-            boat: "${models.boatUri}",
-            folder: "${models.folderUri}",
-            file: "${models.fileUri}",
-            audio: "${models.audioUri}",
+          window.__GLOBAL_URIS__ = {
+            ocean: "${publicAssets.oceanUri}",
+            boat: "${publicAssets.boatUri}",
+            folder: "${publicAssets.folderUri}",
+            file: "${publicAssets.fileUri}",
+            audio: "${publicAssets.audioUri}",
+            favicon: "${publicAssets.faviconUri}",
           };
-          window.__GITLANTIS_ROOT__ = "${scripts.workspaceFoldersUri}";
+          window.__GITLANTIS_ROOT__ = "${scripts?.workspaceFoldersUri}";
         </script>
-        <script type="module" src="${scripts.scriptUri}"></script>
+        <script type="module" src="${scripts?.scriptUri}"></script>
       </body>
       </html>
     `;

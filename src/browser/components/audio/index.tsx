@@ -5,7 +5,7 @@ import type { PositionalAudio as TPositionalAudio } from "three";
 import { useGameStore } from "@/browser/hooks/useGame/store";
 import { useGameContext } from "@/browser/hooks/useGame/context";
 
-const modelUris = (window as any).__MODEL_URIS__ || {
+const globalUris = (window as any).__GLOBAL_URIS__ || {
   audio: OCEAN_AUDIO_PATH,
 };
 
@@ -33,7 +33,7 @@ export const Audio = () => {
   return (
     <>
       {splashScreenInvisible && (
-        <PositionalAudio ref={audioRef} url={modelUris.audio} />
+        <PositionalAudio ref={audioRef} url={globalUris.audio} />
       )}
     </>
   );

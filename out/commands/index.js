@@ -48,8 +48,8 @@ const getLauncher = (context) => {
     const scripts = (0, utils_1.getTranspiledScripts)(panel, context);
     if (!scripts)
         return;
-    const models = (0, utils_1.getModels)(panel, context);
-    panel.webview.html = (0, utils_1.getWebviewPage)({ scripts, models });
+    const publicAssets = (0, utils_1.getPublicAssets)(panel, context);
+    panel.webview.html = (0, utils_1.getWebviewPage)({ scripts, publicAssets });
     panel.webview.onDidReceiveMessage((message) => (0, onDidReceiveMessage_1.onDidReceiveMessage)({
         panel: panel,
         context,

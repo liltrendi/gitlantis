@@ -5,7 +5,7 @@ import { useGameContext } from "@/browser/hooks/useGame/context";
 import { OCEAN_MODEL_PATH } from "@/browser/config";
 // import { useReset } from "@/browser/hooks/useReset";
 
-const modelUris = (window as any).__MODEL_URIS__ || {
+const globalUris = (window as any).__GLOBAL_URIS__ || {
   ocean: OCEAN_MODEL_PATH,
 };
 
@@ -17,7 +17,7 @@ export const useOceanRegen = (TILE_SIZE = 10000, TILES_RADIUS = 2) => {
   >([]);
   const { boatRef, oceanRef } = useGameContext();
 
-  const waterNormals = useLoader(TextureLoader, modelUris.ocean as string);
+  const waterNormals = useLoader(TextureLoader, globalUris.ocean as string);
   waterNormals.wrapS = waterNormals.wrapT = RepeatWrapping;
 
   const sceneConfig = {

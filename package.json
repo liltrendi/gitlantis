@@ -20,9 +20,9 @@
     "dev": "vite",
     "lint": "eslint .",
     "preview": "vite preview",
-    "build:webview": "tsc -b && vite build",
+    "build:browser": "tsc -b && vite build",
     "build:extension": "tsc -p tsconfig.extension.json",
-    "build": "npm run build:webview && npm run build:extension",
+    "build": "npm run build:browser && npm run build:extension",
     "watch": "tsc -watch -p tsconfig.extension.json"
   },
   "dependencies": {

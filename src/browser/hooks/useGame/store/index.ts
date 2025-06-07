@@ -13,7 +13,7 @@ export const useGameStore = create<TGameStore>((set) => ({
     turnDeceleration: 0.05,
     collisionRadius: 100,
     collisionPushStrength: 5,
-    volume: 0.20,
+    volume: 0.3,
     splashScreen: "Show"
   },
   setMinimap: (minimap) =>

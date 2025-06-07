@@ -1,9 +1,14 @@
+import { FAVICON_PATH } from "@/browser/config";
 import { useGameContext } from "@/browser/hooks/useGame/context";
 
-export const Splash = () => {
-  const {settings, splashScreenInvisible, setSplashScreenInvisible} = useGameContext()
+const globalUris = (window as any).__GLOBAL_URIS__ || {
+  favicon: FAVICON_PATH,
+}; 
 
-  if(settings.splashScreen === "Hide") return;
+export const Splash = () => {
+  const { settings, splashScreenInvisible, setSplashScreenInvisible } = useGameContext();
+
+  if (settings.splashScreen === "Hide") return;
 
   return (
     <div
@@ -11,15 +16,22 @@ export const Splash = () => {
         splashScreenInvisible ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
+      <img
+        src={globalUris.favicon}
+        alt="Gitlantis Logo"
+        className="w-14 h-14 mb-6 object-contain"
+      />
+
       <h1 className="text-6xl md:text-7xl font-extrabold text-[#eee] mb-10">
         Gitlantis
       </h1>
+
       <button
         onClick={() => setSplashScreenInvisible(true)}
         className="px-6 py-3 rounded-full bg-[#f2bc07] text-black font-semibold text-lg hover:scale-105 transition-transform"
       >
-        Begin expedition
+        Start expedition
       </button>
     </div>
   );
-}
+};
