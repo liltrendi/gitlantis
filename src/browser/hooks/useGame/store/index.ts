@@ -83,6 +83,26 @@ export const useGameStore = create<TGameStore>((set, get) => ({
     get().persistState();
   },
 
+  setRockingAmplitude: (rockingAmplitude: number) => {
+    set((state) => ({ settings: { ...state.settings, rockingAmplitude } }));
+    get().persistState();
+  },
+
+  setRockingSpeed: (rockingSpeed: number) => {
+    set((state) => ({ settings: { ...state.settings, rockingSpeed } }));
+    get().persistState();
+  },
+
+  setBobbingAmplitude: (bobbingAmplitude: number) => {
+    set((state) => ({ settings: { ...state.settings, bobbingAmplitude } }));
+    get().persistState();
+  },
+
+  setBobbingSpeed: (bobbingSpeed: number) => {
+    set((state) => ({ settings: { ...state.settings, bobbingSpeed } }));
+    get().persistState();
+  },
+
   setVolume: (volume: number) => {
     set((state) => ({ settings: { ...state.settings, volume } }));
     get().persistState();

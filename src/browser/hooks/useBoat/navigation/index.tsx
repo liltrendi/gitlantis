@@ -19,10 +19,10 @@ export const useNavigation = ({
     deceleration: settings.deceleration,
     turnSpeed: settings.turnSpeed,
     turnDeceleration: settings.turnDeceleration,
-    rockingAmplitude: 0.05,
-    rockingSpeed: 0.3,
-    bobbingAmplitude: 0.05,
-    bobbingSpeed: 0.8,
+    rockingAmplitude: settings.rockingAmplitude,
+    rockingSpeed: settings.rockingSpeed,
+    bobbingAmplitude: settings.bobbingAmplitude,
+    bobbingSpeed: settings.bobbingSpeed,
   };
 
   const state = useRef({
@@ -44,7 +44,7 @@ export const useNavigation = ({
       1 - Math.min(Math.abs(state.current.speed) / config.maxSpeed, 1);
 
     const time = performance.now() / 1000;
-    floating.rotation.z =
+    floating.rotation.y =
       Math.sin(time * config.rockingSpeed * Math.PI * 2) *
       config.rockingAmplitude *
       movementFactor;

@@ -54,5 +54,9 @@ declare global {
     collisionRadius: number;
     collisionPushStrength: number;
     volume: number;
+    rockingAmplitude: number,
+    rockingSpeed: number,
+    bobbingAmplitude: number,
+    bobbingSpeed: number,
   };
 }

@@ -55,7 +55,47 @@ export const SettingsBehavior = (
       </h3>
 
       <SharedSlider
-        label="Avoidance radius"
+        label="Rocking amplitude"
+        min={0.01}
+        max={0.1}
+        value={gameProps.settings.rockingAmplitude}
+        setter={gameProps.setRockingAmplitude}
+        tooltip="Side tilt amount"
+      />
+
+      <SharedSlider
+        label="Rocking speed"
+        min={0.1}
+        max={1}
+        value={gameProps.settings.rockingSpeed}
+        setter={gameProps.setRockingSpeed}
+        tooltip="Side tilt speed"
+      />
+
+      <SharedSlider
+        label="Bobbing amplitude"
+        min={0.01}
+        max={1}
+        value={gameProps.settings.bobbingAmplitude}
+        setter={gameProps.setBobbingAmplitude}
+        tooltip="Vertical bounce amount"
+      />
+
+      <SharedSlider
+        label="Bobbing speed"
+        min={0.1}
+        max={1}
+        value={gameProps.settings.bobbingSpeed}
+        setter={gameProps.setBobbingSpeed}
+        tooltip="Vertical bounce speed"
+      />
+
+      <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[20px]">
+        {gameProps.activeTab.description[2]}
+      </h3>
+
+      <SharedSlider
+        label="Impact radius"
         min={50}
         max={300}
         value={gameProps.settings.collisionRadius}
