@@ -78,6 +78,10 @@ export const Minimap = () => {
     const targetPos = boatRef.current.position;
     virtualCam.current.position.set(targetPos.x, targetPos.y + 50, targetPos.z);
     virtualCam.current.lookAt(targetPos);
+    
+    // Rotate the camera 45 degrees anticlockwise (around the Y axis)
+    virtualCam.current.rotateZ(Math.PI / -2); // 45 degrees in radians
+    
     virtualCam.current.updateMatrixWorld();
 
     gl.autoClear = false;
