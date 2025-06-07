@@ -4,6 +4,9 @@ export const DIRECTORY_COMMANDS = {
   read_directory: "read_directory",
   open_file: "open_file",
   open_explorer: "open_explorer",
+  persist_settings: 'persist_settings',
+  load_settings: 'load_settings',
+  settings_loaded: 'settings_loaded',
 };
 
 export const DIRECTORY_RESPONSE = {

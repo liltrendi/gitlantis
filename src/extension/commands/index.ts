@@ -25,6 +25,7 @@ export const getLauncher = (context: vscode.ExtensionContext) => {
   const publicAssets = getPublicAssets(panel, context);
 
   panel.webview.html = getWebviewPage({ scripts, publicAssets });
+
   panel.webview.onDidReceiveMessage((message) =>
     onDidReceiveMessage({
       panel: panel as vscode.WebviewPanel,

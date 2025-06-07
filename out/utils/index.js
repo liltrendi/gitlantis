@@ -34,7 +34,6 @@ var __importStar = (this && this.__importStar) || (function () {
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.getWebviewPage = exports.createPanel = exports.getPublicAssets = exports.getTranspiledScripts = exports.getUri = exports.getHashedAssetUri = void 0;
-exports.getVSCodeAPI = getVSCodeAPI;
 const vscode = __importStar(require("vscode"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
@@ -149,20 +148,3 @@ const getWebviewPage = ({ scripts, publicAssets, }) => {
     `;
 };
 exports.getWebviewPage = getWebviewPage;
-let vscodeWeb;
-function getVSCodeAPI() {
-    if (typeof acquireVsCodeApi !== "undefined") {
-        if (!vscodeWeb) {
-            vscodeWeb = acquireVsCodeApi();
-        }
-        return vscodeWeb;
-    }
-    else {
-        console.warn("acquireVsCodeApi is not available in this context.");
-        return {
-            postMessage: (_) => {
-                console.warn("postMessage called outside VSCode webview");
-            },
-        };
-    }
-}

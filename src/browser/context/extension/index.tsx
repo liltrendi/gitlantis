@@ -1,4 +1,5 @@
-import { ROOT_DIRECTORY_KEY } from "@/extension/config";
+import { useGameStore } from "@/browser/hooks/useGame/store";
+import { DIRECTORY_COMMANDS, ROOT_DIRECTORY_KEY } from "@/extension/config";
 import {
   useState,
   useEffect,
@@ -10,6 +11,7 @@ import {
 } from "react";
 
 type TExtensionConfig = {
+  settingsLoaded: boolean;
   rootLabel: string;
   currentPath: string;
   vscodeApi: TAcquireVsCode | null | undefined;
@@ -18,6 +20,7 @@ type TExtensionConfig = {
 };
 
 export const ExtensionContext = createContext<TExtensionConfig>({
+  settingsLoaded: false,
   rootLabel: "",
   currentPath: "",
   vscodeApi: undefined,
@@ -35,12 +38,48 @@ export const ExtensionContextProvider: FC<{
   );
 
   useEffect(() => {
-    setVscodeApi(window.acquireVsCodeApi?.() ?? null);
+    const api = window.acquireVsCodeApi?.() ?? null;
+    setVscodeApi(api);
+    // @ts-expect-error
+    window.vscodeApi = api;
   }, []);
+
+  const { initializeStore, extension } = useGameStore();
+
+  useEffect(() => {
+    if (!vscodeApi) {
+      initializeStore();
+      return;
+    }
+
+    const messageListener = (event: MessageEvent) => {
+      const message = event.data;
+      if (message.type === DIRECTORY_COMMANDS.settings_loaded) {
+        initializeStore(message.data);
+      }
+    };
+
+    window.addEventListener("message", messageListener);
+
+    vscodeApi.postMessage({
+      type: DIRECTORY_COMMANDS.load_settings,
+    });
+
+    return () => {
+      window.removeEventListener("message", messageListener);
+    };
+  }, [initializeStore, vscodeApi]);
 
   return (
     <ExtensionContext.Provider
-      value={{ rootLabel, currentPath, vscodeApi, setRootLabel, setCurrentPath }}
+      value={{
+        settingsLoaded: extension.isLoaded,
+        rootLabel,
+        currentPath,
+        vscodeApi,
+        setRootLabel,
+        setCurrentPath,
+      }}
     >
       {children}
     </ExtensionContext.Provider>

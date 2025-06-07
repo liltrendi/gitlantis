@@ -9,11 +9,11 @@ export type TDirectoryContent = {
   path: Uri | TDirectoryContentPath;
 };
 
-export type TDirectoryContentPath = {path: string, scheme: string}
+export type TDirectoryContentPath = { path: string; scheme: string };
 
 export type TDirectoryErrorType = {
-  type: typeof DIRECTORY_ERRORS[keyof typeof DIRECTORY_ERRORS],
-  message: string
+  type: (typeof DIRECTORY_ERRORS)[keyof typeof DIRECTORY_ERRORS];
+  message: string;
 };
 
 export type THandlerMessage = {
@@ -22,6 +22,7 @@ export type THandlerMessage = {
   path: string;
   children: Array<TDirectoryContent>;
   error: TDirectoryErrorType;
+  data?: TDefaultSettings;
 };
 
 declare global {
@@ -31,5 +32,24 @@ declare global {
     setState: (state: any) => void;
   };
 
-  type TAcquireVsCode = ReturnType<typeof acquireVsCodeApi>
+  type TAcquireVsCode = ReturnType<typeof acquireVsCodeApi>;
+
+  type TShowHide = "Show" | "Hide";
+  type TNodesToShow = "Folders and files" | "Folders only" | "Files only";
+
+  type TDefaultSettings = {
+    minimap: TShowHide;
+    breadcrumbs: TShowHide;
+    compass: TShowHide;
+    nodesToShow: TNodesToShow;
+    boatSpeed: number;
+    acceleration: number;
+    deceleration: number;
+    turnSpeed: number;
+    turnDeceleration: number;
+    collisionRadius: number;
+    collisionPushStrength: number;
+    volume: number;
+    splashScreen: TShowHide;
+  };
 }

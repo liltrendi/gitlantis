@@ -1,47 +1,96 @@
+import { DIRECTORY_COMMANDS } from "@/extension/config";
+import { DEFAULT_SETTINGS } from "@/extension/store";
 import { create } from "zustand";
 
-export const useGameStore = create<TGameStore>((set) => ({
-  settings: {
-    minimap: "Show",
-    breadcrumbs: "Show",
-    compass: "Show",
-    nodesToShow: "Folders and files",
-    boatSpeed: 3.0,
-    acceleration: 0.02,
-    deceleration: 0.01,
-    turnSpeed: 0.02,
-    turnDeceleration: 0.05,
-    collisionRadius: 100,
-    collisionPushStrength: 5,
-    volume: 0.3,
-    splashScreen: "Show"
+export const useGameStore = create<TGameStore>((set, get) => ({
+  settings: DEFAULT_SETTINGS,
+  extension: { isLoaded: false },
+
+  initializeStore: (persistedSettings?: Partial<TDefaultSettings>) => {
+    if (persistedSettings) {
+      set({
+        settings: { ...DEFAULT_SETTINGS, ...persistedSettings },
+        extension: { isLoaded: true },
+      });
+    } else {
+      set({ extension: { isLoaded: true } });
+    }
   },
-  setMinimap: (minimap) =>
-    set((state) => ({ settings: { ...state.settings, minimap } })),
-  setBreadcrumbs: (breadcrumbs) =>
-    set((state) => ({ settings: { ...state.settings, breadcrumbs } })),
-  setCompass: (compass) =>
-    set((state) => ({ settings: { ...state.settings, compass } })),
-  setNodesToShow: (nodesToShow) =>
-    set((state) => ({ settings: { ...state.settings, nodesToShow } })),
-  setBoatSpeed: (boatSpeed: number) =>
-    set((state) => ({ settings: { ...state.settings, boatSpeed } })),
-  setBoatAcceleration: (acceleration: number) =>
-    set((state) => ({ settings: { ...state.settings, acceleration } })),
-  setBoatDeceleration: (deceleration: number) =>
-    set((state) => ({ settings: { ...state.settings, deceleration } })),
-  setBoatTurnSpeed: (turnSpeed: number) =>
-    set((state) => ({ settings: { ...state.settings, turnSpeed } })),
-  setBoatTurnDeceleration: (turnDeceleration: number) =>
-    set((state) => ({ settings: { ...state.settings, turnDeceleration } })),
-  setCollisionRadius: (collisionRadius: number) =>
-    set((state) => ({ settings: { ...state.settings, collisionRadius } })),
-  setCollisionPushStrength: (collisionPushStrength: number) =>
+
+  persistState: () => {
+    // @ts-expect-error
+    const vscodeApi = window?.vscodeApi;
+    if (!vscodeApi) return;
+    vscodeApi.postMessage({
+      type: DIRECTORY_COMMANDS.persist_settings,
+      data: get().settings,
+    });
+  },
+
+  setMinimap: (minimap) => {
+    set((state) => ({ settings: { ...state.settings, minimap } }));
+    get().persistState();
+  },
+
+  setBreadcrumbs: (breadcrumbs) => {
+    set((state) => ({ settings: { ...state.settings, breadcrumbs } }));
+    get().persistState();
+  },
+
+  setCompass: (compass) => {
+    set((state) => ({ settings: { ...state.settings, compass } }));
+    get().persistState();
+  },
+
+  setNodesToShow: (nodesToShow) => {
+    set((state) => ({ settings: { ...state.settings, nodesToShow } }));
+    get().persistState();
+  },
+
+  setBoatSpeed: (boatSpeed: number) => {
+    set((state) => ({ settings: { ...state.settings, boatSpeed } }));
+    get().persistState();
+  },
+
+  setBoatAcceleration: (acceleration: number) => {
+    set((state) => ({ settings: { ...state.settings, acceleration } }));
+    get().persistState();
+  },
+
+  setBoatDeceleration: (deceleration: number) => {
+    set((state) => ({ settings: { ...state.settings, deceleration } }));
+    get().persistState();
+  },
+
+  setBoatTurnSpeed: (turnSpeed: number) => {
+    set((state) => ({ settings: { ...state.settings, turnSpeed } }));
+    get().persistState();
+  },
+
+  setBoatTurnDeceleration: (turnDeceleration: number) => {
+    set((state) => ({ settings: { ...state.settings, turnDeceleration } }));
+    get().persistState();
+  },
+
+  setCollisionRadius: (collisionRadius: number) => {
+    set((state) => ({ settings: { ...state.settings, collisionRadius } }));
+    get().persistState();
+  },
+
+  setCollisionPushStrength: (collisionPushStrength: number) => {
     set((state) => ({
       settings: { ...state.settings, collisionPushStrength },
-    })),
-  setVolume: (volume: number) =>
-    set((state) => ({ settings: { ...state.settings, volume } })),
-  setShowSplashScreen: (splashScreen) =>
-    set((state) => ({ settings: { ...state.settings, splashScreen } })),
+    }));
+    get().persistState();
+  },
+
+  setVolume: (volume: number) => {
+    set((state) => ({ settings: { ...state.settings, volume } }));
+    get().persistState();
+  },
+
+  setShowSplashScreen: (splashScreen) => {
+    set((state) => ({ settings: { ...state.settings, splashScreen } }));
+    get().persistState();
+  },
 }));

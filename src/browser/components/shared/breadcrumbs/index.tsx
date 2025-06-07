@@ -13,7 +13,11 @@ export const Breadcrumbs = () => {
   return (
     <div
       className={`text-md text-gray-500 flex flex-col items-start absolute top-3 left-3 z-50 rounded-t-lg ${
-        splashScreenInvisible ? "opacity-100" : "opacity-0 pointer-events-none"
+        settings.splashScreen === "Hide"
+          ? "opacity-100"
+          : splashScreenInvisible
+          ? "opacity-100"
+          : "opacity-0 pointer-events-none"
       }`}
     >
       <span

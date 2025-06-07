@@ -177,21 +177,3 @@ export const getWebviewPage = ({
       </html>
     `;
 };
-
-let vscodeWeb: TAcquireVsCode | undefined;
-
-export function getVSCodeAPI() {
-  if (typeof acquireVsCodeApi !== "undefined") {
-    if (!vscodeWeb) {
-      vscodeWeb = acquireVsCodeApi();
-    }
-    return vscodeWeb;
-  } else {
-    console.warn("acquireVsCodeApi is not available in this context.");
-    return {
-      postMessage: (_: any) => {
-        console.warn("postMessage called outside VSCode webview");
-      },
-    };
-  }
-}

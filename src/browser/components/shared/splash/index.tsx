@@ -8,6 +8,8 @@ const globalUris = (window as any).__GLOBAL_URIS__ || {
 export const Splash = () => {
   const { settings, splashScreenInvisible, setSplashScreenInvisible } = useGameContext();
 
+  console.log("::splashScreen::", settings.splashScreen)
+  
   if (settings.splashScreen === "Hide") return;
 
   return (

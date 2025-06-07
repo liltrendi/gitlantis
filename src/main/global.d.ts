@@ -39,30 +39,14 @@ declare global {
     nodeRef: TNodeRef;
     worldOffsetRef: TWorldOffsetRef;
     directories: TDirectoryContent[];
-    settings: Pick<TGameStore, "settings">["settings"]
+    settings: Pick<TGameStore, "settings">["settings"];
     splashScreenInvisible: boolean;
-    setSplashScreenInvisible: Dispatch<SetStateAction<boolean>>
+    setSplashScreenInvisible: Dispatch<SetStateAction<boolean>>;
   };
 
-  type TShowHide = "Show" | "Hide";
-  type TNodesToShow = "Folders and files" | "Folders only" | "Files only";
-
   type TGameStore = {
-    settings: {
-      minimap: TShowHide;
-      breadcrumbs: TShowHide;
-      compass: TShowHide;
-      nodesToShow: TNodesToShow;
-      boatSpeed: number;
-      acceleration: number;
-      deceleration: number;
-      turnSpeed: number;
-      turnDeceleration: number;
-      collisionRadius: number;
-      collisionPushStrength: number;
-      volume: number,
-      splashScreen: TShowHide
-    };
+    settings: TDefaultSettings;
+    extension: {isLoaded: boolean}
     setMinimap: (value: TShowHide) => void;
     setBreadcrumbs: (value: TShowHide) => void;
     setCompass: (value: TShowHide) => void;
@@ -74,7 +58,9 @@ declare global {
     setBoatTurnDeceleration: (turnDeceleration: number) => void;
     setCollisionRadius: (collisionRadius: number) => void;
     setCollisionPushStrength: (collisionPushStrength: number) => void;
-    setVolume: (volume: number) => void
+    setVolume: (volume: number) => void;
     setShowSplashScreen: (value: TShowHide) => void;
+    persistState: () => void;
+    initializeStore: (persistedSettings?: Partial<TDefaultSettings>) => void;
   };
 }
