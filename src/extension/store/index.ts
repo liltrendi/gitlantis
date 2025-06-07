@@ -11,5 +11,4 @@ export const DEFAULT_SETTINGS: TDefaultSettings = {
   collisionRadius: 100,
   collisionPushStrength: 5,
   volume: 0.3,
-  splashScreen: "Show",
 } as const;

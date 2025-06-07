@@ -50,6 +50,5 @@ declare global {
     collisionRadius: number;
     collisionPushStrength: number;
     volume: number;
-    splashScreen: TShowHide;
   };
 }

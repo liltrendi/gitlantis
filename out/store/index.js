@@ -14,5 +14,4 @@ exports.DEFAULT_SETTINGS = {
     collisionRadius: 100,
     collisionPushStrength: 5,
     volume: 0.3,
-    splashScreen: "Show",
 };

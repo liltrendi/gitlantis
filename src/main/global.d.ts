@@ -40,8 +40,8 @@ declare global {
     worldOffsetRef: TWorldOffsetRef;
     directories: TDirectoryContent[];
     settings: Pick<TGameStore, "settings">["settings"];
-    splashScreenInvisible: boolean;
-    setSplashScreenInvisible: Dispatch<SetStateAction<boolean>>;
+    showSplashScreen: boolean,
+    setShowSplashScreen: Dispatch<SetStateAction<boolean>>
   };
 
   type TGameStore = {
@@ -59,7 +59,6 @@ declare global {
     setCollisionRadius: (collisionRadius: number) => void;
     setCollisionPushStrength: (collisionPushStrength: number) => void;
     setVolume: (volume: number) => void;
-    setShowSplashScreen: (value: TShowHide) => void;
     persistState: () => void;
     initializeStore: (persistedSettings?: Partial<TDefaultSettings>) => void;
   };

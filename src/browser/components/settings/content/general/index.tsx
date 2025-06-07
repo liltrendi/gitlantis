@@ -19,15 +19,6 @@ export const SettingsGeneral = (
         }
         tooltip="File types to interact with"
       />
-      <SharedSelect
-        label="Splash"
-        value={gameProps.settings.splashScreen}
-        options={["Show", "Hide"]}
-        onChange={(e) =>
-          gameProps.setShowSplashScreen(e.target.value as TShowHide)
-        }
-        tooltip="Toggle splash screen visibility"
-      />
 
       <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[15px]">
         {gameProps.activeTab.description[1]}

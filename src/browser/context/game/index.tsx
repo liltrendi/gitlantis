@@ -11,8 +11,8 @@ export const GameContext = createContext<TGameConfig>({
   worldOffsetRef: null,
   directories: [],
   settings: {} as Pick<TGameStore, "settings">["settings"],
-  splashScreenInvisible: false,
-  setSplashScreenInvisible: () => {},
+  showSplashScreen: true,
+  setShowSplashScreen: () => {},
 });
 
 export const GameContextProvider: FC<{
@@ -20,7 +20,7 @@ export const GameContextProvider: FC<{
 }> = ({ children }) => {
   const gameConfig = useGameConfig();
   const { walker, settings, openExplorer } = useWalker();
-  const [splashScreenInvisible, setSplashScreenInvisible] = useState(settings.splashScreen === "Hide");
+  const [showSplashScreen, setShowSplashScreen] = useState(true);
 
   if (walker.loading) return <Loading />;
 
@@ -40,8 +40,8 @@ export const GameContextProvider: FC<{
         ...gameConfig,
         settings,
         directories: walker.response,
-        splashScreenInvisible,
-        setSplashScreenInvisible,
+        showSplashScreen,
+        setShowSplashScreen,
       }}
     >
       {children}

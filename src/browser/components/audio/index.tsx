@@ -12,12 +12,12 @@ const globalUris = (window as any).__GLOBAL_URIS__ || {
 export const Audio = () => {
   const audioRef = useRef<TPositionalAudio | null>(null);
   const { settings } = useGameStore();
-  const { splashScreenInvisible } = useGameContext();
+  const { showSplashScreen } = useGameContext();
 
   useEffect(() => {
     const audio = audioRef.current;
 
-    if (audio && splashScreenInvisible) {
+    if (audio && !showSplashScreen) {
       const waitForBuffer = () => {
         if (audio.buffer) {
           audio.setVolume(settings.volume);
@@ -28,11 +28,11 @@ export const Audio = () => {
       };
       waitForBuffer();
     }
-  }, [splashScreenInvisible, settings.volume]);
+  }, [showSplashScreen, settings.volume]);
 
   return (
     <>
-      {splashScreenInvisible && (
+      {!showSplashScreen && (
         <PositionalAudio ref={audioRef} url={globalUris.audio} />
       )}
     </>

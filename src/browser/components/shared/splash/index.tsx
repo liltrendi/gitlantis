@@ -6,16 +6,12 @@ const globalUris = (window as any).__GLOBAL_URIS__ || {
 }; 
 
 export const Splash = () => {
-  const { settings, splashScreenInvisible, setSplashScreenInvisible } = useGameContext();
-
-  console.log("::splashScreen::", settings.splashScreen)
-  
-  if (settings.splashScreen === "Hide") return;
+  const { showSplashScreen, setShowSplashScreen } = useGameContext();
 
   return (
     <div
       className={`fixed inset-0 bg-[#0a0a0a] flex flex-col items-center justify-center z-50 transition-opacity duration-[2500ms] ${
-        splashScreenInvisible ? "opacity-0 pointer-events-none" : "opacity-100"
+        showSplashScreen ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
     >
       <img
@@ -29,7 +25,7 @@ export const Splash = () => {
       </h1>
 
       <button
-        onClick={() => setSplashScreenInvisible(true)}
+        onClick={() => setShowSplashScreen(false)}
         className="px-6 py-3 rounded-full bg-[#f2bc07] text-black font-semibold text-lg hover:scale-105 transition-transform"
       >
         Start expedition

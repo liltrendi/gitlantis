@@ -88,9 +88,4 @@ export const useGameStore = create<TGameStore>((set, get) => ({
     set((state) => ({ settings: { ...state.settings, volume } }));
     get().persistState();
   },
-
-  setShowSplashScreen: (splashScreen) => {
-    set((state) => ({ settings: { ...state.settings, splashScreen } }));
-    get().persistState();
-  },
 }));

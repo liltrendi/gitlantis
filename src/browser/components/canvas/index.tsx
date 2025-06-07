@@ -3,17 +3,12 @@ import { Canvas } from "@react-three/fiber";
 import type { ReactNode } from "react";
 
 export const GameCanvas = ({ children }: { children: ReactNode }) => {
-  const { splashScreenInvisible, settings } = useGameContext();
-  console.log(":::splashScreenInvisible:::", splashScreenInvisible);
-
+  const { showSplashScreen } = useGameContext();
+  
   return (
     <div
       className={`${
-        settings.splashScreen === "Hide"
-          ? "opacity-100"
-          : splashScreenInvisible
-          ? "opacity-100"
-          : "opacity-0 pointer-events-none"
+        showSplashScreen ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
       <Canvas id="worldCanvas" className="!h-[100vh] !w-[100vw]">
