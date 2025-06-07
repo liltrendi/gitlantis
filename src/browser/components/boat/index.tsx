@@ -12,12 +12,12 @@ const globalUris = (window as any).__GLOBAL_URIS__ || {
 export const Boat = () => {
   const { nodes, materials } = useGLTF(globalUris.boat as string);
   const { boatRef } = useGameContext();
-  const floatingRef = useRef<TBoatRef>(null)
-  useNavigation({ boatRef, floatingRef });
+  const { floatingRef } = useNavigation({ boatRef });
 
   return (
-    <group ref={boatRef} position={[0, -5.5, 0]} dispose={null}>
-      <group ref={floatingRef} rotation={[-Math.PI, Math.PI, 0]}>
+    <group ref={boatRef} position={[0, -5.5, -20]} dispose={null}>
+      <group ref={floatingRef} rotation={[Math.PI, 0, 0]}>
+        <axesHelper args={[3]} />
         <mesh
           scale={[0.03, 0.03, 0.03]}
           material={materials?.boat_body}

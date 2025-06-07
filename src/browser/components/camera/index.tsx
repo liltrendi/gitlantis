@@ -18,11 +18,11 @@ export const Camera = () => {
     boatRef.current.getWorldPosition(boatPosition);
     boatRef.current.getWorldQuaternion(boatQuaternion);
 
-    const offsetVector = new Vector3(-150, 25, -25);
+    const offsetVector = new Vector3(150, 25, 25);
     offsetVector.applyQuaternion(boatQuaternion);
     idealCameraPosition.current.copy(boatPosition).add(offsetVector);
 
-    const lookAtOffset = new Vector3(0, 2, -0.5);
+    const lookAtOffset = new Vector3(0, 20, -0.5);
     lookAtOffset.applyQuaternion(boatQuaternion);
     idealLookAt.current.copy(boatPosition).add(lookAtOffset);
 

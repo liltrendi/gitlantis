@@ -30,7 +30,7 @@ export const Minimap = () => {
     const targetPos = boatRef.current.position;
     virtualCam.current.position.set(targetPos.x, targetPos.y + 50, targetPos.z);
     virtualCam.current.lookAt(targetPos);
-    virtualCam.current.rotateZ(Math.PI / -2);
+    virtualCam.current.rotateZ(Math.PI / 2);
     virtualCam.current.updateMatrixWorld();
 
     gl.autoClear = false;

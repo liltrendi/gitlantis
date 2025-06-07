@@ -2,14 +2,11 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useKeyboard } from "@/browser/hooks/useBoat/keyboard";
 import { useGameStore } from "@/browser/hooks/useGame/store";
+import type { Group } from "three";
 
-export const useNavigation = ({
-  boatRef,
-  floatingRef,
-}: {
-  boatRef: TBoatRef;
-  floatingRef: TBoatRef;
-}) => {
+export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
+  const floatingRef = useRef<TBoatRef>(null);
+
   const keys = useKeyboard();
   const { settings } = useGameStore();
 
@@ -44,11 +41,11 @@ export const useNavigation = ({
       1 - Math.min(Math.abs(state.current.speed) / config.maxSpeed, 1);
 
     const time = performance.now() / 1000;
-    floating.rotation.y =
+    (floating as unknown as Group).rotation.y =
       Math.sin(time * config.rockingSpeed * Math.PI * 2) *
       config.rockingAmplitude *
       movementFactor;
-    floating.position.y =
+    (floating as unknown as Group).position.y =
       Math.sin(time * config.bobbingSpeed * Math.PI * 2) *
       config.bobbingAmplitude *
       movementFactor;
@@ -86,11 +83,13 @@ export const useNavigation = ({
     }
 
     if (Math.abs(currentState.speed) > 0.001) {
-      boat.translateX(currentState.speed * deltaMultiplier);
+      boat.translateX(-currentState.speed * deltaMultiplier);
     }
 
     if (Math.abs(currentState.speed) < 0.001) currentState.speed = 0;
     if (Math.abs(currentState.angularVelocity) < 0.001)
       currentState.angularVelocity = 0;
   });
+
+  return { floatingRef };
 };
