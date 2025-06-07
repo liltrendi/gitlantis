@@ -19,7 +19,7 @@ export const Compass = () => {
         <div
           className="absolute top-0 flex items-center h-full"
           style={{
-            transform: `translateX(${-currentRotation}px)`, // Adjusted for finer precision with more markers
+            transform: `translateX(${-currentRotation}px)`,
             left: "50%",
             marginLeft: `-${compassWidth / 2}px`,
           }}
@@ -27,7 +27,7 @@ export const Compass = () => {
           {compassStrip.map((item) => (
             <div
               key={item.key}
-              className="flex flex-col items-center justify-center shrink-0 px-2" // Reduced padding
+              className="flex flex-col items-center justify-center shrink-0 px-2"
               style={{ minWidth: `${markerWidth}px` }}
             >
               <div className="w-0.5 h-6 bg-gray-300 mb-1"></div>
