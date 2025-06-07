@@ -42,6 +42,8 @@ declare global {
     settings: Pick<TGameStore, "settings">["settings"];
     showSplashScreen: boolean,
     setShowSplashScreen: Dispatch<SetStateAction<boolean>>
+    isMinimapFullScreen: boolean,
+    setMinimapFullscreen: Dispatch<SetStateAction<boolean>>
   };
 
   type TGameStore = {

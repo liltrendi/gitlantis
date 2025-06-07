@@ -4,7 +4,7 @@ import { ROOT_DIRECTORY_KEY } from "@/extension/config";
 
 export const Breadcrumbs = () => {
   const { rootLabel, currentPath, setCurrentPath } = useExtensionContext();
-  const { settings, showSplashScreen } = useGameContext();
+  const { settings, showSplashScreen, isMinimapFullScreen } = useGameContext();
 
   if (settings.breadcrumbs === "Hide" || currentPath.length === 0) return null;
 
@@ -13,7 +13,7 @@ export const Breadcrumbs = () => {
   return (
     <div
       className={`text-md text-gray-500 flex flex-col items-start absolute top-3 left-3 z-50 rounded-t-lg ${
-        showSplashScreen ? "opacity-0 pointer-events-none" : "opacity-100"
+        (showSplashScreen || isMinimapFullScreen) ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
       <span

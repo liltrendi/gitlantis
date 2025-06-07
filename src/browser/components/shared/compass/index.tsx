@@ -9,14 +9,14 @@ export const Compass = () => {
     degreesLabel,
     markerWidth,
   } = useBoatCompass();
-  const { settings, showSplashScreen } = useGameContext();
+  const { settings, showSplashScreen, isMinimapFullScreen } = useGameContext();
 
   if (settings.compass === "Hide") return null;
 
   return (
     <div
       className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 ${
-        showSplashScreen ? "opacity-0 pointer-events-none" : "opacity-100"
+        (showSplashScreen || isMinimapFullScreen) ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
       <div className="relative w-80 h-2 bg-black/50 border border-gray-600 rounded overflow-hidden">

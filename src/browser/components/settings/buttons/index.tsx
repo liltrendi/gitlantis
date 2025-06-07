@@ -3,13 +3,13 @@ import type { useGameSettings } from "@/browser/hooks/useGame/settings";
 import { useGameContext } from "@/browser/hooks/useGame/context";
 
 export const SettingsCog = (gameProps: ReturnType<typeof useGameSettings>) => {
-  const { showSplashScreen } = useGameContext();
+  const { showSplashScreen, isMinimapFullScreen } = useGameContext();
 
   return (
     <button
       onClick={() => gameProps.setIsOpen(true)}
       className={`absolute bottom-3 left-3 z-50 text-white text-lg color-[#fff] bg-[#222]/90 hover:bg-[#222]/80 px-3 py-[10px] rounded-lg ${
-        showSplashScreen ? "opacity-0 pointer-events-none" : "opacity-100"
+        (showSplashScreen || isMinimapFullScreen) ? "opacity-0 pointer-events-none" : "opacity-100"
       }`}
     >
       <CogIcon color="#f2bc07" />

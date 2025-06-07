@@ -13,6 +13,8 @@ export const GameContext = createContext<TGameConfig>({
   settings: {} as Pick<TGameStore, "settings">["settings"],
   showSplashScreen: true,
   setShowSplashScreen: () => {},
+  isMinimapFullScreen: false,
+  setMinimapFullscreen: () => {},
 });
 
 export const GameContextProvider: FC<{
@@ -21,6 +23,7 @@ export const GameContextProvider: FC<{
   const gameConfig = useGameConfig();
   const { walker, settings, openExplorer } = useWalker();
   const [showSplashScreen, setShowSplashScreen] = useState(true);
+  const [isMinimapFullScreen, setMinimapFullscreen] = useState(false);
 
   if (walker.loading) return <Loading />;
 
@@ -42,6 +45,8 @@ export const GameContextProvider: FC<{
         directories: walker.response,
         showSplashScreen,
         setShowSplashScreen,
+        isMinimapFullScreen,
+        setMinimapFullscreen
       }}
     >
       {children}
