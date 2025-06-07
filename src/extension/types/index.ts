@@ -32,6 +32,10 @@ declare global {
     setState: (state: any) => void;
   };
 
+  interface Window {
+    vscodeApi?: ReturnType<typeof acquireVsCodeApi>
+  }
+
   type TAcquireVsCode = ReturnType<typeof acquireVsCodeApi>;
 
   type TShowHide = "Show" | "Hide";

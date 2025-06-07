@@ -1,0 +1,30 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.handleLoadSettings = exports.handlePersistSettings = void 0;
+const config_1 = require("../../config");
+const SETTINGS_KEY = "__gitlantis_._settings__";
+const handlePersistSettings = async (context, settings) => {
+    try {
+        await context.globalState.update(SETTINGS_KEY, settings);
+    }
+    catch (error) {
+        console.error("::gitlantis->persistenceFailure::", error);
+    }
+};
+exports.handlePersistSettings = handlePersistSettings;
+const handleLoadSettings = async (context, panel) => {
+    try {
+        const persistedSettings = context.globalState.get(SETTINGS_KEY);
+        panel.webview.postMessage({
+            type: config_1.DIRECTORY_COMMANDS.settings_loaded,
+            data: persistedSettings || null,
+        });
+    }
+    catch (error) {
+        panel.webview.postMessage({
+            type: config_1.DIRECTORY_COMMANDS.settings_loaded,
+            data: null,
+        });
+    }
+};
+exports.handleLoadSettings = handleLoadSettings;

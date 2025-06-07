@@ -18,7 +18,6 @@ export const useGameStore = create<TGameStore>((set, get) => ({
   },
 
   persistState: () => {
-    // @ts-expect-error
     const vscodeApi = window?.vscodeApi;
     if (!vscodeApi) return;
     vscodeApi.postMessage({
