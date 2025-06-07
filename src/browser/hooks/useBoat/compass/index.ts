@@ -23,9 +23,13 @@ export const useBoatCompass = () => {
 
   const cardinals = [
     { label: "N", degree: 0 },
+    { label: "NE", degree: 45 },
     { label: "E", degree: 90 },
+    { label: "SE", degree: 135 },
     { label: "S", degree: 180 },
+    { label: "SW", degree: 225 },
     { label: "W", degree: 270 },
+    { label: "NW", degree: 315 },
   ];
 
   const getClosestCardinal = (degree: number) => {
@@ -66,7 +70,7 @@ export const useBoatCompass = () => {
 
   const compassStrip = createScrollableCompass();
   const compassWidth = 320;
-  const markerWidth = 80;
+  const markerWidth = 40; // Reduced from 80 to accommodate more markers
 
   const degreesLabel = `${Math.round(currentRotation) ?? 0}° ${
     getClosestCardinal(Math.round(currentRotation)) ?? ""
