@@ -3,7 +3,13 @@ import { useFrame } from "@react-three/fiber";
 import { useKeyboard } from "@/browser/hooks/useBoat/keyboard";
 import { useGameStore } from "@/browser/hooks/useGame/store";
 
-export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
+export const useNavigation = ({
+  boatRef,
+  floatingRef,
+}: {
+  boatRef: TBoatRef;
+  floatingRef: TBoatRef;
+}) => {
   const keys = useKeyboard();
   const { settings } = useGameStore();
 
@@ -13,6 +19,10 @@ export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
     deceleration: settings.deceleration,
     turnSpeed: settings.turnSpeed,
     turnDeceleration: settings.turnDeceleration,
+    rockingAmplitude: 0.05,
+    rockingSpeed: 0.3,
+    bobbingAmplitude: 0.05,
+    bobbingSpeed: 0.8,
   };
 
   const state = useRef({
@@ -22,19 +32,32 @@ export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
   });
 
   useFrame((_, delta) => {
-    if (!boatRef?.current) return;
-    const boat = boatRef.current;
-    if (!boat) return;
+    const boat = boatRef?.current;
+    const floating = floatingRef?.current;
+
+    if (!boat || !floating) return;
 
     const deltaMultiplier = Math.min(delta * 60, 2);
     const currentState = state.current;
+
+    const movementFactor =
+      1 - Math.min(Math.abs(state.current.speed) / config.maxSpeed, 1);
+
+    const time = performance.now() / 1000;
+    floating.rotation.z =
+      Math.sin(time * config.rockingSpeed * Math.PI * 2) *
+      config.rockingAmplitude *
+      movementFactor;
+    floating.position.y =
+      Math.sin(time * config.bobbingSpeed * Math.PI * 2) *
+      config.bobbingAmplitude *
+      movementFactor;
 
     // handle forward/backward input
     let targetSpeed = 0;
     if (keys.forward) targetSpeed = config.maxSpeed;
     if (keys.backward) targetSpeed = -config.maxSpeed * 0.5;
 
-    // accelerate or decelerate towards target speed
     if (targetSpeed !== 0) {
       currentState.speed +=
         (targetSpeed - currentState.speed) * config.acceleration;
@@ -42,7 +65,6 @@ export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
       currentState.speed *= 1 - config.deceleration;
     }
 
-    // handle turning
     let targetTurn = 0;
     const isMovingBackward = currentState.speed < 0;
     if (keys.left) {
@@ -52,7 +74,6 @@ export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
       targetTurn = isMovingBackward ? config.turnSpeed : -config.turnSpeed;
     }
 
-    // apply turning
     if (targetTurn !== 0) {
       currentState.angularVelocity +=
         (targetTurn - currentState.angularVelocity) * 0.1;
@@ -60,27 +81,16 @@ export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
       currentState.angularVelocity *= 1 - config.turnDeceleration;
     }
 
-    // apply rotation
     if (Math.abs(currentState.angularVelocity) > 0.001) {
       boat.rotateY(currentState.angularVelocity * deltaMultiplier);
     }
 
-    // apply forward movement in the boat's current direction
     if (Math.abs(currentState.speed) > 0.001) {
       boat.translateX(currentState.speed * deltaMultiplier);
     }
 
-    // clean up tiny values
     if (Math.abs(currentState.speed) < 0.001) currentState.speed = 0;
     if (Math.abs(currentState.angularVelocity) < 0.001)
       currentState.angularVelocity = 0;
   });
-
-  return {
-    speed: state.current.speed,
-    angularVelocity: state.current.angularVelocity,
-    isBoatMoving:
-      Math.abs(state.current.speed) > 0.001 ||
-      Math.abs(state.current.angularVelocity) > 0.001,
-  };
 };

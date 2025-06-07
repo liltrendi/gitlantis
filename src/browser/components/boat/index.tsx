@@ -3,6 +3,7 @@ import { useGLTF } from "@react-three/drei";
 import { BOAT_MODEL_PATH } from "@/browser/config";
 import { useNavigation } from "@/browser/hooks/useBoat/navigation";
 import { useGameContext } from "@/browser/hooks/useGame/context";
+import { useRef } from "react";
 
 const globalUris = (window as any).__GLOBAL_URIS__ || {
   boat: BOAT_MODEL_PATH,
@@ -11,11 +12,12 @@ const globalUris = (window as any).__GLOBAL_URIS__ || {
 export const Boat = () => {
   const { nodes, materials } = useGLTF(globalUris.boat as string);
   const { boatRef } = useGameContext();
-  useNavigation({ boatRef });
+  const floatingRef = useRef<TBoatRef>(null)
+  useNavigation({ boatRef, floatingRef });
 
   return (
-    <group ref={boatRef} dispose={null}>
-      <group position={[0, -5.5, 0]} rotation={[-Math.PI, Math.PI, 0]}>
+    <group ref={boatRef} position={[0, -5.5, 0]} dispose={null}>
+      <group ref={floatingRef} rotation={[-Math.PI, Math.PI, 0]}>
         <mesh
           scale={[0.03, 0.03, 0.03]}
           material={materials?.boat_body}
