@@ -2,7 +2,7 @@ import { useGameStore } from "@/browser/hooks/useGame/store";
 import { useEffect, useRef, useState } from "react";
 
 const tabs = [
-  { label: "General", description: ["Display", "Guides"] },
+  { label: "General", description: ["Display", "Audio", "Guides"] },
   { label: "Behavior", description: ["Navigation", "Collision"] },
   { label: "Keybindings", description: ["Basic controls", "Special keys"] },
   { label: "About", description: ["Overview", "Attribution"] },

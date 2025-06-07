@@ -25,7 +25,8 @@ export const useWalker = () => {
     response: [],
   });
 
-  const { vscodeApi, currentPath, setCurrentPath, setRootLabel } = useExtensionContext();
+  const { vscodeApi, currentPath, setCurrentPath, setRootLabel } =
+    useExtensionContext();
   const { settings } = useGameStore();
 
   const getFilteredNodes = useCallback(
@@ -62,7 +63,13 @@ export const useWalker = () => {
           break;
       }
     },
-    [setRootLabel, setCurrentPath, getFilteredNodes, setWalker, settings.nodesToShow]
+    [
+      setRootLabel,
+      setCurrentPath,
+      getFilteredNodes,
+      setWalker,
+      settings.nodesToShow,
+    ]
   );
 
   useEffect(() => {
@@ -101,5 +108,5 @@ export const useWalker = () => {
     });
   };
 
-  return { walker, openExplorer, settings };
+  return { walker, settings, openExplorer };
 };

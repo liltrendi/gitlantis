@@ -21,6 +21,7 @@ export const useReset = () => {
     const boat = boatRef.current;
 
     const distance = boat.position.distanceTo(origin);
+
     if (distance > threshold) {
       const offset = boat.position.clone();
 

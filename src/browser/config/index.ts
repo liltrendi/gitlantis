@@ -2,10 +2,11 @@ export const OCEAN_MODEL_PATH = "/models/ocean/ocean.jpeg";
 export const BOAT_MODEL_PATH = `/models/boat/boat.glb`;
 export const FOLDER_MODEL_PATH = `/models/folder/folder.glb`;
 export const FILE_MODEL_PATH = `/models/file/file.glb`;
+export const OCEAN_AUDIO_PATH = `music/waves.mp3`;
 
 export const NODE_SHORTCUTS: Array<{ label: string; keys: string[] }> = [
   { label: "Shift+Enter to explore", keys: ["Shift", "Enter"] },
-  { label: "Escape", keys: ["Escape"] },
+  { label: "Escape", keys: ["Escape"] }, 
 ];
 
 export const SAMPLE_DATA = [

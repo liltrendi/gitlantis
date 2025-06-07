@@ -13,6 +13,8 @@ export const useGameStore = create<TGameStore>((set) => ({
     turnDeceleration: 0.05,
     collisionRadius: 100,
     collisionPushStrength: 5,
+    volume: 0.05,
+    splashScreen: "Show"
   },
   setMinimap: (minimap) =>
     set((state) => ({ settings: { ...state.settings, minimap } })),
@@ -38,4 +40,8 @@ export const useGameStore = create<TGameStore>((set) => ({
     set((state) => ({
       settings: { ...state.settings, collisionPushStrength },
     })),
+  setVolume: (volume: number) =>
+    set((state) => ({ settings: { ...state.settings, volume } })),
+  setShowSplashScreen: (splashScreen) =>
+    set((state) => ({ settings: { ...state.settings, splashScreen } })),
 }));

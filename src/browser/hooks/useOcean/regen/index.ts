@@ -1,14 +1,17 @@
+import { useState } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { PlaneGeometry, RepeatWrapping, TextureLoader, Vector3 } from "three";
 import { useGameContext } from "@/browser/hooks/useGame/context";
-import { useState } from "react";
 import { OCEAN_MODEL_PATH } from "@/browser/config";
+// import { useReset } from "@/browser/hooks/useReset";
 
 const modelUris = (window as any).__MODEL_URIS__ || {
   ocean: OCEAN_MODEL_PATH,
 };
 
 export const useOceanRegen = (TILE_SIZE = 10000, TILES_RADIUS = 2) => {
+  // useReset();
+
   const [tiles, setTiles] = useState<
     Array<{ key: string; position: [number, number, number] }>
   >([]);

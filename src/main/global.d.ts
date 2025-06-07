@@ -1,5 +1,5 @@
 import type { Object3DNode } from "@react-three/fiber";
-import type { RefObject, Group } from "react";
+import type { RefObject, Group, Dispatch, SetStateAction } from "react";
 import type { Water } from "three-stdlib";
 import type { TDirectoryContent } from "@/extension/types";
 
@@ -39,18 +39,19 @@ declare global {
     nodeRef: TNodeRef;
     worldOffsetRef: TWorldOffsetRef;
     directories: TDirectoryContent[];
+    settings: Pick<TGameStore, "settings">["settings"]
+    splashScreenInvisible: boolean;
+    setSplashScreenInvisible: Dispatch<SetStateAction<boolean>>
   };
 
-  type TMinimap = "Show" | "Hide";
-  type TBreadcrumbs = "Show" | "Hide";
-  type TCompass = "Show" | "Hide";
+  type TShowHide = "Show" | "Hide";
   type TNodesToShow = "Folders and files" | "Folders only" | "Files only";
 
   type TGameStore = {
     settings: {
-      minimap: TMinimap;
-      breadcrumbs: TBreadcrumbs;
-      compass: TCompass;
+      minimap: TShowHide;
+      breadcrumbs: TShowHide;
+      compass: TShowHide;
       nodesToShow: TNodesToShow;
       boatSpeed: number;
       acceleration: number;
@@ -59,10 +60,12 @@ declare global {
       turnDeceleration: number;
       collisionRadius: number;
       collisionPushStrength: number;
+      volume: number,
+      splashScreen: TShowHide
     };
-    setMinimap: (value: TMinimap) => void;
-    setBreadcrumbs: (value: TBreadcrumbs) => void;
-    setCompass: (value: TCompass) => void;
+    setMinimap: (value: TShowHide) => void;
+    setBreadcrumbs: (value: TShowHide) => void;
+    setCompass: (value: TShowHide) => void;
     setNodesToShow: (value: TNodesToShow) => void;
     setBoatSpeed: (boatSpeed: number) => void;
     setBoatAcceleration: (acceleration: number) => void;
@@ -71,5 +74,7 @@ declare global {
     setBoatTurnDeceleration: (turnDeceleration: number) => void;
     setCollisionRadius: (collisionRadius: number) => void;
     setCollisionPushStrength: (collisionPushStrength: number) => void;
+    setVolume: (volume: number) => void
+    setShowSplashScreen: (value: TShowHide) => void;
   };
 }

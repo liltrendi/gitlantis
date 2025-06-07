@@ -1,9 +1,3 @@
-import {
-  Container,
-  Text,
-  Button,
-  Icon,
-} from "@/browser/components/shared/no-open-project/styles";
 import { DIRECTORY_ERRORS } from "@/extension/config";
 
 export const NoOpenProject = ({
@@ -16,14 +10,20 @@ export const NoOpenProject = ({
   action: () => void;
 }) => {
   return (
-    <Container>
-      <Text>{message}</Text>
+    <div
+      className={`fixed inset-0 bg-[#0a0a0a] flex flex-col items-center justify-center z-50 transition-opacity duration-1000`}
+    >
+      <h1 className="text-2xl font-extrabold text-[#eee] mb-10">
+        {message}
+      </h1>
       {type === DIRECTORY_ERRORS.no_open_project ? (
-        <Button onClick={action}>
-          <Icon />
-          Open Folder
-        </Button>
+        <button
+          onClick={action}
+          className="px-6 py-3 rounded-full bg-[#f2bc07] text-black font-semibold text-lg hover:scale-105 transition-transform"
+        >
+          Open folder
+        </button>
       ) : null}
-    </Container>
+    </div>
   );
 };

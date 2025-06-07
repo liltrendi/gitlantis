@@ -1,4 +1,5 @@
 import { SharedSelect } from "@/browser/components/shared/select";
+import { SharedSlider } from "@/browser/components/shared/slider";
 import type { useGameSettings } from "@/browser/hooks/useGame/settings";
 
 export const SettingsGeneral = (
@@ -10,30 +11,51 @@ export const SettingsGeneral = (
         {gameProps.activeTab.description[0]}
       </h3>
       <SharedSelect
-        label="Render"
+        label="Explore"
         value={gameProps.settings.nodesToShow}
         options={["Folders and files", "Folders only", "Files only"]}
         onChange={(e) =>
           gameProps.setNodesToShow(e.target.value as TNodesToShow)
         }
-        tooltip="Show folders, files, or both"
+        tooltip="File types to interact with"
+      />
+      <SharedSelect
+        label="Splash"
+        value={gameProps.settings.splashScreen}
+        options={["Show", "Hide"]}
+        onChange={(e) =>
+          gameProps.setShowSplashScreen(e.target.value as TShowHide)
+        }
+        tooltip="Toggle splash screen visibility"
       />
 
-      <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[20px]">
+      <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[15px]">
         {gameProps.activeTab.description[1]}
+      </h3>
+      <SharedSlider
+        label="Volume"
+        min={0.01}
+        max={1}
+        value={gameProps.settings.volume}
+        setter={gameProps.setVolume}
+        tooltip="How loud the waves are"
+      />
+
+      <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[15px]">
+        {gameProps.activeTab.description[2]}
       </h3>
       <SharedSelect
         label="Minimap"
         value={gameProps.settings.minimap}
         options={["Show", "Hide"]}
-        onChange={(e) => gameProps.setMinimap(e.target.value as TMinimap)}
+        onChange={(e) => gameProps.setMinimap(e.target.value as TShowHide)}
         tooltip="Toggle overhead view"
       />
       <SharedSelect
         label="Compass"
         value={gameProps.settings.compass}
         options={["Show", "Hide"]}
-        onChange={(e) => gameProps.setCompass(e.target.value as TCompass)}
+        onChange={(e) => gameProps.setCompass(e.target.value as TShowHide)}
         tooltip="Toggle compass visibility"
       />
       <SharedSelect
@@ -41,7 +63,7 @@ export const SettingsGeneral = (
         value={gameProps.settings.breadcrumbs}
         options={["Show", "Hide"]}
         onChange={(e) =>
-          gameProps.setBreadcrumbs(e.target.value as TBreadcrumbs)
+          gameProps.setBreadcrumbs(e.target.value as TShowHide)
         }
         tooltip="Toggle navigation visibility"
       />

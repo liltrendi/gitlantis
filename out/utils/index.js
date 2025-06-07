@@ -54,7 +54,7 @@ exports.getUri = getUri;
 const getTranspiledScripts = (panel, context) => {
     const scriptUri = (0, exports.getHashedAssetUri)(panel.webview, context.extensionUri, "out", "index", ".js");
     const styleUri = (0, exports.getHashedAssetUri)(panel.webview, context.extensionUri, "out", "index", ".css");
-    const workspaceFoldersUri = vscode.workspace.workspaceFolders?.[0]?.uri.toString() ?? '';
+    const workspaceFoldersUri = vscode.workspace.workspaceFolders?.[0]?.uri.toString() ?? "";
     if (!scriptUri || !styleUri) {
         vscode.window.showErrorMessage("gitlantis::failed to load scripts");
         return null;
@@ -87,7 +87,12 @@ const getModels = (panel, context) => {
         "file",
         "file.glb",
     ]);
-    return { oceanUri, boatUri, folderUri, fileUri };
+    const audioUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
+        "out",
+        "music",
+        "waves.mp3",
+    ]);
+    return { oceanUri, boatUri, folderUri, fileUri, audioUri };
 };
 exports.getModels = getModels;
 const createPanel = (context) => {
@@ -121,6 +126,7 @@ const getWebviewPage = ({ scripts, models, }) => {
             boat: "${models.boatUri}",
             folder: "${models.folderUri}",
             file: "${models.fileUri}",
+            audio: "${models.audioUri}",
           };
           window.__GITLANTIS_ROOT__ = "${scripts.workspaceFoldersUri}";
         </script>

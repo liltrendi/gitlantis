@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const Container = styled.div`
-  background: #222;
+  background: #0a0a0a;
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -17,22 +17,10 @@ export const Text = styled.span`
   color: #fff;
 `;
 
-
-export const Button = styled.button`
-  padding: 12px 20px;
-  margin-top: 30px;
-  font-size: 20px;
-  outline: none;
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-  background: #f2bc07;
-  color: #000;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-`;
+export const Button = styled.button.attrs({
+  className:
+    "px-6 py-3 flex items-center rounded-full bg-[#f2bc07] text-black font-semibold text-lg hover:scale-105 transition-transform mt-[30px] gap-[6px]",
+})``;
 
 export const Icon = styled(() => (
   <svg

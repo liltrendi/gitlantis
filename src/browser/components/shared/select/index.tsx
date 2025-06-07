@@ -10,7 +10,7 @@ export const SharedSelect = ({
   onChange,
 }: {
   label: string;
-  value: TMinimap | TCompass | TBreadcrumbs | TNodesToShow;
+  value: TShowHide | TNodesToShow;
   options: string[];
   tooltip?: string;
   onChange: ChangeEventHandler<HTMLSelectElement>;

@@ -7,10 +7,11 @@ import { useGameContext } from "@/browser/hooks/useGame/context";
 export const Minimap = () => {
   const { gl, scene, size } = useThree();
   const virtualCam = useRef<OrthographicCamera>(null);
-  const { boatRef } = useGameContext();
+  const { boatRef, settings } = useGameContext();
 
   useFrame(() => {
-    if (!virtualCam.current || !boatRef?.current) return;
+    if (!virtualCam.current || !boatRef?.current || settings.minimap === "Hide")
+      return;
 
     const targetPos = boatRef.current.position;
     virtualCam.current.position.set(targetPos.x, targetPos.y + 50, targetPos.z);
@@ -21,9 +22,10 @@ export const Minimap = () => {
     gl.clearDepth();
     gl.setScissorTest(true);
 
-    const width = 120, height = 120;
+    const width = 120,
+      height = 120;
     const x = size.width - width - 10;
-    const y = size.height - height - 10
+    const y = size.height - height - 10;
 
     gl.setViewport(x, y, width, height);
     gl.setScissor(x, y, width, height);
@@ -33,5 +35,7 @@ export const Minimap = () => {
     gl.setViewport(0, 0, size.width, size.height);
   });
 
-  return <MinimapCamera ref={virtualCam} makeDefault={false} zoom={3.5}  />;
+  if (settings.minimap === "Hide") return null;
+
+  return <MinimapCamera ref={virtualCam} makeDefault={false} zoom={3.5} />;
 };
