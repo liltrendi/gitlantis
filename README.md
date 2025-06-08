@@ -32,9 +32,11 @@ Gitlantis transforms the way you explore your project files by turning your code
 2. Search for `Gitlantis`.
 3. Click **Install**.
 
+Alternatively, visit: [Install Gitlantis](https://marketplace.visualstudio.com/items?itemName=brian-njogu.gitlantis)
+
 #### 📦 From OpenVSX
 
-[Install Gitlantis from OpenVSX](https://x.com)
+[Install Gitlantis](https://open-vsx.org/extension/brian-njogu/gitlantis)
 
 ## 🏃 Running Gitlantis
 
