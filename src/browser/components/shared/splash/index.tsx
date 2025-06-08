@@ -13,7 +13,6 @@ export const Splash = () => {
       className={`fixed inset-0 bg-[#0a0a0a] flex flex-col items-center z-50 transition-opacity duration-[2500ms] ${
         showSplashScreen ? "opacity-100" : "opacity-0 pointer-events-none"
       }`}
-      style={{ minHeight: "100vh" }}
     >
       <div className="flex flex-col items-center justify-center flex-grow">
         <img

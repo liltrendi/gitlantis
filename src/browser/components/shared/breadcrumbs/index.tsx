@@ -12,9 +12,9 @@ export const Breadcrumbs = () => {
 
   return (
     <div
-      className={`text-md text-gray-500 flex flex-col items-start absolute top-3 left-3 z-50 rounded-t-lg transition-all duration-300  ${
-        (showSplashScreen || isMinimapFullScreen) ? "opacity-0 pointer-events-none" : "opacity-100 delay-[1700ms]"
-      }`}
+      className={`text-md text-gray-500 flex flex-col items-start absolute top-3 left-3 z-50 rounded-t-lg transition-opacity duration-300  ${
+        (showSplashScreen) ? "opacity-0 pointer-events-none" : "opacity-100 delay-[1700ms]"
+      } ${isMinimapFullScreen ? "hidden":"block"}`}
     >
       <span
         className={`bg-[#f2bc07] px-2 py-[1px] text-md text-black rounded-tl-lg rounded-tr-lg rounded-br-md border-t border-l border-r border-b border-[#2d302f] border-l-4`}
