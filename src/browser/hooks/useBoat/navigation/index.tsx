@@ -64,11 +64,13 @@ export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
 
     let targetTurn = 0;
     const isMovingBackward = currentState.speed < 0;
+    const isStationary = currentState.speed === 0;
+
     if (keys.left) {
-      targetTurn = isMovingBackward ? -config.turnSpeed : config.turnSpeed;
+      targetTurn = isStationary ? config.turnSpeed : isMovingBackward ? -config.turnSpeed : config.turnSpeed;
     }
     if (keys.right) {
-      targetTurn = isMovingBackward ? config.turnSpeed : -config.turnSpeed;
+      targetTurn = isStationary ? -config.turnSpeed : isMovingBackward ? config.turnSpeed : -config.turnSpeed;
     }
 
     if (targetTurn !== 0) {
