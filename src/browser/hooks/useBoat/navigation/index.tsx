@@ -4,9 +4,14 @@ import { useKeyboard } from "@/browser/hooks/useBoat/keyboard";
 import { useGameStore } from "@/browser/hooks/useGame/store";
 import type { Group } from "three";
 
+const INTENDED_DIRECTION = {
+  FORWARD: 1,
+  BACKWARD: -1,
+  NEUTRAL: 0,
+};
+
 export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
   const floatingRef = useRef<TBoatRef>(null);
-
   const keys = useKeyboard();
   const { settings } = useGameStore();
 
@@ -26,12 +31,12 @@ export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
     velocity: { x: 0, z: 0 },
     angularVelocity: 0,
     speed: 0,
+    intendedDirection: INTENDED_DIRECTION.NEUTRAL,
   });
 
   useFrame((_, delta) => {
     const boat = boatRef?.current;
     const floating = floatingRef?.current;
-
     if (!boat || !floating) return;
 
     const deltaMultiplier = Math.min(delta * 60, 2);
@@ -41,19 +46,31 @@ export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
       1 - Math.min(Math.abs(state.current.speed) / config.maxSpeed, 1);
 
     const time = performance.now() / 1000;
+
     (floating as unknown as Group).rotation.y =
       Math.sin(time * config.rockingSpeed * Math.PI * 2) *
       config.rockingAmplitude *
       movementFactor;
+
     (floating as unknown as Group).position.y =
       Math.sin(time * config.bobbingSpeed * Math.PI * 2) *
       config.bobbingAmplitude *
       movementFactor;
 
-    // handle forward/backward input
+    // handle forward/backward input and track intent
     let targetSpeed = 0;
-    if (keys.forward) targetSpeed = config.maxSpeed;
-    if (keys.backward) targetSpeed = -config.maxSpeed * 0.5;
+    let intendedDirection = INTENDED_DIRECTION.NEUTRAL;
+
+    if (keys.forward) {
+      targetSpeed = config.maxSpeed;
+      intendedDirection = INTENDED_DIRECTION.FORWARD;
+    } else if (keys.backward) {
+      targetSpeed = -config.maxSpeed * 0.5;
+      intendedDirection = INTENDED_DIRECTION.BACKWARD;
+    }
+
+    // update intended direction
+    currentState.intendedDirection = intendedDirection;
 
     if (targetSpeed !== 0) {
       currentState.speed +=
@@ -62,15 +79,30 @@ export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
       currentState.speed *= 1 - config.deceleration;
     }
 
+    // use intended direction for turning logic
     let targetTurn = 0;
-    const isMovingBackward = currentState.speed < 0;
-    const isStationary = currentState.speed === 0;
+    const isStationary = Math.abs(currentState.speed) < 0.001;
 
     if (keys.left) {
-      targetTurn = isStationary ? config.turnSpeed : isMovingBackward ? -config.turnSpeed : config.turnSpeed;
+      if (isStationary) {
+        targetTurn = config.turnSpeed;
+      } else {
+        targetTurn =
+          currentState.intendedDirection === INTENDED_DIRECTION.BACKWARD
+            ? -config.turnSpeed
+            : config.turnSpeed;
+      }
     }
+
     if (keys.right) {
-      targetTurn = isStationary ? -config.turnSpeed : isMovingBackward ? config.turnSpeed : -config.turnSpeed;
+      if (isStationary) {
+        targetTurn = -config.turnSpeed;
+      } else {
+        targetTurn =
+          currentState.intendedDirection === INTENDED_DIRECTION.BACKWARD
+            ? config.turnSpeed
+            : -config.turnSpeed;
+      }
     }
 
     if (targetTurn !== 0) {
