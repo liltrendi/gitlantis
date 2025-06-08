@@ -1,6 +1,6 @@
 # Gitlantis
 
-Gitlantis transforms the way you explore your project files by turning your codebase into an immersive ocean world. Navigate your folders like islands and cabinets like shipwrecks — it’s a unique, fun, and efficient way to visually explore and manage your code.
+Gitlantis transforms the way you explore your project files by turning your codebase into an immersive ocean world. Navigate your folders and files by interacting with the floating lighthouses and buoys — it’s a unique, fun, and efficient way to visually explore and manage your code.
 
 ![Demo](https://s3.us-east-1.amazonaws.com/brayo.co/gitlantis/demo.png)
 
@@ -42,16 +42,9 @@ Alternatively, visit: [Install Gitlantis](https://marketplace.visualstudio.com/i
 
 After installing the extension, you can launch Gitlantis:
 
-### 🧭 From the Command Palette
-
 1. Open the Command Palette:  
    - **Mac**: `Cmd + Shift + P`  
    - **Linux/Windows**: `Ctrl + Shift + P`
 
 2. Search for and select: `Gitlantis`
-
-### 🧪 From the Activity Bar
-
-1. Open a folder or workspace in your editor.
-2. Click the **Gitlantis icon** in the sidebar to start exploring.
 
