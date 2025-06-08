@@ -66,6 +66,7 @@ declare global {
     setBobbingSpeed: (value: number) => void;
     setVolume: (volume: number) => void;
     persistState: () => void;
+    restoreDefaults: () => void;
     initializeStore: (persistedSettings?: Partial<TDefaultSettings>) => void;
   };
 }

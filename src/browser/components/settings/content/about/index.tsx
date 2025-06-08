@@ -96,7 +96,6 @@ export const SettingsAbout = (
           </li>
         ))}
       </ul>
-      {/* About models used and attributions */}
     </>
   );
 };

@@ -3,6 +3,7 @@ import { SettingsGeneral } from "@/browser/components/settings/content/general";
 import { SettingsBehavior } from "@/browser/components/settings/content/behavior";
 import { SettingsControls } from "@/browser/components/settings/content/controls";
 import { SettingsAbout } from "@/browser/components/settings/content/about";
+import { SettingsRestoreDefaults } from "@/browser/components/settings/content/restore";
 
 export const SettingsContent = (
   gameProps: ReturnType<typeof useGameSettings>
@@ -20,6 +21,8 @@ export const SettingsContent = (
             return <SettingsControls {...gameProps} />;
           case "About":
             return <SettingsAbout {...gameProps} />;
+          case "Danger zone":
+            return <SettingsRestoreDefaults {...gameProps} />
           default:
             return null;
         }

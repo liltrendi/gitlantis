@@ -26,6 +26,19 @@ export const useGameStore = create<TGameStore>((set, get) => ({
     });
   },
 
+  restoreDefaults: () => {
+    const vscodeApi = window?.vscodeApi;
+  
+    set({ settings: { ...DEFAULT_SETTINGS } });
+  
+    if (vscodeApi) {
+      vscodeApi.postMessage({
+        type: DIRECTORY_COMMANDS.persist_settings,
+        data: { ...DEFAULT_SETTINGS },
+      });
+    }
+  },
+
   setMinimap: (minimap) => {
     set((state) => ({ settings: { ...state.settings, minimap } }));
     get().persistState();

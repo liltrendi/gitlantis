@@ -6,6 +6,7 @@ const SETTINGS_TABS = [
   { label: "Behavior", description: ["Navigation", "Floating", "Collision"] },
   { label: "Keybindings", description: ["Basic controls", "Special keys"] },
   { label: "About", description: ["Overview", "Attribution"] },
+  { label: "Danger zone", description: ["Restore default settings"] },
 ] as const;
 
 export const useGameSettings = () => {
