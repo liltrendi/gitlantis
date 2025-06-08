@@ -23,7 +23,10 @@
     "build:browser": "tsc -b && vite build",
     "build:extension": "tsc -p tsconfig.extension.json",
     "build": "npm run build:browser && npm run build:extension",
-    "watch": "tsc -watch -p tsconfig.extension.json"
+    "watch": "tsc -watch -p tsconfig.extension.json",
+    "package": "pnpm vsce package --no-dependencies",
+    "publish": "pnpm vsce publish --no-dependencies",
+    "release": "pnpm run build && pnpm run package && pnpm run publish"
   },
   "dependencies": {
     "@react-three/cannon": "^6.6.0",
@@ -60,5 +63,9 @@
   "activationEvents": [
     "onCommand:gitlantis.openWebview",
     "onStartupFinished"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liltrendi/gitlantis"
+  }
 }
