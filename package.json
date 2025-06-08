@@ -1,7 +1,9 @@
 {
   "name": "gitlantis",
+  "publisher": "brian-njogu",
   "displayName": "Gitlantis",
   "main": "./out/index.js",
+  "icon": "logo.png",
   "engines": {
     "vscode": "^1.80.0"
   },

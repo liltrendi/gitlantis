@@ -1,0 +1,46 @@
+# Source files - only include compiled output
+src/
+*.ts
+!out/**/*.js
+**/*.ts
+**/tsconfig.json
+!file.ts
+
+# Development dependencies
+node_modules/
+pnpm-lock.yaml
+.nvmrc
+
+# Build tools and configs
+vite.config.ts
+tsconfig*.json
+eslint.config.js
+postcss.config.js
+tailwind.config.js
+
+# Development files
+.gitignore
+.vscode/
+index.html
+
+# Exclude public/ cause files are already copied to out/
+public/
+
+# Documentation (optional - you might want to keep readme.md)
+README.dev.md
+
+# Any test files
+**/*.test.*
+**/*.spec.*
+test/
+tests/
+
+# Logs and temp files
+*.log
+.DS_Store
+Thumbs.db
+
+# include these
+!logo.png
+!README.md
+!LICENSE.txt
