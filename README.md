@@ -1,6 +1,6 @@
 # Gitlantis
 
-Gitlantis transforms the way you explore your project files by turning your codebase into an immersive ocean world. Navigate your folders and files by interacting with the floating lighthouses and buoys — it’s a unique, fun, and efficient way to visually explore and manage your code.
+Gitlantis transforms the way you explore your project files by turning your codebase into an immersive ocean world. Navigate your folders and files by interacting with the floating lighthouses and buoys — it’s a unique, fun, and creative way to visually explore and manage your code.
 
 ![Demo](https://s3.us-east-1.amazonaws.com/brayo.co/gitlantis/demo.png)
 
@@ -13,7 +13,7 @@ Gitlantis transforms the way you explore your project files by turning your code
   Each folder appears as a lighthouse you can interact with to dive deeper into your project's structure.
 
 - **🛟 Files as Floating Buoys**  
-  Encounter files as yellow buoys bobbing in the ocean — click to open them directly in your editor.
+  Encounter files as smaller buoys bobbing in the ocean — click to open them directly in your editor.
 
 - **🧭 Immersive Minimap Compass**  
   A dynamic compass and minimap help you navigate your codebase like a seasoned sea captain. Easily locate nearby files, folders, and landmarks.
