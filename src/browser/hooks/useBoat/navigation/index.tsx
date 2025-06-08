@@ -57,20 +57,40 @@ export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
       config.bobbingAmplitude *
       movementFactor;
 
-    // handle forward/backward input and track intent
+    // Handle forward/backward input and track intent
     let targetSpeed = 0;
-    let intendedDirection = INTENDED_DIRECTION.NEUTRAL;
+    let activeInput = INTENDED_DIRECTION.NEUTRAL;
 
-    if (keys.forward) {
+    // Make input handling symmetrical - last pressed key wins
+    if (keys.forward && keys.backward) {
+      // If both keys pressed, prioritize stopping/neutral
+      targetSpeed = 0;
+      activeInput = INTENDED_DIRECTION.NEUTRAL;
+    } else if (keys.forward) {
       targetSpeed = config.maxSpeed;
-      intendedDirection = INTENDED_DIRECTION.FORWARD;
+      activeInput = INTENDED_DIRECTION.FORWARD;
     } else if (keys.backward) {
       targetSpeed = -config.maxSpeed * 0.5;
-      intendedDirection = INTENDED_DIRECTION.BACKWARD;
+      activeInput = INTENDED_DIRECTION.BACKWARD;
     }
 
-    // update intended direction
-    currentState.intendedDirection = intendedDirection;
+    // Update intended direction logic:
+    // - If there's active input, use that direction
+    // - If no input but still moving, preserve the direction based on current movement
+    // - Only reset to neutral when truly stationary
+    if (activeInput !== INTENDED_DIRECTION.NEUTRAL) {
+      currentState.intendedDirection = activeInput;
+    } else if (Math.abs(currentState.speed) < 0.001) {
+      // Only reset to neutral when actually stopped
+      currentState.intendedDirection = INTENDED_DIRECTION.NEUTRAL;
+    } else {
+      // Preserve direction based on current movement when coasting
+      if (currentState.speed > 0.001) {
+        currentState.intendedDirection = INTENDED_DIRECTION.FORWARD;
+      } else if (currentState.speed < -0.001) {
+        currentState.intendedDirection = INTENDED_DIRECTION.BACKWARD;
+      }
+    }
 
     if (targetSpeed !== 0) {
       currentState.speed +=
@@ -79,7 +99,7 @@ export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
       currentState.speed *= 1 - config.deceleration;
     }
 
-    // use intended direction for turning logic
+    // Use intended direction for turning logic
     let targetTurn = 0;
     const isStationary = Math.abs(currentState.speed) < 0.001;
 
