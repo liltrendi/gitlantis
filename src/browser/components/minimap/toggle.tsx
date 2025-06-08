@@ -20,7 +20,7 @@ export const MinimapToggle = () => {
         rounded-lg text-white cursor-pointer
         flex items-center justify-center
         hover:bg-gray-700/90 transition-colors
-        transition-all duration-300 
+        transition-opacity duration-300 
         ${
           isMinimapFullScreen
             ? "right-[calc(3.9%+10px)] bottom-[calc(5.5%+10px)]"
