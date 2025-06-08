@@ -4,7 +4,7 @@ import type { ReactNode } from "react";
 
 export const GameCanvas = ({ children }: { children: ReactNode }) => {
   const { showSplashScreen } = useGameContext();
-  
+
   return (
     <div
       className={`${

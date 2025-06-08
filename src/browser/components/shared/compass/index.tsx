@@ -15,8 +15,8 @@ export const Compass = () => {
 
   return (
     <div
-      className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 ${
-        (showSplashScreen || isMinimapFullScreen) ? "opacity-0 pointer-events-none" : "opacity-100"
+      className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 transition-all duration-300  ${
+        (showSplashScreen || isMinimapFullScreen) ? "opacity-0 pointer-events-none" : "opacity-100 delay-[1700ms]"
       }`}
     >
       <div className="relative w-80 h-2 bg-black/50 border border-gray-600 rounded overflow-hidden">

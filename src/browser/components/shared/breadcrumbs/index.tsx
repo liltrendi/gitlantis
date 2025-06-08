@@ -12,8 +12,8 @@ export const Breadcrumbs = () => {
 
   return (
     <div
-      className={`text-md text-gray-500 flex flex-col items-start absolute top-3 left-3 z-50 rounded-t-lg ${
-        (showSplashScreen || isMinimapFullScreen) ? "opacity-0 pointer-events-none" : "opacity-100"
+      className={`text-md text-gray-500 flex flex-col items-start absolute top-3 left-3 z-50 rounded-t-lg transition-all duration-300  ${
+        (showSplashScreen || isMinimapFullScreen) ? "opacity-0 pointer-events-none" : "opacity-100 delay-[1700ms]"
       }`}
     >
       <span

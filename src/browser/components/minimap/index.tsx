@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { OrthographicCamera } from "three";
 import { useThree, useFrame } from "@react-three/fiber";
 import { OrthographicCamera as MinimapCamera } from "@react-three/drei";
@@ -7,7 +7,14 @@ import { useGameContext } from "@/browser/hooks/useGame/context";
 export const Minimap = () => {
   const { gl, scene, size } = useThree();
   const virtualCam = useRef<OrthographicCamera>(null);
-  const { boatRef, settings, isMinimapFullScreen } = useGameContext();
+  const { boatRef, settings, isMinimapFullScreen, showSplashScreen } = useGameContext();
+  const [shouldFadeIn, setShouldFadeIn] = useState(settings.minimap === "Show" && !showSplashScreen)
+
+  useEffect(() => {
+    if(settings.minimap === "Show" && !showSplashScreen){
+      setTimeout(() => setShouldFadeIn(true), 1700)
+    }
+  }, [settings.minimap, showSplashScreen])
 
   const minimapSize = isMinimapFullScreen
     ? { width: size.width * 0.93, height: size.height * 0.9 }
@@ -55,7 +62,7 @@ export const Minimap = () => {
     gl.setViewport(0, 0, size.width, size.height);
   });
 
-  if (settings.minimap === "Hide") return null;
+  if (!shouldFadeIn) return null;
 
   return (
     <MinimapCamera

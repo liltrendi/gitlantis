@@ -10,8 +10,6 @@ export const MinimapToggle = () => {
 
   const shouldShow = !showSplashScreen && settings.minimap === "Show";
 
-  if (!shouldShow) return null;
-
   return (
     <button
       onClick={() => setMinimapFullscreen(!isMinimapFullScreen)}
@@ -22,11 +20,12 @@ export const MinimapToggle = () => {
         rounded-lg text-white cursor-pointer
         flex items-center justify-center
         hover:bg-gray-700/90 transition-colors
+        transition-all duration-300 
         ${
           isMinimapFullScreen
             ? "right-[calc(3.9%+10px)] bottom-[calc(5.5%+10px)]"
             : "right-[15px] bottom-[15px]"
-        }
+        } ${shouldShow ? "opacity-100 delay-[1700ms]" : "opacity-0 pointer-events-none"}
       `}
     >
       {isMinimapFullScreen ? (
