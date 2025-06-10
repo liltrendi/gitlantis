@@ -9,7 +9,7 @@ import { useGameContext } from "@/browser/hooks/useGame/context";
 export const Joystick = () => {
   const joystickRef = useRef<HTMLDivElement>(null);
   const managerRef = useRef<JoystickManager | null>(null);
-  const { settings, showSplashScreen, isMinimapFullScreen, directionInputRef } =
+  const { settings, showSplashScreen, directionInputRef } =
     useGameContext();
 
   const onMove = (dx: number, dy: number) => {
@@ -59,9 +59,7 @@ export const Joystick = () => {
   return (
     <div
       ref={joystickRef}
-      className={`fixed block md:invisible ${
-        isMinimapFullScreen ? "bottom-20" : "bottom-4"
-      } left-1/2 -translate-x-1/2 w-[100px] h-[100px] z-50 touch-none transition-opacity duration-300  ${
+      className={`fixed block md:invisible bottom-4 left-1/2 -translate-x-1/2 w-[100px] h-[100px] z-50 touch-none transition-opacity duration-300  ${
         showSplashScreen
           ? "opacity-0 pointer-events-none"
           : "opacity-100 delay-[1700ms]"
