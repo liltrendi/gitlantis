@@ -14,6 +14,7 @@ type TExtensionConfig = {
   rootLabel: string;
   currentPath: string;
   vscodeApi: TAcquireVsCode | null | undefined;
+  isBrowserEnvironment: boolean;
   setCurrentPath: Dispatch<SetStateAction<string>>;
   setRootLabel: Dispatch<SetStateAction<string>>;
 };
@@ -22,6 +23,7 @@ export const ExtensionContext = createContext<TExtensionConfig>({
   rootLabel: "",
   currentPath: "",
   vscodeApi: undefined,
+  isBrowserEnvironment: true,
   setRootLabel: () => {},
   setCurrentPath: () => {},
 });
@@ -49,6 +51,7 @@ export const ExtensionContextProvider: FC<{
         rootLabel,
         currentPath,
         vscodeApi,
+        isBrowserEnvironment: (vscodeApi === null || vscodeApi === undefined),
         setRootLabel,
         setCurrentPath,
       }}

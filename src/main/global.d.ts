@@ -41,6 +41,7 @@ declare global {
     directories: TDirectoryContent[];
     settings: Pick<TGameStore, "settings">["settings"];
     showSplashScreen: boolean,
+    isBrowserEnvironment: boolean;
     setShowSplashScreen: Dispatch<SetStateAction<boolean>>
     isMinimapFullScreen: boolean,
     setMinimapFullscreen: Dispatch<SetStateAction<boolean>>

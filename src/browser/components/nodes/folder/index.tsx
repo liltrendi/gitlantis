@@ -9,6 +9,7 @@ export const Folder = ({
   model,
   nodeRef,
   isColliding,
+  isBrowserEnvironment,
 }: {
   label: string;
   index: number;
@@ -16,6 +17,7 @@ export const Folder = ({
   nodeRef: TNodeRef;
   instance: TNodeInstance;
   isColliding: boolean;
+  isBrowserEnvironment: boolean;
 }) => {
   return (
     // @ts-expect-error
@@ -32,12 +34,16 @@ export const Folder = ({
         <Backdrop label={label} yPosition={23} fontSize={1.8} />
         {isColliding ? (
           <Backdrop
-            label={"SHIFT+ENTER to explore"}
+            label={
+              isBrowserEnvironment
+                ? "Download the extension to open folders"
+                : "SHIFT+ENTER to explore"
+            }
             color="white"
             yPosition={3.5}
             fontSize={0.75}
             frontOffset={-5}
-            maxWidth={7.8}
+            maxWidth={isBrowserEnvironment ? 9 : 7.8}
           />
         ) : null}
       </Clone>

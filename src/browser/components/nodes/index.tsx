@@ -10,7 +10,7 @@ export const Nodes = () => {
   const fileModel = useFileModel();
   const folderModel = useFolderModel();
 
-  const { nodes, boatRef, nodeRef } = useNodePlacement();
+  const { nodes, boatRef, nodeRef, isBrowserEnvironment } = useNodePlacement();
   const { trackedCollisions } = useNodeCollision({ nodes, boatRef, nodeRef });
   useNodeMovement({ nodes, boatRef, nodeRef });
 
@@ -24,6 +24,7 @@ export const Nodes = () => {
           instance,
           nodeRef,
           isColliding,
+          isBrowserEnvironment,
           label: instance.data.name,
           model: isFile ? fileModel : folderModel,
           key: `${instance.data.type}-${instance.key}`,

@@ -9,6 +9,7 @@ export const File = ({
   model,
   nodeRef,
   isColliding,
+  isBrowserEnvironment,
 }: {
   label: string;
   index: number;
@@ -16,6 +17,7 @@ export const File = ({
   nodeRef: TNodeRef;
   instance: TNodeInstance;
   isColliding: boolean;
+  isBrowserEnvironment: boolean;
 }) => {
   return (
     // @ts-expect-error
@@ -32,12 +34,16 @@ export const File = ({
         <Backdrop label={label} yPosition={2.68} fontSize={0.35} />
         {isColliding ? (
           <Backdrop
-            label={"SHIFT+ENTER to explore"}
+            label={
+              isBrowserEnvironment
+                ? "Download the extension to open files"
+                : "SHIFT+ENTER to explore"
+            }
             color="white"
             yPosition={0.8}
-            fontSize={0.25}
+            fontSize={isBrowserEnvironment ? 0.25 : 0.25}
             frontOffset={-1}
-            maxWidth={2.5}
+            maxWidth={isBrowserEnvironment ? 3 : 2.5}
           />
         ) : null}
       </Clone>

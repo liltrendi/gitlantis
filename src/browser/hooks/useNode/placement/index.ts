@@ -3,7 +3,7 @@ import { Vector3 } from "three";
 import { useGameContext } from "@/browser/hooks/useGame/context";
 
 export const useNodePlacement = () => {
-  const { worldOffsetRef, boatRef, nodeRef, directories } = useGameContext();
+  const { worldOffsetRef, boatRef, nodeRef, directories, isBrowserEnvironment } = useGameContext();
   const [nodes, setNodes] = useState<TNodeInstances>([]);
 
   const TILE_SIZE = 1000;
@@ -133,5 +133,5 @@ export const useNodePlacement = () => {
     nodeRef.current = nodeRef.current.slice(0, nodes.length);
   }, [nodes.length]);
 
-  return { nodes, boatRef, nodeRef };
+  return { nodes, boatRef, nodeRef, isBrowserEnvironment };
 };

@@ -3,6 +3,7 @@ import { NoOpenProject } from "@/browser/components/shared/no-open-project";
 import { useWalker } from "@/browser/hooks/useWalker";
 import { useGameConfig } from "@/browser/hooks/useGame/config";
 import { Loading } from "@/browser/components/shared/loading";
+import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 
 export const GameContext = createContext<TGameConfig>({
   boatRef: null,
@@ -10,6 +11,7 @@ export const GameContext = createContext<TGameConfig>({
   nodeRef: null,
   worldOffsetRef: null,
   directories: [],
+  isBrowserEnvironment: true,
   settings: {} as Pick<TGameStore, "settings">["settings"],
   showSplashScreen: true,
   setShowSplashScreen: () => {},
@@ -24,6 +26,7 @@ export const GameContextProvider: FC<{
   const { walker, settings, openExplorer } = useWalker();
   const [showSplashScreen, setShowSplashScreen] = useState(true);
   const [isMinimapFullScreen, setMinimapFullscreen] = useState(false);
+  const {isBrowserEnvironment} = useExtensionContext()
 
   if (walker.loading) return <Loading />;
 
@@ -46,7 +49,8 @@ export const GameContextProvider: FC<{
         showSplashScreen,
         setShowSplashScreen,
         isMinimapFullScreen,
-        setMinimapFullscreen
+        setMinimapFullscreen,
+        isBrowserEnvironment
       }}
     >
       {children}

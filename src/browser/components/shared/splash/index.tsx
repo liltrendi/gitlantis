@@ -6,7 +6,8 @@ const globalUris = (window as any).__GLOBAL_URIS__ || {
 };
 
 export const Splash = () => {
-  const { showSplashScreen, setShowSplashScreen } = useGameContext();
+  const { showSplashScreen, setShowSplashScreen, isBrowserEnvironment } =
+    useGameContext();
 
   return (
     <div
@@ -29,12 +30,37 @@ export const Splash = () => {
           onClick={() => setShowSplashScreen(false)}
           className="px-6 py-3 rounded-full bg-[#f2bc07] text-black font-semibold text-lg hover:scale-105 transition-transform"
         >
-          Start expedition
+          {isBrowserEnvironment ? "Explore demo" : "Start expedition"}
         </button>
+
+        {isBrowserEnvironment ? (
+          <>
+            <div className="my-[30px] text-gray-500 text-sm font-semibold">
+              OR
+            </div>
+
+            <div className="flex flex-col items-center space-y-2 gap-1">
+              <a
+                href="https://open-vsx.org/extension/brian-njogu/gitlantis"
+                target="_blank"
+                className="text-md text-[#eee] underline hover:text-yellow-300 transition-colors"
+              >
+                Download via Open VSX
+              </a>
+              <a
+                href="https://marketplace.visualstudio.com/items?itemName=brian-njogu.gitlantis"
+                target="_blank"
+                className="text-md text-[#eee] underline hover:text-yellow-300 transition-colors"
+              >
+                Download via Visual Studio Code Marketplace
+              </a>
+            </div>
+          </>
+        ) : null}
       </div>
 
       <p className="pb-12 text-center text-gray-400 max-w-md mx-auto select-none">
-        <span className="block mb-2 text-lg font-semibold tracking-wide text-yellow-400 drop-shadow-lg">
+        <span className="block mb-4 text-lg font-semibold tracking-wide text-gray-500 drop-shadow-lg">
           Navigate your ship with:
         </span>
 
@@ -67,7 +93,13 @@ export const Splash = () => {
         </kbd>
 
         <span className="block pt-8 text-md text-gray-500">
-          <a className="text-[#f2bc07] underline" target="_blank" href="https://brayo.co">brayo.co</a>
+          <a
+            className="text-gray-500 underline"
+            target="_blank"
+            href="https://brayo.co"
+          >
+            brayo.co
+          </a>
         </span>
       </p>
     </div>
