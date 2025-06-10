@@ -33,23 +33,33 @@ declare global {
     data: TDirectoryContent;
   }>;
 
+  type TDirectionInput = {
+    forward: boolean;
+    backward: boolean;
+    left: boolean;
+    right: boolean;
+  };
+  type TDirectionInputRef = RefObject<TDirectionInput>;
+
   type TGameConfig = {
     boatRef: TBoatRef;
+    floatingRef: TBoatRef;
     oceanRef: TOceanRef;
     nodeRef: TNodeRef;
     worldOffsetRef: TWorldOffsetRef;
     directories: TDirectoryContent[];
     settings: Pick<TGameStore, "settings">["settings"];
-    showSplashScreen: boolean,
+    showSplashScreen: boolean;
     isBrowserEnvironment: boolean;
-    setShowSplashScreen: Dispatch<SetStateAction<boolean>>
-    isMinimapFullScreen: boolean,
-    setMinimapFullscreen: Dispatch<SetStateAction<boolean>>
+    setShowSplashScreen: Dispatch<SetStateAction<boolean>>;
+    isMinimapFullScreen: boolean;
+    setMinimapFullscreen: Dispatch<SetStateAction<boolean>>;
+    directionInputRef: RefObject<TDirectionInput>;
   };
 
   type TGameStore = {
     settings: TDefaultSettings;
-    extension: {isLoaded: boolean}
+    extension: { isLoaded: boolean };
     setMinimap: (value: TShowHide) => void;
     setBreadcrumbs: (value: TShowHide) => void;
     setCompass: (value: TShowHide) => void;

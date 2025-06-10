@@ -11,8 +11,9 @@ const globalUris = (window as any).__GLOBAL_URIS__ || {
 
 export const Boat = () => {
   const { nodes, materials } = useGLTF(globalUris.boat as string);
-  const { boatRef } = useGameContext();
-  const { floatingRef } = useNavigation({ boatRef });
+  const { boatRef, floatingRef } = useGameContext();
+
+  useNavigation({ boatRef, floatingRef });
 
   return (
     <group ref={boatRef} position={[0, -5.5, -20]} dispose={null}>

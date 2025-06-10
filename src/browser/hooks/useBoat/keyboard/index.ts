@@ -1,31 +1,27 @@
-import { useRef, useEffect } from "react";
+import { useEffect } from "react";
+import { useGameContext } from "../../useGame/context";
 
 export const useKeyboard = () => {
-  const keys = useRef({
-    forward: false,
-    backward: false,
-    left: false,
-    right: false,
-  });
+  const { directionInputRef } = useGameContext();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       switch (e.key.toLowerCase()) {
         case "arrowup":
         case "w":
-          keys.current.forward = true;
+          directionInputRef.current.forward = true;
           break;
         case "arrowdown":
         case "s":
-          keys.current.backward = true;
+          directionInputRef.current.backward = true;
           break;
         case "arrowleft":
         case "a":
-          keys.current.left = true;
+          directionInputRef.current.left = true;
           break;
         case "arrowright":
         case "d":
-          keys.current.right = true;
+          directionInputRef.current.right = true;
           break;
       }
     };
@@ -34,19 +30,19 @@ export const useKeyboard = () => {
       switch (e.key.toLowerCase()) {
         case "arrowup":
         case "w":
-          keys.current.forward = false;
+          directionInputRef.current.forward = false;
           break;
         case "arrowdown":
         case "s":
-          keys.current.backward = false;
+          directionInputRef.current.backward = false;
           break;
         case "arrowleft":
         case "a":
-          keys.current.left = false;
+          directionInputRef.current.left = false;
           break;
         case "arrowright":
         case "d":
-          keys.current.right = false;
+          directionInputRef.current.right = false;
           break;
       }
     };
@@ -60,5 +56,5 @@ export const useKeyboard = () => {
     };
   }, []);
 
-  return keys.current;
+  return directionInputRef.current;
 };

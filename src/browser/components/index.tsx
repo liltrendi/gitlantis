@@ -15,14 +15,16 @@ import { Minimap } from "@/browser/components/minimap";
 import { Breadcrumbs } from "@/browser/components/shared/breadcrumbs";
 import { Compass } from "@/browser/components/shared/compass";
 import { MinimapToggle } from "@/browser/components/minimap/toggle";
+import { Joystick } from "@/browser/components/joystick";
 
 export const World = () => {
   return (
     <GameContextProvider>
       <Splash />
-      <GlobalSettings />
       <Breadcrumbs />
       <Compass />
+      <Joystick />
+      <GlobalSettings />
       <MinimapToggle />
       <GameCanvas>
         <Suspense fallback={null}>

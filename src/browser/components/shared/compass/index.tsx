@@ -15,7 +15,7 @@ export const Compass = () => {
 
   return (
     <div
-      className={`fixed bottom-4 left-1/2 transform -translate-x-1/2 z-50 transition-opacity duration-300  ${
+      className={`fixed left-1/2 transform -translate-x-1/2 top-4 sm:top-auto sm:bottom-4 -translate-x-1/2 z-50 transition-opacity duration-300  ${
         (showSplashScreen) ? "opacity-0 pointer-events-none" : "opacity-100 delay-[1700ms]" 
       } ${isMinimapFullScreen ? "hidden":"block"}`}
     >

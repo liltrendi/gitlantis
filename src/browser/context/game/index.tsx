@@ -1,4 +1,4 @@
-import { createContext, useState, type FC, type ReactNode } from "react";
+import { createContext, type FC, type ReactNode } from "react";
 import { NoOpenProject } from "@/browser/components/shared/no-open-project";
 import { useWalker } from "@/browser/hooks/useWalker";
 import { useGameConfig } from "@/browser/hooks/useGame/config";
@@ -7,6 +7,7 @@ import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 
 export const GameContext = createContext<TGameConfig>({
   boatRef: null,
+  floatingRef: null,
   oceanRef: null,
   nodeRef: null,
   worldOffsetRef: null,
@@ -17,16 +18,17 @@ export const GameContext = createContext<TGameConfig>({
   setShowSplashScreen: () => {},
   isMinimapFullScreen: false,
   setMinimapFullscreen: () => {},
+  directionInputRef: {
+    current: { forward: false, backward: false, left: false, right: false },
+  },
 });
 
 export const GameContextProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
-  const gameConfig = useGameConfig();
+  const { isBrowserEnvironment } = useExtensionContext();
   const { walker, settings, openExplorer } = useWalker();
-  const [showSplashScreen, setShowSplashScreen] = useState(true);
-  const [isMinimapFullScreen, setMinimapFullscreen] = useState(false);
-  const {isBrowserEnvironment} = useExtensionContext()
+  const { ...gameConfig } = useGameConfig();
 
   if (walker.loading) return <Loading />;
 
@@ -46,11 +48,7 @@ export const GameContextProvider: FC<{
         ...gameConfig,
         settings,
         directories: walker.response,
-        showSplashScreen,
-        setShowSplashScreen,
-        isMinimapFullScreen,
-        setMinimapFullscreen,
-        isBrowserEnvironment
+        isBrowserEnvironment,
       }}
     >
       {children}

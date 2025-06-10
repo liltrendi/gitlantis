@@ -7,18 +7,25 @@ import { useGameContext } from "@/browser/hooks/useGame/context";
 export const Minimap = () => {
   const { gl, scene, size } = useThree();
   const virtualCam = useRef<OrthographicCamera>(null);
-  const { boatRef, settings, isMinimapFullScreen, showSplashScreen } = useGameContext();
-  const [shouldFadeIn, setShouldFadeIn] = useState(settings.minimap === "Show" && !showSplashScreen)
+  const { boatRef, settings, isMinimapFullScreen, showSplashScreen } =
+    useGameContext();
+  const [shouldFadeIn, setShouldFadeIn] = useState(
+    settings.minimap === "Show" && !showSplashScreen
+  );
 
   useEffect(() => {
-    if(settings.minimap === "Show" && !showSplashScreen){
-      setTimeout(() => setShouldFadeIn(true), 1700)
+    if (settings.minimap === "Show" && !showSplashScreen) {
+      setTimeout(() => setShouldFadeIn(true), 1700);
     }
-  }, [settings.minimap, showSplashScreen])
+  }, [settings.minimap, showSplashScreen]);
 
   const minimapSize = isMinimapFullScreen
     ? { width: size.width * 0.93, height: size.height * 0.9 }
     : { width: 120, height: 120 };
+
+  const isMobile =
+    typeof window !== "undefined" &&
+    window.matchMedia("(max-width: 768px)").matches;
 
   const minimapPosition = isMinimapFullScreen
     ? {
@@ -27,7 +34,7 @@ export const Minimap = () => {
       }
     : {
         x: size.width - minimapSize.width - 10,
-        y: size.height - minimapSize.height - 10,
+        y: size.height - minimapSize.height - (isMobile ? 45 : 10),
       };
 
   useFrame(() => {

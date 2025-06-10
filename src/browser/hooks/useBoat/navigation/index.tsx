@@ -1,8 +1,8 @@
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
-import { useKeyboard } from "@/browser/hooks/useBoat/keyboard";
 import { useGameStore } from "@/browser/hooks/useGame/store";
 import type { Group } from "three";
+import { useKeyboard } from "@/browser/hooks/useBoat/keyboard";
 
 const INTENDED_DIRECTION = {
   FORWARD: 1,
@@ -10,10 +10,16 @@ const INTENDED_DIRECTION = {
   NEUTRAL: 0,
 };
 
-export const useNavigation = ({ boatRef }: { boatRef: TBoatRef }) => {
-  const floatingRef = useRef<TBoatRef>(null);
-  const keys = useKeyboard();
+export const useNavigation = ({
+  boatRef,
+  floatingRef,
+}: {
+  boatRef: TBoatRef;
+  floatingRef: TBoatRef;
+}) => {
   const { settings } = useGameStore();
+
+  const keys = useKeyboard();
 
   const config = {
     maxSpeed: settings.boatSpeed,

@@ -70,7 +70,7 @@ export const useBoatCompass = () => {
 
   const compassStrip = createScrollableCompass();
   const compassWidth = 320;
-  const markerWidth = 40; // Reduced from 80 to accommodate more markers
+  const markerWidth = 40;
 
   const degreesLabel = `${Math.round(currentRotation) ?? 0}° ${
     getClosestCardinal(Math.round(currentRotation)) ?? ""
