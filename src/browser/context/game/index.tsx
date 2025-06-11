@@ -1,4 +1,5 @@
 import { createContext, type FC, type ReactNode } from "react";
+import { Analytics } from "@vercel/analytics/next";
 import { NoOpenProject } from "@/browser/components/shared/no-open-project";
 import { useWalker } from "@/browser/hooks/useWalker";
 import { useGameConfig } from "@/browser/hooks/useGame/config";
@@ -51,6 +52,7 @@ export const GameContextProvider: FC<{
         isBrowserEnvironment,
       }}
     >
+      {isBrowserEnvironment ? <Analytics /> : null}
       {children}
     </GameContext.Provider>
   );
