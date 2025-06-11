@@ -6,8 +6,41 @@ const globalUris = (window as any).__GLOBAL_URIS__ || {
 };
 
 export const Splash = () => {
-  const { showSplashScreen, setShowSplashScreen, isBrowserEnvironment } =
-    useGameContext();
+  const {
+    showSplashScreen,
+    setShowSplashScreen,
+    isBrowserEnvironment,
+    oceanAudioRef,
+    settings,
+  } = useGameContext();
+
+  const playOceanAudio = () => {
+    const waitForBufferAndContext = () => {
+      const audio = oceanAudioRef.current;
+
+      if (!audio?.buffer) {
+        requestAnimationFrame(waitForBufferAndContext);
+        return;
+      }
+
+      audio.setVolume(settings.volume);
+
+      const context = audio.context;
+
+      if (context.state === "suspended") {
+        context.resume().then(() => audio.play());
+      } else {
+        audio.play();
+      }
+    };
+
+    waitForBufferAndContext();
+  };
+
+  const revealWorld = () => {
+    playOceanAudio();
+    setShowSplashScreen(false);
+  };
 
   return (
     <div
@@ -27,7 +60,7 @@ export const Splash = () => {
         </h1>
 
         <button
-          onClick={() => setShowSplashScreen(false)}
+          onClick={revealWorld}
           className="px-6 py-3 rounded-full bg-[#f2bc07] text-black font-semibold text-lg hover:scale-105 transition-transform"
         >
           {isBrowserEnvironment ? "Explore demo" : "Start expedition"}

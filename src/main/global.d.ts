@@ -2,6 +2,7 @@ import type { Object3DNode } from "@react-three/fiber";
 import type { RefObject, Group, Dispatch, SetStateAction } from "react";
 import type { Water } from "three-stdlib";
 import type { TDirectoryContent } from "@/extension/types";
+import type { PositionalAudio } from "three";
 
 declare module "@react-three/fiber" {
   interface ThreeElements {
@@ -55,6 +56,7 @@ declare global {
     isMinimapFullScreen: boolean;
     setMinimapFullscreen: Dispatch<SetStateAction<boolean>>;
     directionInputRef: RefObject<TDirectionInput>;
+    oceanAudioRef: RefObject<PositionalAudio | null>
   };
 
   type TGameStore = {

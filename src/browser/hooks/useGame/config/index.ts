@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { Vector3 } from "three";
+import { PositionalAudio, Vector3 } from "three";
 
 export const useGameConfig = () => {
   const [showSplashScreen, setShowSplashScreen] = useState(true);
@@ -15,10 +15,12 @@ export const useGameConfig = () => {
     left: false,
     right: false,
   });
+  const oceanAudioRef = useRef<PositionalAudio | null>(null);
 
   return {
     directionInputRef,
     worldOffsetRef,
+    oceanAudioRef,
     boatRef,
     floatingRef,
     oceanRef,

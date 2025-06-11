@@ -22,6 +22,7 @@ export const GameContext = createContext<TGameConfig>({
   directionInputRef: {
     current: { forward: false, backward: false, left: false, right: false },
   },
+  oceanAudioRef: { current: null },
 });
 
 export const GameContextProvider: FC<{

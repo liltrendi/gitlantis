@@ -1,7 +1,6 @@
 import { PositionalAudio } from "@react-three/drei";
 import { CLOUDFRONT_ROOT_URL, OCEAN_AUDIO_PATH } from "@/browser/config";
-import { useEffect, useRef } from "react";
-import type { PositionalAudio as TPositionalAudio } from "three";
+import { useEffect } from "react";
 import { useGameStore } from "@/browser/hooks/useGame/store";
 import { useGameContext } from "@/browser/hooks/useGame/context";
 
@@ -10,31 +9,19 @@ const globalUris = (window as any).__GLOBAL_URIS__ || {
 };
 
 export const Audio = () => {
-  const audioRef = useRef<TPositionalAudio | null>(null);
   const { settings } = useGameStore();
-  const { showSplashScreen, isBrowserEnvironment } = useGameContext();
+  const { showSplashScreen, isBrowserEnvironment, oceanAudioRef } =
+    useGameContext();
 
   useEffect(() => {
-    const audio = audioRef.current;
-
-    if (audio && !showSplashScreen) {
-      const waitForBuffer = () => {
-        if (audio.buffer) {
-          audio.setVolume(settings.volume);
-          audio.play();
-        } else {
-          requestAnimationFrame(waitForBuffer);
-        }
-      };
-      waitForBuffer();
-    }
-  }, [showSplashScreen, settings.volume]);
-
-  if (showSplashScreen) return;
+    const audio = oceanAudioRef.current;
+    if (showSplashScreen || !audio) return;
+    audio.setVolume(settings.volume);
+  }, [settings.volume, showSplashScreen]);
 
   return (
     <PositionalAudio
-      ref={audioRef}
+      ref={oceanAudioRef}
       url={`${isBrowserEnvironment ? CLOUDFRONT_ROOT_URL : ""}${
         globalUris.audio
       }`}
