@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useGameStore } from "@/browser/hooks/useGame/store";
 import { DIRECTORY_COMMANDS } from "@/extension/config";
-import { PERSISTED_SETTINGS_KEY } from "@/extension/handlers/handleSettings";
+import { PERSISTED_SETTINGS_KEY } from "@/extension/store";
 
 export const usePersistence = (
   vscodeApi: TAcquireVsCode | null | undefined

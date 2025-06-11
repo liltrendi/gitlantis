@@ -1,6 +1,5 @@
 import { DIRECTORY_COMMANDS } from "@/extension/config";
-import { PERSISTED_SETTINGS_KEY } from "@/extension/handlers/handleSettings";
-import { DEFAULT_SETTINGS } from "@/extension/store";
+import { DEFAULT_SETTINGS, PERSISTED_SETTINGS_KEY } from "@/extension/store";
 import { create } from "zustand";
 
 export const useGameStore = create<TGameStore>((set, get) => ({

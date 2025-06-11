@@ -1,7 +1,6 @@
 import * as vscode from "vscode";
 import { DIRECTORY_COMMANDS } from "../../config";
-
-export const PERSISTED_SETTINGS_KEY = "__gitlantis_._settings__";
+import { PERSISTED_SETTINGS_KEY } from "../../store";
 
 export const handlePersistSettings = async (
   context: vscode.ExtensionContext,
