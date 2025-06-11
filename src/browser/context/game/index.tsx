@@ -1,5 +1,5 @@
 import { createContext, type FC, type ReactNode } from "react";
-import { Analytics } from "@vercel/analytics/next";
+import { Analytics } from "@vercel/analytics/react";
 import { NoOpenProject } from "@/browser/components/shared/no-open-project";
 import { useWalker } from "@/browser/hooks/useWalker";
 import { useGameConfig } from "@/browser/hooks/useGame/config";
