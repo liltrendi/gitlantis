@@ -14,7 +14,7 @@ export const DEFAULT_SETTINGS: TDefaultSettings = {
   rockingSpeed: 0.30,
   bobbingAmplitude: 0.20,
   bobbingSpeed: 0.6,
-  volume: 0.3,
+  volume: 0.5,
 } as const;
 
 export const PERSISTED_SETTINGS_KEY = "__gitlantis_._settings__";

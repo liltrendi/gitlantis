@@ -30,16 +30,14 @@ export const Audio = () => {
     }
   }, [showSplashScreen, settings.volume]);
 
+  if (showSplashScreen) return;
+
   return (
-    <>
-      {!showSplashScreen && (
-        <PositionalAudio
-          ref={audioRef}
-          url={`${isBrowserEnvironment ? CLOUDFRONT_ROOT_URL : ""}${
-            globalUris.audio
-          }`}
-        />
-      )}
-    </>
+    <PositionalAudio
+      ref={audioRef}
+      url={`${isBrowserEnvironment ? CLOUDFRONT_ROOT_URL : ""}${
+        globalUris.audio
+      }`}
+    />
   );
 };

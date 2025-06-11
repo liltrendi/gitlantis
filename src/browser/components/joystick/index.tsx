@@ -9,7 +9,7 @@ import { useGameContext } from "@/browser/hooks/useGame/context";
 export const Joystick = () => {
   const joystickRef = useRef<HTMLDivElement>(null);
   const managerRef = useRef<JoystickManager | null>(null);
-  const { settings, showSplashScreen, directionInputRef } =
+  const { showSplashScreen, directionInputRef } =
     useGameContext();
 
   const onMove = (dx: number, dy: number) => {
