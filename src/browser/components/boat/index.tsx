@@ -11,14 +11,15 @@ const globalUris = (window as any).__GLOBAL_URIS__ || {
 
 export const Boat = () => {
   const { boatRef, floatingRef, isBrowserEnvironment } = useGameContext();
-  const { nodes, materials } = useGLTF(`${isBrowserEnvironment ? CLOUDFRONT_ROOT_URL:""}${globalUris.boat}`);
+  const { nodes, materials } = useGLTF(
+    `${isBrowserEnvironment ? CLOUDFRONT_ROOT_URL : ""}${globalUris.boat}`
+  );
 
   useNavigation({ boatRef, floatingRef });
 
   return (
     <group ref={boatRef} position={[0, -5.5, -20]} dispose={null}>
       <group ref={floatingRef} rotation={[Math.PI, 0, 0]}>
-        <axesHelper args={[3]} />
         <mesh
           scale={[0.03, 0.03, 0.03]}
           material={materials?.boat_body}
