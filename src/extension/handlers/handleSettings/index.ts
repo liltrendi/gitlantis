@@ -1,14 +1,14 @@
 import * as vscode from "vscode";
 import { DIRECTORY_COMMANDS } from "../../config";
 
-const SETTINGS_KEY = "__gitlantis_._settings__";
+export const PERSISTED_SETTINGS_KEY = "__gitlantis_._settings__";
 
 export const handlePersistSettings = async (
   context: vscode.ExtensionContext,
   settings: any
 ) => {
   try {
-    await context.globalState.update(SETTINGS_KEY, settings);
+    await context.globalState.update(PERSISTED_SETTINGS_KEY, settings);
   } catch (error) {
     console.error("::gitlantis->persistenceFailure::", error);
   }
@@ -19,7 +19,7 @@ export const handleLoadSettings = async (
   panel: vscode.WebviewPanel
 ) => {
   try {
-    const persistedSettings = context.globalState.get(SETTINGS_KEY);
+    const persistedSettings = context.globalState.get(PERSISTED_SETTINGS_KEY);
     panel.webview.postMessage({
       type: DIRECTORY_COMMANDS.settings_loaded,
       data: persistedSettings || null,

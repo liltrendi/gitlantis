@@ -1,4 +1,5 @@
 import { DIRECTORY_COMMANDS } from "@/extension/config";
+import { PERSISTED_SETTINGS_KEY } from "@/extension/handlers/handleSettings";
 import { DEFAULT_SETTINGS } from "@/extension/store";
 import { create } from "zustand";
 
@@ -13,29 +14,57 @@ export const useGameStore = create<TGameStore>((set, get) => ({
         extension: { isLoaded: true },
       });
     } else {
+      const vscodeApi = window?.vscodeApi;
+      if (!vscodeApi) {
+        try {
+          const local = localStorage.getItem("gitlantis_settings");
+          if (local) {
+            const parsed = JSON.parse(local);
+            set({
+              settings: { ...DEFAULT_SETTINGS, ...parsed },
+            });
+          }
+        } catch (err) {}
+      }
       set({ extension: { isLoaded: true } });
     }
   },
 
   persistState: () => {
     const vscodeApi = window?.vscodeApi;
-    if (!vscodeApi) return;
-    vscodeApi.postMessage({
-      type: DIRECTORY_COMMANDS.persist_settings,
-      data: get().settings,
-    });
+
+    if (vscodeApi) {
+      vscodeApi.postMessage({
+        type: DIRECTORY_COMMANDS.persist_settings,
+        data: get().settings,
+      });
+    } else {
+      try {
+        localStorage.setItem(
+          PERSISTED_SETTINGS_KEY,
+          JSON.stringify(get().settings)
+        );
+      } catch (err) {}
+    }
   },
 
   restoreDefaults: () => {
     const vscodeApi = window?.vscodeApi;
-  
+
     set({ settings: { ...DEFAULT_SETTINGS } });
-  
+
     if (vscodeApi) {
       vscodeApi.postMessage({
         type: DIRECTORY_COMMANDS.persist_settings,
         data: { ...DEFAULT_SETTINGS },
       });
+    }
+    {
+      try {
+        localStorage.removeItem(PERSISTED_SETTINGS_KEY);
+      } catch (err) {
+        console.warn("Failed to clear localStorage settings:", err);
+      }
     }
   },
 
