@@ -2,22 +2,19 @@ import { useState } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { PlaneGeometry, RepeatWrapping, TextureLoader, Vector3 } from "three";
 import { useGameContext } from "@/browser/hooks/useGame/context";
-import { OCEAN_MODEL_PATH } from "@/browser/config";
-// import { useReset } from "@/browser/hooks/useReset";
+import { CLOUDFRONT_ROOT_URL, OCEAN_MODEL_PATH } from "@/browser/config";
 
 const globalUris = (window as any).__GLOBAL_URIS__ || {
   ocean: OCEAN_MODEL_PATH,
 };
 
 export const useOceanRegen = (TILE_SIZE = 10000, TILES_RADIUS = 2) => {
-  // useReset();
-
   const [tiles, setTiles] = useState<
     Array<{ key: string; position: [number, number, number] }>
   >([]);
-  const { boatRef, oceanRef } = useGameContext();
+  const { boatRef, oceanRef, isBrowserEnvironment } = useGameContext();
 
-  const waterNormals = useLoader(TextureLoader, globalUris.ocean as string);
+  const waterNormals = useLoader(TextureLoader, `${isBrowserEnvironment ? CLOUDFRONT_ROOT_URL:""}${globalUris.ocean}`);
   waterNormals.wrapS = waterNormals.wrapT = RepeatWrapping;
 
   const sceneConfig = {

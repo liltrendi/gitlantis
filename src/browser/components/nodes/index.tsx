@@ -7,10 +7,11 @@ import { useNodePlacement } from "@/browser/hooks/useNode/placement";
 import { useNodeCollision } from "@/browser/hooks/useNode/collision";
 
 export const Nodes = () => {
-  const fileModel = useFileModel();
-  const folderModel = useFolderModel();
-
   const { nodes, boatRef, nodeRef, isBrowserEnvironment } = useNodePlacement();
+
+  const fileModel = useFileModel(isBrowserEnvironment);
+  const folderModel = useFolderModel(isBrowserEnvironment);
+
   const { trackedCollisions } = useNodeCollision({ nodes, boatRef, nodeRef });
   useNodeMovement({ nodes, boatRef, nodeRef });
 

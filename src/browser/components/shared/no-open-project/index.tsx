@@ -1,4 +1,5 @@
-import { FAVICON_PATH } from "@/browser/config";
+import { CLOUDFRONT_ROOT_URL, FAVICON_PATH } from "@/browser/config";
+import { useGameContext } from "@/browser/hooks/useGame/context";
 import { DIRECTORY_ERRORS } from "@/extension/config";
 
 const globalUris = (window as any).__GLOBAL_URIS__ || {
@@ -14,12 +15,15 @@ export const NoOpenProject = ({
   message: string;
   action: () => void;
 }) => {
+  const { isBrowserEnvironment } = useGameContext();
   return (
     <div
       className={`fixed inset-0 bg-[#0a0a0a] flex flex-col items-center justify-center z-50 transition-opacity duration-1000`}
     >
       <img
-        src={globalUris.favicon}
+        src={`${isBrowserEnvironment ? CLOUDFRONT_ROOT_URL : ""}${
+          globalUris.favicon
+        }`}
         alt="Gitlantis Logo"
         className="w-14 h-14 mb-6 object-contain"
       />

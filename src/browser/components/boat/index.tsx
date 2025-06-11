@@ -1,6 +1,6 @@
 // @ts-nocheck
 import { useGLTF } from "@react-three/drei";
-import { BOAT_MODEL_PATH } from "@/browser/config";
+import { BOAT_MODEL_PATH, CLOUDFRONT_ROOT_URL } from "@/browser/config";
 import { useNavigation } from "@/browser/hooks/useBoat/navigation";
 import { useGameContext } from "@/browser/hooks/useGame/context";
 import { useRef } from "react";
@@ -10,8 +10,8 @@ const globalUris = (window as any).__GLOBAL_URIS__ || {
 };
 
 export const Boat = () => {
-  const { nodes, materials } = useGLTF(globalUris.boat as string);
-  const { boatRef, floatingRef } = useGameContext();
+  const { boatRef, floatingRef, isBrowserEnvironment } = useGameContext();
+  const { nodes, materials } = useGLTF(`${isBrowserEnvironment ? CLOUDFRONT_ROOT_URL:""}${globalUris.boat}`);
 
   useNavigation({ boatRef, floatingRef });
 
