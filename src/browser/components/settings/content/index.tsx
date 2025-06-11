@@ -22,7 +22,7 @@ export const SettingsContent = (
           case "About":
             return <SettingsAbout {...gameProps} />;
           case "Danger zone":
-            return <SettingsRestoreDefaults {...gameProps} />
+            return <SettingsRestoreDefaults {...gameProps} />;
           default:
             return null;
         }
