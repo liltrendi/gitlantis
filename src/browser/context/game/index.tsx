@@ -5,7 +5,6 @@ import { useWalker } from "@/browser/hooks/useWalker";
 import { useGameConfig } from "@/browser/hooks/useGame/config";
 import { Loading } from "@/browser/components/shared/loading";
 import { useExtensionContext } from "@/browser/hooks/useExtension/context";
-import { useGoogleAnalytics } from "@/browser/hooks/useGoogleAnalytics";
 
 export const GameContext = createContext<TGameConfig>({
   boatRef: null,
@@ -29,8 +28,6 @@ export const GameContext = createContext<TGameConfig>({
 export const GameContextProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
-  useGoogleAnalytics();
-  
   const { isBrowserEnvironment } = useExtensionContext();
   const { walker, settings, openExplorer } = useWalker();
   const { ...gameConfig } = useGameConfig();
