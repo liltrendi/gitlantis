@@ -54,8 +54,6 @@ export const Joystick = () => {
     };
   }, [onMove]);
 
-  if (settings.breadcrumbs === "Hide") return null;
-
   return (
     <div
       ref={joystickRef}
