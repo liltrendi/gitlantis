@@ -23,10 +23,6 @@ export const Minimap = () => {
     ? { width: size.width * 0.93, height: size.height * 0.9 }
     : { width: 120, height: 120 };
 
-  const isMobile =
-    typeof window !== "undefined" &&
-    window.matchMedia("(max-width: 768px)").matches;
-
   const minimapPosition = isMinimapFullScreen
     ? {
         x: (size.width - minimapSize.width) / 2,
@@ -34,7 +30,7 @@ export const Minimap = () => {
       }
     : {
         x: size.width - minimapSize.width - 10,
-        y: size.height - minimapSize.height - (isMobile ? 45 : 10),
+        y: size.height - minimapSize.height - 10,
       };
 
   useFrame(() => {

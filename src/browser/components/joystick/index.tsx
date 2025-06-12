@@ -9,12 +9,10 @@ import { useGameContext } from "@/browser/hooks/useGame/context";
 export const Joystick = () => {
   const joystickRef = useRef<HTMLDivElement>(null);
   const managerRef = useRef<JoystickManager | null>(null);
-  const { showSplashScreen, directionInputRef } =
-    useGameContext();
+  const { showSplashScreen, directionInputRef } = useGameContext();
 
   const onMove = (dx: number, dy: number) => {
     const threshold = 0.2;
-
     directionInputRef.current.forward = dy > threshold;
     directionInputRef.current.backward = dy < -threshold;
     directionInputRef.current.left = dx < -threshold;
@@ -26,8 +24,7 @@ export const Joystick = () => {
 
     const options: JoystickManagerOptions = {
       zone: joystickRef.current,
-      mode: "static",
-      position: { left: "50%", bottom: "50%" },
+      mode: "dynamic",
       color: "red",
       size: 100,
       restOpacity: 0.4,
@@ -52,12 +49,12 @@ export const Joystick = () => {
       manager.destroy();
       managerRef.current = null;
     };
-  }, [onMove]);
+  }, []);
 
   return (
     <div
       ref={joystickRef}
-      className={`fixed block md:invisible bottom-4 left-1/2 -translate-x-1/2 w-[100px] h-[100px] z-50 touch-none transition-opacity duration-300  ${
+      className={`fixed inset-0 z-50 md:invisible touch-none transition-opacity duration-300 ${
         showSplashScreen
           ? "opacity-0 pointer-events-none"
           : "opacity-100 delay-[1700ms]"
