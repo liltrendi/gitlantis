@@ -13,6 +13,7 @@ import { Nodes } from "@/browser/components/nodes";
 import { GlobalSettings } from "@/browser/components/settings";
 import { Minimap } from "@/browser/components/minimap";
 import { Breadcrumbs } from "@/browser/components/shared/breadcrumbs";
+import { Donate } from "@/browser/components/donate";
 import { Compass } from "@/browser/components/shared/compass";
 import { MinimapToggle } from "@/browser/components/minimap/toggle";
 import { Joystick } from "@/browser/components/joystick";
@@ -22,6 +23,7 @@ export const World = () => {
     <GameContextProvider>
       <Splash />
       <Breadcrumbs />
+      <Donate />
       <Compass />
       <Joystick />
       <GlobalSettings />
