@@ -1,4 +1,3 @@
-import { useGoogleAnalytics } from "@/browser/hooks/useGoogleAnalytics";
 import { usePersistence } from "@/browser/hooks/usePersistence";
 import { ROOT_DIRECTORY_KEY } from "@/extension/config";
 import {
@@ -45,7 +44,6 @@ export const ExtensionContextProvider: FC<{
   }, []);
 
   usePersistence(vscodeApi);
-  useGoogleAnalytics();
 
   return (
     <ExtensionContext.Provider
