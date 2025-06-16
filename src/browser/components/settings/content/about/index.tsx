@@ -4,10 +4,20 @@ import { Coffee, Sparkle } from "lucide-react";
 const ATTRIBUTIONS = [
   {
     model: {
-      name: "Boat",
-      link: "https://sketchfab.com/3d-models/boat-c6694b9cafe74e7ba46f5612a3e9a7f0",
+      name: "Lighthouse",
+      link: "https://sketchfab.com/3d-models/sm--bld--lighthouse-07768c38fcf24560aa3520d9796592f5",
     },
-    creator: { name: "4122", link: "https://sketchfab.com/4122" },
+    creator: { name: "kirasuinu", link: "https://sketchfab.com/kirasuinu" },
+  },
+  {
+    model: {
+      name: "Audio",
+      link: "https://freesound.org/people/MarleneAyni/sounds/731702/",
+    },
+    creator: {
+      name: "MarleneAyni",
+      link: "https://freesound.org/people/MarleneAyni/",
+    },
   },
   {
     model: {
@@ -21,10 +31,10 @@ const ATTRIBUTIONS = [
   },
   {
     model: {
-      name: "Lighthouse",
-      link: "https://sketchfab.com/3d-models/sm--bld--lighthouse-07768c38fcf24560aa3520d9796592f5",
+      name: "Boat",
+      link: "https://sketchfab.com/3d-models/boat-c6694b9cafe74e7ba46f5612a3e9a7f0",
     },
-    creator: { name: "kirasuinu", link: "https://sketchfab.com/kirasuinu" },
+    creator: { name: "4122", link: "https://sketchfab.com/4122" },
   },
 ];
 
