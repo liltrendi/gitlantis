@@ -12,7 +12,10 @@ export const MinimapToggle = () => {
 
   return (
     <button
-      onClick={() => setMinimapFullscreen(!isMinimapFullScreen)}
+      onClick={(e) => {
+        e.currentTarget.blur();
+        setMinimapFullscreen(!isMinimapFullScreen)
+      }}
       title={isMinimapFullScreen ? "Minimize minimap" : "Fullscreen minimap"}
       className={`
         fixed z-[1001] w-11 h-11 
