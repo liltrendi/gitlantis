@@ -1,5 +1,6 @@
 {
   "name": "gitlantis",
+  "description": "Transform your project into an explorable 3D world",
   "publisher": "brian-njogu",
   "displayName": "Gitlantis",
   "main": "./out/index.js",
