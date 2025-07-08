@@ -4,10 +4,10 @@ import { FAVICON_PATH } from "@/browser/config";
 import { useGameContext } from "@/browser/hooks/useGame/context";
 
 const globalUris = (window as any).__GLOBAL_URIS__ || {
-  favicon: FAVICON_PATH,
+  favicon: FAVICON_PATH, 
 };
 
-const MIN_LOAD_TIME = 1000; // ms
+const MIN_LOAD_TIME = 1000;
 
 export const Splash = () => {
   const {
@@ -92,7 +92,7 @@ export const Splash = () => {
         <img
           src={globalUris.favicon}
           alt="Gitlantis Logo"
-          className="w-14 h-14 mb-6 object-contain"
+          className="w-14 h-14 sm:w-20 sm:h-20 mb-6 object-contain"
         />
 
         <h1 className="text-6xl md:text-7xl font-extrabold text-[#eee] mb-10">
