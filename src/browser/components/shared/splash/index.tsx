@@ -36,9 +36,11 @@ export const Splash = () => {
       const context = audio.context;
 
       if (context.state === "suspended") {
-        context.resume().then(() => audio.play());
+        context.resume().then(() => {
+          if (!audio.isPlaying) audio.play();
+        });
       } else {
-        audio.play();
+        if (!audio.isPlaying) audio.play();
       }
     };
 

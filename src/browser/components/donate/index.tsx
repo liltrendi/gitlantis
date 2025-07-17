@@ -9,7 +9,7 @@ export const Donate = () => {
       href="https://buymeacoffee.com/liltrendi"
       target="_blank"
       rel="noopener noreferrer"
-      className={`fixed left-3 top-20 z-[100] inline-flex items-center gap-1.5 rounded-full border border-[#2d302f] bg-[#2d302f] px-4 py-2 text-sm font-medium text-[#f2bc07] shadow-lg transition-opacity duration-300 hover:bg-black sm:left-1/2 sm:top-3 sm:-translate-x-1/2 sm:transform ${showSplashScreen ? "pointer-events-none opacity-0" : "opacity-100 delay-[1700ms]"} ${isMinimapFullScreen ? "hidden" : "block"} `}
+      className={`fixed left-3 top-20 z-[100] inline-flex items-center gap-1.5 rounded-full border border-[#2d302f] bg-[#2d302f] px-4 py-2 text-sm font-medium text-[#f2bc07] shadow-lg transition-opacity duration-300 hover:bg-black sm:left-1/2 sm:top-3 sm:-translate-x-1/2 sm:transform ${showSplashScreen ? "pointer-events-none opacity-0" : "opacity-100 delay-[1700ms]"} ${isMinimapFullScreen ? "hidden" : "block"} hidden`}
     >
       Consider donating
       <ArrowUpRight className="h-4 w-4" />

@@ -11,8 +11,8 @@ export const GameContextProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
   const { isBrowserEnvironment } = useExtensionContext();
-  const { walker, settings, openExplorer } = useWalker();
-  const { ...gameConfig } = useGameConfig();
+  const { git, walker, settings, openExplorer } = useWalker();
+  const gameConfig = useGameConfig();
 
   if (walker.loading) return <Loading />;
 
@@ -30,9 +30,10 @@ export const GameContextProvider: FC<{
     <GameContext.Provider
       value={{
         ...gameConfig,
-        settings,
         directories: walker.response,
         isBrowserEnvironment,
+        settings,
+        git,
       }}
     >
       {isBrowserEnvironment ? <Analytics /> : null}

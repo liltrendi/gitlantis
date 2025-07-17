@@ -3,6 +3,7 @@ import type { RefObject, Group, Dispatch, SetStateAction } from "react";
 import type { Water } from "three-stdlib";
 import type { TDirectoryContent } from "@/extension/types";
 import type { PositionalAudio } from "three";
+import type { useGit } from "@/browser/hooks/useGit";
 
 declare module "@react-three/fiber" {
   interface ThreeElements {
@@ -57,6 +58,7 @@ declare global {
     setMinimapFullscreen: Dispatch<SetStateAction<boolean>>;
     directionInputRef: RefObject<TDirectionInput>;
     oceanAudioRef: RefObject<PositionalAudio | null>;
+    git: ReturnType<typeof useGit>;
   };
 
   type TGameStore = {

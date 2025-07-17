@@ -20,6 +20,7 @@ export type THandlerMessage = {
   label: string;
   type: TMessageType;
   path: string;
+  branch?: string;
   children: Array<TDirectoryContent>;
   error: TDirectoryErrorType;
   data?: TDefaultSettings;

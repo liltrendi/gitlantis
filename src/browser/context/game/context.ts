@@ -17,4 +17,7 @@ export const GameContext = createContext<TGameConfig>({
     current: { forward: false, backward: false, left: false, right: false },
   },
   oceanAudioRef: { current: null },
+  git: {
+    branches: { all: [], current: null },
+  },
 });

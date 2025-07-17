@@ -19,3 +19,14 @@ export const DIRECTORY_ERRORS = {
   no_open_project: "no-project-open",
   generic: "generic",
 };
+
+export const GIT_COMMANDS = {
+  list_branches: "list_branches",
+  checkout_branch: "checkout_branch",
+};
+
+export const GIT_ERRORS = {
+  listing_error: "listing_error",
+  checkout_error: "checkout_error",
+  generic: "generic",
+};

@@ -6,6 +6,8 @@ const readDirectory_1 = require("../readDirectory");
 const openFile_1 = require("../openFile");
 const openExplorer_1 = require("../openExplorer");
 const handleSettings_1 = require("../handleSettings");
+const list_1 = require("../git/branches/list");
+const checkout_1 = require("../git/branches/checkout");
 const onDidReceiveMessage = async ({ context, panel, message, }) => {
     switch (message.type) {
         case config_1.DIRECTORY_COMMANDS.read_directory:
@@ -18,6 +20,10 @@ const onDidReceiveMessage = async ({ context, panel, message, }) => {
             return (0, handleSettings_1.handleLoadSettings)(context, panel);
         case config_1.DIRECTORY_COMMANDS.persist_settings:
             return (0, handleSettings_1.handlePersistSettings)(context, message.data);
+        case config_1.GIT_COMMANDS.list_branches:
+            return (0, list_1.handleListBranches)(panel, message);
+        case config_1.GIT_COMMANDS.checkout_branch:
+            return (0, checkout_1.handleCheckoutBranch)(panel, message);
     }
 };
 exports.onDidReceiveMessage = onDidReceiveMessage;

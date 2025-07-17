@@ -13,8 +13,10 @@ import type {
 import { SAMPLE_DATA } from "@/browser/config";
 import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 import { useGameStore } from "@/browser/hooks/useGame/store";
+import { useGit } from "@/browser/hooks/useGit";
 
 export const useWalker = () => {
+  const git = useGit();
   const [walker, setWalker] = useState<{
     loading: boolean;
     error: null | TDirectoryErrorType;
@@ -100,7 +102,7 @@ export const useWalker = () => {
       window.removeEventListener("message", handleWalkResponse);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vscodeApi, currentPath, settings.nodesToShow]);
+  }, [vscodeApi, currentPath, settings.nodesToShow, git.branches]);
 
   const openExplorer = () => {
     if (!vscodeApi) return;
@@ -110,5 +112,5 @@ export const useWalker = () => {
     });
   };
 
-  return { walker, settings, openExplorer };
+  return { walker, settings, git, openExplorer };
 };
