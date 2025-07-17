@@ -8,7 +8,7 @@ export const GameCanvas = ({ children }: { children: ReactNode }) => {
   return (
     <div
       className={`${
-        showSplashScreen ? "opacity-0 pointer-events-none" : "opacity-100"
+        showSplashScreen ? "pointer-events-none opacity-0" : "opacity-100"
       }`}
     >
       <Canvas id="worldCanvas" className="!h-[100vh] !w-[100vw]">

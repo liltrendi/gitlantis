@@ -54,6 +54,7 @@ export const useKeyboard = () => {
       document.removeEventListener("keydown", handleKeyDown);
       document.removeEventListener("keyup", handleKeyUp);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return directionInputRef.current;

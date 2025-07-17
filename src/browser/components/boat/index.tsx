@@ -3,7 +3,6 @@ import { useGLTF } from "@react-three/drei";
 import { BOAT_MODEL_PATH, CLOUDFRONT_ROOT_URL } from "@/browser/config";
 import { useNavigation } from "@/browser/hooks/useBoat/navigation";
 import { useGameContext } from "@/browser/hooks/useGame/context";
-import { useRef } from "react";
 
 const globalUris = (window as any).__GLOBAL_URIS__ || {
   boat: BOAT_MODEL_PATH,

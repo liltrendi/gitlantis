@@ -33,7 +33,7 @@ declare global {
   };
 
   interface Window {
-    vscodeApi?: ReturnType<typeof acquireVsCodeApi>
+    vscodeApi?: ReturnType<typeof acquireVsCodeApi>;
   }
 
   type TAcquireVsCode = ReturnType<typeof acquireVsCodeApi>;
@@ -54,9 +54,9 @@ declare global {
     collisionRadius: number;
     collisionPushStrength: number;
     volume: number;
-    rockingAmplitude: number,
-    rockingSpeed: number,
-    bobbingAmplitude: number,
-    bobbingSpeed: number,
+    rockingAmplitude: number;
+    rockingSpeed: number;
+    bobbingAmplitude: number;
+    bobbingSpeed: number;
   };
 }

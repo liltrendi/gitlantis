@@ -17,6 +17,7 @@ export const Audio = () => {
     const audio = oceanAudioRef.current;
     if (showSplashScreen || !audio) return;
     audio.setVolume(settings.volume);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settings.volume, showSplashScreen]);
 
   return (

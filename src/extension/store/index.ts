@@ -11,8 +11,8 @@ export const DEFAULT_SETTINGS: TDefaultSettings = {
   collisionRadius: 100,
   collisionPushStrength: 5,
   rockingAmplitude: 0.03,
-  rockingSpeed: 0.30,
-  bobbingAmplitude: 0.20,
+  rockingSpeed: 0.3,
+  bobbingAmplitude: 0.2,
   bobbingSpeed: 0.6,
   volume: 0.5,
 } as const;

@@ -8,9 +8,11 @@ export const SettingsCog = (gameProps: ReturnType<typeof useGameSettings>) => {
   return (
     <button
       onClick={() => gameProps.setIsOpen(true)}
-      className={`absolute bottom-3 left-3 z-50 text-white text-lg color-[#fff] bg-[#222]/90 hover:bg-[#222]/80 px-3 py-[10px] rounded-lg transition-opacity duration-300 ${
-        (showSplashScreen || isMinimapFullScreen) ? "opacity-0 pointer-events-none" : "opacity-100 delay-[1700ms]"
-      } ${isMinimapFullScreen ? "hidden":"block"}`}
+      className={`color-[#fff] absolute bottom-3 left-3 z-50 rounded-lg bg-[#222]/90 px-3 py-[10px] text-lg text-white transition-opacity duration-300 hover:bg-[#222]/80 ${
+        showSplashScreen || isMinimapFullScreen
+          ? "pointer-events-none opacity-0"
+          : "opacity-100 delay-[1700ms]"
+      } ${isMinimapFullScreen ? "hidden" : "block"}`}
     >
       <CogIcon color="#f2bc07" />
     </button>
@@ -23,7 +25,7 @@ export const SettingsClose = (
   return (
     <button
       onClick={() => gameProps.setIsOpen(false)}
-      className="absolute top-4 right-4 text-white hover:text-gray-300 z-10"
+      className="absolute right-4 top-4 z-10 text-white hover:text-gray-300"
     >
       <XIcon />
     </button>

@@ -63,6 +63,7 @@ export const useWalker = () => {
           break;
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [
       setRootLabel,
       setCurrentPath,
@@ -98,6 +99,7 @@ export const useWalker = () => {
     return () => {
       window.removeEventListener("message", handleWalkResponse);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vscodeApi, currentPath, settings.nodesToShow]);
 
   const openExplorer = () => {

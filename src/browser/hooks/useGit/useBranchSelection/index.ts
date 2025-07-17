@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useBranchSelection = () => {
+const useBranches = () => {
   const DEFAULT_BRANCH = "main";
   const allBranches = [
     DEFAULT_BRANCH,
@@ -8,6 +8,12 @@ export const useBranchSelection = () => {
     "feat/auth",
     "hotfix/bugfix",
   ];
+  return { allBranches };
+};
+
+export const useBranchSelection = () => {
+  const { allBranches } = useBranches();
+
   const [currentBranch, setCurrentBranch] = useState(allBranches[0]);
   const [isPickerOpen, setPickerOpen] = useState(false);
 
@@ -16,11 +22,13 @@ export const useBranchSelection = () => {
     setPickerOpen(false);
   };
 
+  const toggleBranchPicker = () => setPickerOpen((prev) => !prev);
+
   return {
     allBranches,
     currentBranch,
-    handleBranchSelection,
     isPickerOpen,
-    setPickerOpen,
+    toggleBranchPicker,
+    handleBranchSelection,
   };
 };

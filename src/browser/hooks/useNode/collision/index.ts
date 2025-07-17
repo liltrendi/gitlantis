@@ -9,11 +9,11 @@ export const useNodeCollision = ({
   boatRef,
   nodeRef,
 }: {
-  nodes: TNodeInstances
+  nodes: TNodeInstances;
   boatRef: TBoatRef;
   nodeRef: TNodeRef;
 }) => {
-  const {settings} = useGameStore();
+  const { settings } = useGameStore();
 
   const [trackedCollisions, setTrackedCollisions] = useState<boolean[]>([]);
 
@@ -54,7 +54,8 @@ export const useNodeCollision = ({
       toNode.y = 0;
       const distance = toNode.length();
 
-      const isColliding = distance < settings.collisionRadius && distance > 0.01;
+      const isColliding =
+        distance < settings.collisionRadius && distance > 0.01;
 
       // notify only when state changes
       if (previousState !== isColliding) {
@@ -63,8 +64,11 @@ export const useNodeCollision = ({
       }
 
       if (isColliding) {
-        const strength = (settings.collisionRadius - distance) / settings.collisionRadius;
-        toNode.normalize().multiplyScalar(strength * settings.collisionPushStrength);
+        const strength =
+          (settings.collisionRadius - distance) / settings.collisionRadius;
+        toNode
+          .normalize()
+          .multiplyScalar(strength * settings.collisionPushStrength);
         avoidanceVector.add(toNode);
       }
     }
@@ -72,7 +76,7 @@ export const useNodeCollision = ({
     boat.position.add(avoidanceVector);
   });
 
-  useNodeShortcuts({nodes, collisionStateRef})
+  useNodeShortcuts({ nodes, collisionStateRef });
 
   return { trackedCollisions };
 };

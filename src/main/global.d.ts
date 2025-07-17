@@ -56,7 +56,7 @@ declare global {
     isMinimapFullScreen: boolean;
     setMinimapFullscreen: Dispatch<SetStateAction<boolean>>;
     directionInputRef: RefObject<TDirectionInput>;
-    oceanAudioRef: RefObject<PositionalAudio | null>
+    oceanAudioRef: RefObject<PositionalAudio | null>;
   };
 
   type TGameStore = {

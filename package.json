@@ -29,7 +29,11 @@
     "watch": "tsc -watch -p tsconfig.extension.json",
     "package": "pnpm vsce package --no-dependencies",
     "publish": "pnpm vsce publish --no-dependencies",
-    "release": "pnpm run build && pnpm run package && pnpm run publish"
+    "release": "pnpm run build && pnpm run package && pnpm run publish",
+    "prepare": "husky",
+    "format": "prettier --check './src/**/*.{js,jsx,ts,tsx,css}'",
+    "format:fix": "prettier --write './src/**/*.{js,jsx,ts,tsx,css}'",
+    "lint:fix": "eslint --fix './src/**/*.{js,jsx,ts,tsx}'"
   },
   "dependencies": {
     "@react-three/cannon": "^6.6.0",
@@ -46,6 +50,9 @@
     "zustand": "^5.0.5"
   },
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.25.0",
     "@types/lodash.throttle": "^4.1.9",
     "@types/node": "^22.15.24",
@@ -53,17 +60,27 @@
     "@types/react-dom": "^19.1.5",
     "@types/three": "^0.176.0",
     "@types/vscode": "^1.80.0",
+    "@typescript-eslint/eslint-plugin": "^8.37.0",
+    "@typescript-eslint/parser": "^8.37.0",
     "@vitejs/plugin-react-swc": "^3.9.0",
     "autoprefixer": "^10.4.21",
     "eslint": "^9.25.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-plugin-prettier": "^5.5.1",
     "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.19",
+    "eslint-plugin-tailwindcss": "^3.18.2",
     "globals": "^16.0.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
     "postcss": "^8.5.4",
+    "prettier": "^3.6.2",
+    "prettier-plugin-tailwindcss": "^0.6.14",
     "tailwindcss": "3.4.1",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "vite-plugin-eslint": "^1.8.1"
   },
   "activationEvents": [
     "onCommand:gitlantis.openWebview",
@@ -72,5 +89,11 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/liltrendi/gitlantis"
+  },
+  "lint-staged": {
+    "*.{js,jsx,ts,tsx}": [
+      "eslint --fix './src/**/*.{js,jsx,ts,tsx}'",
+      "prettier --write './src/**/*.{js,jsx,ts,tsx,css}'"
+    ]
   }
 }

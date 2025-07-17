@@ -1,32 +1,7 @@
 import { usePersistence } from "@/browser/hooks/usePersistence";
 import { ROOT_DIRECTORY_KEY } from "@/extension/config";
-import {
-  useState,
-  useEffect,
-  createContext,
-  type ReactNode,
-  type FC,
-  type Dispatch,
-  type SetStateAction,
-} from "react";
-
-type TExtensionConfig = {
-  rootLabel: string;
-  currentPath: string;
-  vscodeApi: TAcquireVsCode | null | undefined;
-  isBrowserEnvironment: boolean;
-  setCurrentPath: Dispatch<SetStateAction<string>>;
-  setRootLabel: Dispatch<SetStateAction<string>>;
-};
-
-export const ExtensionContext = createContext<TExtensionConfig>({
-  rootLabel: "",
-  currentPath: "",
-  vscodeApi: undefined,
-  isBrowserEnvironment: true,
-  setRootLabel: () => {},
-  setCurrentPath: () => {},
-});
+import { useState, useEffect, type ReactNode, type FC } from "react";
+import { ExtensionContext } from "@/browser/context/extension/context";
 
 export const ExtensionContextProvider: FC<{
   children: ReactNode;
@@ -51,7 +26,7 @@ export const ExtensionContextProvider: FC<{
         rootLabel,
         currentPath,
         vscodeApi,
-        isBrowserEnvironment: (vscodeApi === null || vscodeApi === undefined),
+        isBrowserEnvironment: vscodeApi === null || vscodeApi === undefined,
         setRootLabel,
         setCurrentPath,
       }}

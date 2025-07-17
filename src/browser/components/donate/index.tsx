@@ -9,19 +9,10 @@ export const Donate = () => {
       href="https://buymeacoffee.com/liltrendi"
       target="_blank"
       rel="noopener noreferrer"
-      className={`
-        fixed z-[100] transition-opacity duration-300
-        top-20 left-3 sm:top-3
-        sm:left-1/2 sm:transform sm:-translate-x-1/2
-        inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-sm font-medium
-        bg-[#2d302f] hover:bg-black text-[#f2bc07] border border-[#2d302f] shadow-lg
-
-        ${showSplashScreen ? "opacity-0 pointer-events-none" : "opacity-100 delay-[1700ms]"}
-        ${isMinimapFullScreen ? "hidden" : "block"}
-      `}
+      className={`fixed left-3 top-20 z-[100] inline-flex items-center gap-1.5 rounded-full border border-[#2d302f] bg-[#2d302f] px-4 py-2 text-sm font-medium text-[#f2bc07] shadow-lg transition-opacity duration-300 hover:bg-black sm:left-1/2 sm:top-3 sm:-translate-x-1/2 sm:transform ${showSplashScreen ? "pointer-events-none opacity-0" : "opacity-100 delay-[1700ms]"} ${isMinimapFullScreen ? "hidden" : "block"} `}
     >
       Consider donating
-      <ArrowUpRight className="w-4 h-4" />
+      <ArrowUpRight className="h-4 w-4" />
     </a>
   );
 };

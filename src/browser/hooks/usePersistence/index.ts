@@ -14,7 +14,7 @@ export const usePersistence = (
         const stored = localStorage.getItem(PERSISTED_SETTINGS_KEY);
         const parsed = stored ? JSON.parse(stored) : undefined;
         initializeStore(parsed);
-      } catch (err) {
+      } catch (_) {
         initializeStore();
       }
       return;

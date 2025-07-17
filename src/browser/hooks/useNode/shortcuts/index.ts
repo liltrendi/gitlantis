@@ -48,9 +48,9 @@ export const useNodeShortcuts = ({
     throttle(
       () => {
         if (!vscodeApi) return;
-        setCurrentPath(prevState => {
-          const newPath = prevState.split("/").slice(0, -1).join("/")
-          return newPath !== "" ? newPath : prevState
+        setCurrentPath((prevState) => {
+          const newPath = prevState.split("/").slice(0, -1).join("/");
+          return newPath !== "" ? newPath : prevState;
         });
       },
       500,
@@ -64,9 +64,9 @@ export const useNodeShortcuts = ({
 
       pressedKeys.current.add(event.key);
 
-      if(pressedKeys.current.has("Escape")){
+      if (pressedKeys.current.has("Escape")) {
         throttledGoBackOneDirectory();
-        return
+        return;
       }
 
       for (const shortcut of NODE_SHORTCUTS) {
@@ -77,7 +77,7 @@ export const useNodeShortcuts = ({
         if (!combinationPressed) continue;
 
         const nodeInfo = getCollidingNode()?.data;
-        if(!nodeInfo) return
+        if (!nodeInfo) return;
         event.preventDefault();
         throttledOpenNode(nodeInfo);
       }

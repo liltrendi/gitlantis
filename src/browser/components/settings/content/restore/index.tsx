@@ -14,7 +14,7 @@ export const SettingsRestoreDefaults = (
 
   return (
     <>
-      <h3 className="text-xl text-gray-200 font-semibold mb-[15px]">
+      <h3 className="mb-[15px] text-xl font-semibold text-gray-200">
         {gameProps.activeTab.description[0]}
       </h3>
       <div className="space-y-5 text-gray-400">
@@ -22,27 +22,27 @@ export const SettingsRestoreDefaults = (
           You are about to reset all previously saved settings for Gitlantis.
           This will restore the extension to its default configuration.
         </p>
-        <p className="text-red-400 mt-4">This action cannot be undone.</p>
+        <p className="mt-4 text-red-400">This action cannot be undone.</p>
 
         <div className="flex gap-3">
           <button
             onClick={() => {
               gameProps.setIsOpen(false);
             }}
-            className="inline-flex items-center px-4 py-2 bg-[transparent] border hover:bg-gray-600 text-white font-medium rounded-lg transition-colors duration-200"
+            className="inline-flex items-center rounded-lg border bg-[transparent] px-4 py-2 font-medium text-white transition-colors duration-200 hover:bg-gray-600"
           >
             Cancel
           </button>
           <button
             onClick={handleRestore}
-            className="inline-flex items-center px-4 py-2 text-red-400 border font-medium hover:bg-red-900 bg-[#2a0f0f] rounded-lg shadow transition-colors duration-200"
+            className="inline-flex items-center rounded-lg border bg-[#2a0f0f] px-4 py-2 font-medium text-red-400 shadow transition-colors duration-200 hover:bg-red-900"
           >
             Restore Defaults
           </button>
         </div>
 
         {showMessage && (
-          <p className="pt-4 text-green-400 font-semibold">
+          <p className="pt-4 font-semibold text-green-400">
             The default configuration has been restored.
           </p>
         )}
