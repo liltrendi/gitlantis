@@ -1,5 +1,5 @@
 import { CLOUDFRONT_ROOT_URL, FAVICON_PATH } from "@/browser/config";
-import { useGameContext } from "@/browser/hooks/useGame/context";
+import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 import { DIRECTORY_ERRORS } from "@/extension/config";
 
 const globalUris = (window as any).__GLOBAL_URIS__ || {
@@ -15,7 +15,8 @@ export const NoOpenProject = ({
   message: string;
   action: () => void;
 }) => {
-  const { isBrowserEnvironment } = useGameContext();
+  const { isBrowserEnvironment } = useExtensionContext();
+
   return (
     <div
       className={`fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0a0a0a] transition-opacity duration-1000`}

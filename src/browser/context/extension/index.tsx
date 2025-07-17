@@ -20,13 +20,15 @@ export const ExtensionContextProvider: FC<{
 
   usePersistence(vscodeApi);
 
+  const isBrowserEnvironment = vscodeApi === null || vscodeApi === undefined;
+
   return (
     <ExtensionContext.Provider
       value={{
         rootLabel,
         currentPath,
         vscodeApi,
-        isBrowserEnvironment: vscodeApi === null || vscodeApi === undefined,
+        isBrowserEnvironment,
         setRootLabel,
         setCurrentPath,
       }}

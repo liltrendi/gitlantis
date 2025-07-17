@@ -59,11 +59,6 @@ const getLauncher = (context) => {
     context.globalState.update(exports.LAUNCH_MARKER, true);
 };
 exports.getLauncher = getLauncher;
-const registerCommands = (context) => {
-    const launchExtension = vscode.commands.registerCommand(exports.LAUNCH_COMMAND, () => (0, exports.getLauncher)(context));
-    context.subscriptions.push(launchExtension);
-};
-exports.registerCommands = registerCommands;
 const relaunchOnFolderChange = (context) => {
     context.subscriptions.push(vscode.workspace.onDidChangeWorkspaceFolders(() => {
         const isActive = context.globalState.get(exports.LAUNCH_MARKER, false);
@@ -74,6 +69,11 @@ const relaunchOnFolderChange = (context) => {
         }
     }));
 };
+const registerCommands = (context) => {
+    const launchExtension = vscode.commands.registerCommand(exports.LAUNCH_COMMAND, () => (0, exports.getLauncher)(context));
+    context.subscriptions.push(launchExtension);
+};
+exports.registerCommands = registerCommands;
 const launchExtension = (context) => {
     const shouldRestore = context.globalState.get(exports.LAUNCH_MARKER, false);
     if (shouldRestore && vscode.workspace.workspaceFolders?.length) {

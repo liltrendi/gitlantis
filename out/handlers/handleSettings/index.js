@@ -20,7 +20,7 @@ const handleLoadSettings = async (context, panel) => {
             data: persistedSettings || null,
         });
     }
-    catch (error) {
+    catch (_) {
         panel.webview.postMessage({
             type: config_1.DIRECTORY_COMMANDS.settings_loaded,
             data: null,
