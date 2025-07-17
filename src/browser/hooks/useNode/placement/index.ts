@@ -3,7 +3,13 @@ import { Vector3 } from "three";
 import { useGameContext } from "@/browser/hooks/useGame/context";
 
 export const useNodePlacement = () => {
-  const { worldOffsetRef, boatRef, nodeRef, directories, isBrowserEnvironment } = useGameContext();
+  const {
+    worldOffsetRef,
+    boatRef,
+    nodeRef,
+    directories,
+    isBrowserEnvironment,
+  } = useGameContext();
   const [nodes, setNodes] = useState<TNodeInstances>([]);
 
   const TILE_SIZE = 1000;
@@ -126,12 +132,13 @@ export const useNodePlacement = () => {
     const boatPosition = boatRef.current.position;
     const generatedNodes = getRandomlyGeneratedNodes(boatPosition);
     setNodes(generatedNodes);
-  }, [worldOffsetRef, directories]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [worldOffsetRef, boatRef, directories]);
 
   useEffect(() => {
     if (!nodeRef?.current) return;
     nodeRef.current = nodeRef.current.slice(0, nodes.length);
-  }, [nodes.length]);
+  }, [nodes.length, nodeRef]);
 
   return { nodes, boatRef, nodeRef, isBrowserEnvironment };
 };

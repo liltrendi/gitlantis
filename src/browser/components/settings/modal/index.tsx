@@ -6,10 +6,10 @@ export const SettingsModal = (
   gameProps: ReturnType<typeof useGameSettings> & { children: ReactNode }
 ) => {
   return (
-    <div className="fixed inset-0 bg-black/70 flex flex-col items-center backdrop-blur-sm z-50 flex items-center justify-center">
+    <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/70 backdrop-blur-sm">
       <div
         ref={gameProps.modalRef}
-        className="bg-[#1e1e1e] text-white sm:w-[65vw] sm:h-[65vh] w-[95vw] h-[65vh] max-w-[650px] rounded-lg shadow-lg p-0 flex overflow-hidden border border-gray-600 relative"
+        className="relative flex h-[65vh] w-[95vw] max-w-[650px] overflow-hidden rounded-lg border border-gray-600 bg-[#1e1e1e] p-0 text-white shadow-lg sm:h-[65vh] sm:w-[65vw]"
       >
         <SettingsClose {...gameProps} />
         {gameProps.children}

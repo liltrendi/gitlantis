@@ -1,15 +1,15 @@
-export const CLOUDFRONT_ROOT_URL = `https://d309f6bqnc919e.cloudfront.net/gitlantis`
+export const CLOUDFRONT_ROOT_URL = `https://d309f6bqnc919e.cloudfront.net/gitlantis`;
 
 export const OCEAN_MODEL_PATH = `/models/ocean/ocean.jpeg?v=1`;
 export const BOAT_MODEL_PATH = `/models/boat/boat.glb?v=1`;
 export const FOLDER_MODEL_PATH = `/models/folder/folder.glb?v=1`;
 export const FILE_MODEL_PATH = `/models/file/file.glb?v=1`;
 export const OCEAN_AUDIO_PATH = `/music/waves.mp3?v=1`;
-export const FAVICON_PATH = `/images/favicon.png?v=1`
+export const FAVICON_PATH = `/images/favicon.png?v=1`;
 
 export const NODE_SHORTCUTS: Array<{ label: string; keys: string[] }> = [
   { label: "Shift+Enter to explore", keys: ["Shift", "Enter"] },
-  { label: "Escape", keys: ["Escape"] }, 
+  { label: "Escape", keys: ["Escape"] },
 ];
 
 export const SAMPLE_DATA = [

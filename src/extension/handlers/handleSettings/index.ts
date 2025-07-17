@@ -23,7 +23,7 @@ export const handleLoadSettings = async (
       type: DIRECTORY_COMMANDS.settings_loaded,
       data: persistedSettings || null,
     });
-  } catch (error) {
+  } catch (_) {
     panel.webview.postMessage({
       type: DIRECTORY_COMMANDS.settings_loaded,
       data: null,

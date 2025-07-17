@@ -49,14 +49,15 @@ export const Joystick = () => {
       manager.destroy();
       managerRef.current = null;
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div
       ref={joystickRef}
-      className={`fixed inset-0 z-50 md:invisible touch-none transition-opacity duration-300 ${
+      className={`fixed inset-0 z-50 touch-none transition-opacity duration-300 md:invisible ${
         showSplashScreen
-          ? "opacity-0 pointer-events-none"
+          ? "pointer-events-none opacity-0"
           : "opacity-100 delay-[1700ms]"
       }`}
     />

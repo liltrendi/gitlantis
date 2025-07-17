@@ -14,22 +14,14 @@ export const MinimapToggle = () => {
     <button
       onClick={(e) => {
         e.currentTarget.blur();
-        setMinimapFullscreen(!isMinimapFullScreen)
+        setMinimapFullscreen(!isMinimapFullScreen);
       }}
       title={isMinimapFullScreen ? "Minimize minimap" : "Fullscreen minimap"}
-      className={`
-        fixed z-[1001] w-11 h-11 
-        bg-gray-800/90 border border-white/40 
-        rounded-lg text-white cursor-pointer
-        flex items-center justify-center
-        hover:bg-gray-700/90 transition-colors
-        transition-opacity duration-300 
-        ${
-          isMinimapFullScreen
-            ? "right-[calc(3.9%+10px)] bottom-[calc(5.5%+10px)]"
-            : "right-[15px] bottom-[15px]"
-        } ${shouldShow ? "opacity-100 delay-[1700ms]" : "opacity-0 pointer-events-none"}
-      `}
+      className={`fixed z-[1001] flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg border border-white/40 bg-gray-800/90 text-white transition-colors transition-opacity duration-300 hover:bg-gray-700/90 ${
+        isMinimapFullScreen
+          ? "bottom-[calc(5.5%+10px)] right-[calc(3.9%+10px)]"
+          : "bottom-[15px] right-[15px]"
+      } ${shouldShow ? "opacity-100 delay-[1700ms]" : "pointer-events-none opacity-0"} `}
     >
       {isMinimapFullScreen ? (
         <svg

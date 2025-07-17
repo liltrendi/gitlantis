@@ -23,7 +23,9 @@ export const useGameStore = create<TGameStore>((set, get) => ({
               settings: { ...DEFAULT_SETTINGS, ...parsed },
             });
           }
-        } catch (err) {}
+        } catch (_) {
+          // nothing to do for now
+        }
       }
       set({ extension: { isLoaded: true } });
     }
@@ -43,7 +45,9 @@ export const useGameStore = create<TGameStore>((set, get) => ({
           PERSISTED_SETTINGS_KEY,
           JSON.stringify(get().settings)
         );
-      } catch (err) {}
+      } catch (_) {
+        // nothing to do for now
+      }
     }
   },
 

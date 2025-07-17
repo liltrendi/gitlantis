@@ -12,17 +12,19 @@ export const Breadcrumbs = () => {
 
   return (
     <div
-      className={`text-md text-gray-500 flex flex-col items-start absolute top-3 left-3 z-50 rounded-t-lg transition-opacity duration-300  ${
-        (showSplashScreen) ? "opacity-0 pointer-events-none" : "opacity-100 delay-[1700ms]"
-      } ${isMinimapFullScreen ? "hidden":"block"}`}
+      className={`text-md absolute left-3 top-3 z-50 flex flex-col items-start rounded-t-lg text-gray-500 transition-opacity duration-300 ${
+        showSplashScreen
+          ? "pointer-events-none opacity-0"
+          : "opacity-100 delay-[1700ms]"
+      } ${isMinimapFullScreen ? "hidden" : "block"}`}
     >
       <span
-        className={`bg-[#f2bc07] px-2 py-[1px] text-md text-black rounded-tl-lg rounded-tr-lg rounded-br-md border-t border-l border-r border-b border-[#2d302f] border-l-4`}
+        className={`text-md rounded-br-md rounded-tl-lg rounded-tr-lg border-b border-l border-l-4 border-r border-t border-[#2d302f] bg-[#f2bc07] px-2 py-[1px] text-black`}
       >
         File explorer
       </span>
       <nav
-        className={`flex flex-wrap max-w-[50vw] break-words bg-[#2d302f] px-3 py-1 rounded-bl-lg rounded-br-lg rounded-tr-lg`}
+        className={`flex max-w-[50vw] flex-wrap break-words rounded-bl-lg rounded-br-lg rounded-tr-lg bg-[#2d302f] px-3 py-1`}
       >
         {(() => {
           if (currentPath === ROOT_DIRECTORY_KEY) {
@@ -50,7 +52,7 @@ export const Breadcrumbs = () => {
                     <button
                       onMouseDown={(e) => e.preventDefault()}
                       onClick={() => setCurrentPath(fullPath)}
-                      className="text-md text-white hover:underline hover:text-[#f2bc07] focus:outline-none"
+                      className="text-md text-white hover:text-[#f2bc07] hover:underline focus:outline-none"
                     >
                       {segment}
                     </button>

@@ -7,7 +7,7 @@ export const SettingsGeneral = (
 ) => {
   return (
     <>
-      <h3 className="text-xl text-gray-200 font-semibold mb-[15px]">
+      <h3 className="mb-[15px] text-xl font-semibold text-gray-200">
         {gameProps.activeTab.description[0]}
       </h3>
       <SharedSelect
@@ -20,7 +20,7 @@ export const SettingsGeneral = (
         tooltip="File types to interact with"
       />
 
-      <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[15px]">
+      <h3 className="mb-[15px] pt-[15px] text-xl font-semibold text-gray-200">
         {gameProps.activeTab.description[1]}
       </h3>
       <SharedSlider
@@ -32,7 +32,7 @@ export const SettingsGeneral = (
         tooltip="How loud the waves are"
       />
 
-      <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[15px]">
+      <h3 className="mb-[15px] pt-[15px] text-xl font-semibold text-gray-200">
         {gameProps.activeTab.description[2]}
       </h3>
       <SharedSelect
@@ -53,9 +53,7 @@ export const SettingsGeneral = (
         label="Breadcrumbs"
         value={gameProps.settings.breadcrumbs}
         options={["Show", "Hide"]}
-        onChange={(e) =>
-          gameProps.setBreadcrumbs(e.target.value as TShowHide)
-        }
+        onChange={(e) => gameProps.setBreadcrumbs(e.target.value as TShowHide)}
         tooltip="Toggle navigation visibility"
       />
     </>

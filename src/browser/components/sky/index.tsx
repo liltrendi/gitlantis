@@ -10,18 +10,18 @@ export const Sky = () => {
     const x = 0.3;
     const y = 0.1;
     const z = 0.4;
-    
+
     return new ThreeVector3(x, y, z);
   }, []);
 
   const relativeSunPosition = useMemo(() => {
     const offset = worldOffsetRef?.current || new ThreeVector3(0, 0, 0);
     return sunWorldPosition.clone().sub(offset);
-  }, [sunWorldPosition, worldOffsetRef?.current]);
+  }, [sunWorldPosition, worldOffsetRef]);
 
   const skyParams = {
-    rayleigh: 2,      // Controls blue scattering (higher = more blue)
-    turbidity: 5,   // Atmospheric haze (lower = clearer)
+    rayleigh: 2, // Controls blue scattering (higher = more blue)
+    turbidity: 5, // Atmospheric haze (lower = clearer)
     mieDirectionalG: 0.8,
     mieCoefficient: 0.05,
   };

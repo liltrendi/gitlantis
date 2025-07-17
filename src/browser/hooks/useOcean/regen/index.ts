@@ -14,7 +14,10 @@ export const useOceanRegen = (TILE_SIZE = 10000, TILES_RADIUS = 2) => {
   >([]);
   const { boatRef, oceanRef, isBrowserEnvironment } = useGameContext();
 
-  const waterNormals = useLoader(TextureLoader, `${isBrowserEnvironment ? CLOUDFRONT_ROOT_URL:""}${globalUris.ocean}`);
+  const waterNormals = useLoader(
+    TextureLoader,
+    `${isBrowserEnvironment ? CLOUDFRONT_ROOT_URL : ""}${globalUris.ocean}`
+  );
   waterNormals.wrapS = waterNormals.wrapT = RepeatWrapping;
 
   const sceneConfig = {
@@ -45,7 +48,7 @@ export const useOceanRegen = (TILE_SIZE = 10000, TILES_RADIUS = 2) => {
           position: [tileX * TILE_SIZE, 0, tileZ * TILE_SIZE] as [
             number,
             number,
-            number
+            number,
           ],
         });
       }

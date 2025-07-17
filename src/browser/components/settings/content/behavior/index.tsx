@@ -6,7 +6,7 @@ export const SettingsBehavior = (
 ) => {
   return (
     <>
-      <h3 className="text-xl text-gray-200 font-semibold mb-[15px]">
+      <h3 className="mb-[15px] text-xl font-semibold text-gray-200">
         {gameProps.activeTab.description[0]}
       </h3>
       <SharedSlider
@@ -50,7 +50,7 @@ export const SettingsBehavior = (
         tooltip="How quickly turning slows"
       />
 
-      <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[20px]">
+      <h3 className="mb-[15px] pt-[20px] text-xl font-semibold text-gray-200">
         {gameProps.activeTab.description[1]}
       </h3>
 
@@ -90,7 +90,7 @@ export const SettingsBehavior = (
         tooltip="Vertical bounce speed"
       />
 
-      <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[20px]">
+      <h3 className="mb-[15px] pt-[20px] text-xl font-semibold text-gray-200">
         {gameProps.activeTab.description[2]}
       </h3>
 

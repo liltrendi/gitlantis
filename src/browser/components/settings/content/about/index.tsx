@@ -43,12 +43,12 @@ export const SettingsAbout = (
 ) => {
   return (
     <>
-      <h3 className="text-xl text-gray-200 font-semibold mb-[15px]">
+      <h3 className="mb-[15px] text-xl font-semibold text-gray-200">
         {gameProps.activeTab.description[0]}
       </h3>
       <div className="space-y-5 text-gray-400">
-        <p className="text-lg space-y-2">
-          <span className="text-[16px] block mb-4">
+        <p className="space-y-2 text-lg">
+          <span className="mb-4 block text-[16px]">
             Hi, my name is{" "}
             <a className="text-[#f2bc07] underline" href="https://brayo.co">
               Brian
@@ -56,7 +56,7 @@ export const SettingsAbout = (
             , the creator of Gitlantis.
           </span>
 
-          <span className="text-[16px] block">
+          <span className="block text-[16px]">
             This extension was designed to make exploring your files more
             engaging and less of a chore. If it’s useful to you, please consider
             donating to help me keep improving it!
@@ -66,18 +66,18 @@ export const SettingsAbout = (
           href="https://buymeacoffee.com/liltrendi"
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex text-sm items-center px-4 py-2 bg-[#f2bc07] hover:bg-[#f2bc07] hover:text-gray-900 text-gray-900 font-semibold rounded-lg shadow-md transition-colors duration-200"
+          className="inline-flex items-center rounded-lg bg-[#f2bc07] px-4 py-2 text-sm font-semibold text-gray-900 shadow-md transition-colors duration-200 hover:bg-[#f2bc07] hover:text-gray-900"
         >
-          <Coffee className="w-5 h-5 mr-2" />
+          <Coffee className="mr-2 h-5 w-5" />
           Buy Me a Coffee
         </a>
       </div>
 
-      <h3 className="text-xl text-gray-200 font-semibold mb-[15px] pt-[20px]">
+      <h3 className="mb-[15px] pt-[20px] text-xl font-semibold text-gray-200">
         {gameProps.activeTab.description[1]}
       </h3>
       <div className="space-y-5 text-gray-400">
-        <span className="text-[16px] block mb-6">
+        <span className="mb-6 block text-[16px]">
           I'm super grateful for the following creators, without whose models
           this project wouldn't have been successful:
         </span>
@@ -87,9 +87,9 @@ export const SettingsAbout = (
         {ATTRIBUTIONS.map((item, index) => (
           <li
             key={`attribution-${index}-${item.creator}`}
-            className="flex items-center space-x-2 mb-4"
+            className="mb-4 flex items-center space-x-2"
           >
-            <Sparkle className="w-5 h-5 text-gray-400" />
+            <Sparkle className="h-5 w-5 text-gray-400" />
             <span className="text-gray-400">
               <span>
                 <a className="text-[#f2bc07] underline" href={item.model.link}>
@@ -98,7 +98,7 @@ export const SettingsAbout = (
               </span>{" "}
               - by{" "}
               <span>
-                <a className="underline text-gray-200" href={item.creator.link}>
+                <a className="text-gray-200 underline" href={item.creator.link}>
                   {item.creator.name}
                 </a>
               </span>
