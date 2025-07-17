@@ -36,7 +36,12 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.handleOpenFile = void 0;
 const vscode = __importStar(require("vscode"));
 const handleOpenFile = async (filePath) => {
-    const uri = vscode.Uri.file(filePath);
-    await vscode.window.showTextDocument(uri);
+    try {
+        const uri = vscode.Uri.file(filePath);
+        await vscode.window.showTextDocument(uri);
+    }
+    catch (_error) {
+        vscode.window.showErrorMessage(`Cannot open the file at: ${filePath}`);
+    }
 };
 exports.handleOpenFile = handleOpenFile;

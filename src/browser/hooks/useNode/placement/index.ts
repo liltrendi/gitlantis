@@ -9,6 +9,7 @@ export const useNodePlacement = () => {
     nodeRef,
     directories,
     isBrowserEnvironment,
+    git,
   } = useGameContext();
   const [nodes, setNodes] = useState<TNodeInstances>([]);
 
@@ -133,7 +134,7 @@ export const useNodePlacement = () => {
     const generatedNodes = getRandomlyGeneratedNodes(boatPosition);
     setNodes(generatedNodes);
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [worldOffsetRef, boatRef, directories]);
+  }, [worldOffsetRef, boatRef, directories, git.branches.current]);
 
   useEffect(() => {
     if (!nodeRef?.current) return;

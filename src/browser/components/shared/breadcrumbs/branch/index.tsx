@@ -32,7 +32,7 @@ export const BreadcrumbBranch = () => {
       >
         <span>
           <span className="pr-1 font-semibold">Branch:</span>
-          <span className="italic">{current || "none found"}</span>
+          <span className="">{current || "none found"}</span>
         </span>
       </span>
 

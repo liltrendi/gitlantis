@@ -72,6 +72,7 @@ export const useWalker = () => {
       getFilteredNodes,
       setWalker,
       settings.nodesToShow,
+      git.branches.current,
     ]
   );
 
@@ -102,7 +103,7 @@ export const useWalker = () => {
       window.removeEventListener("message", handleWalkResponse);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vscodeApi, currentPath, settings.nodesToShow, git.branches]);
+  }, [vscodeApi, currentPath, settings.nodesToShow, git.branches.current]);
 
   const openExplorer = () => {
     if (!vscodeApi) return;

@@ -21,10 +21,10 @@ exports.DIRECTORY_ERRORS = {
 };
 exports.GIT_COMMANDS = {
     list_branches: "list_branches",
-    checkout_branch: "checkout_branch"
+    checkout_branch: "checkout_branch",
 };
 exports.GIT_ERRORS = {
     listing_error: "listing_error",
     checkout_error: "checkout_error",
-    generic: "generic"
+    generic: "generic",
 };

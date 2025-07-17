@@ -1,8 +1,7 @@
-import { GIT_COMMANDS, GIT_ERRORS } from "../../../config";
+import { GIT_COMMANDS } from "../../../config";
 import type { THandlerMessage } from "../../../types";
 import type { GitExtension } from "../../../types/git";
 import * as vscode from "vscode";
-import { sendError } from "../../utils";
 
 const checkoutBranch = async (branch: string = "", inputPath?: string) => {
   const gitExtension =
@@ -52,12 +51,9 @@ export const handleCheckoutBranch = async (
       type: GIT_COMMANDS.checkout_branch,
       current: message.branch,
     });
-  } catch (error: unknown) {
-    sendError(
-      panel,
-      message.path,
-      GIT_ERRORS.checkout_error,
-      (error as Error).message
+  } catch (_error: unknown) {
+    vscode.window.showErrorMessage(
+      `Unable to checkout to the branch: ${message.branch}`
     );
   }
 };
