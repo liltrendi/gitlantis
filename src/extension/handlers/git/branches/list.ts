@@ -1,50 +1,33 @@
 import * as vscode from "vscode";
 import { GIT_COMMANDS } from "../../../config";
 import type { THandlerMessage } from "../../../types";
-import type { GitExtension, Repository } from "../../../types/git";
+import type { Repository } from "../../../types/git";
+import { getCurrentRepo } from "../../utils";
 
-const getProjectBranches = async (inputPath?: string | null) => {
-  const gitExtension =
-    vscode.extensions.getExtension<GitExtension>("vscode.git")?.exports;
-  const api = gitExtension?.getAPI(1);
-
-  if (!api) {
-    throw new Error("Git extension not available");
-  }
-
-  const repo = api.repositories.find((r) => {
-    if (!inputPath) return true;
-    return r.rootUri.fsPath === inputPath;
-  });
-
-  if (!repo) {
-    throw new Error("No Git repository found for the given path");
-  }
-
+const getBranches = async (panel: vscode.WebviewPanel, repo: Repository) => {
   const branches = await repo.getBranches({ remote: true });
-  return branches
+  const allBranches = branches
     .map((b) => b.name)
     .filter((name) => name !== "HEAD" && name !== "origin/HEAD");
+  const currentBranch = repo.state.HEAD?.name || "unknown";
+
+  panel.webview.postMessage({
+    type: GIT_COMMANDS.list_branches,
+    all: allBranches,
+    current: currentBranch,
+  });
 };
 
-const getCurrentBranch = async (inputPath?: string | null) => {
-  const gitExtension = vscode.extensions.getExtension("vscode.git")?.exports;
-  const api = gitExtension?.getAPI(1);
-
-  if (!api) {
-    throw new Error("Git extension not available");
-  }
-
-  const repo = api.repositories.find((r: Repository) => {
-    if (!inputPath) return true;
-    return r.rootUri.fsPath === inputPath;
+const listenForBranchChanges = (
+  panel: vscode.WebviewPanel,
+  repo: Repository
+) => {
+  repo.state.onDidChange(() => {
+    panel.webview.postMessage({
+      type: GIT_COMMANDS.checkout_branch,
+      current: repo.state.HEAD?.name,
+    });
   });
-
-  if (!repo) {
-    throw new Error("No Git repository found for the given path");
-  }
-
-  return repo.state.HEAD?.name || "unknown";
 };
 
 export const handleListBranches = async (
@@ -52,15 +35,20 @@ export const handleListBranches = async (
   message: THandlerMessage
 ) => {
   try {
-    const allBranches = await getProjectBranches(message.path);
-    const currentBranch = await getCurrentBranch(message.path);
+    const repo = getCurrentRepo(message.path);
 
-    panel.webview.postMessage({
-      type: GIT_COMMANDS.list_branches,
-      all: allBranches,
-      current: currentBranch,
-    });
+    if (!repo) {
+      vscode.window.showErrorMessage(
+        `Could not find a valid git repository for your current project`
+      );
+      return;
+    }
+
+    await getBranches(panel, repo);
+    listenForBranchChanges(panel, repo);
   } catch (_error: unknown) {
-    // ignore for now as user may be in empty project
+    vscode.window.showErrorMessage(
+      `Oops, something went wrong. Please try again.`
+    );
   }
 };

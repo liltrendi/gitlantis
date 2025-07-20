@@ -33,7 +33,7 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendError = exports.getWorkspaceFolderFromPath = void 0;
+exports.getCurrentRepo = exports.getGitApi = exports.sendError = exports.getWorkspaceFolderFromPath = void 0;
 const vscode = __importStar(require("vscode"));
 const path = __importStar(require("path"));
 const config_1 = require("../../config");
@@ -61,3 +61,19 @@ const sendError = (panel, path, errorType, message) => {
     });
 };
 exports.sendError = sendError;
+const getGitApi = () => {
+    const gitExtension = vscode.extensions.getExtension("vscode.git")?.exports;
+    const api = gitExtension?.getAPI(1);
+    return api;
+};
+exports.getGitApi = getGitApi;
+const getCurrentRepo = (path) => {
+    const api = (0, exports.getGitApi)();
+    const repo = api?.repositories.find((r) => {
+        if (!path)
+            return true;
+        return r.rootUri.fsPath === path;
+    });
+    return repo;
+};
+exports.getCurrentRepo = getCurrentRepo;

@@ -1,18 +1,10 @@
 import { GIT_COMMANDS } from "../../../config";
 import type { THandlerMessage } from "../../../types";
-import type { GitExtension } from "../../../types/git";
 import * as vscode from "vscode";
+import { getCurrentRepo } from "../../utils";
 
-const checkoutBranch = async (branch: string = "", inputPath?: string) => {
-  const gitExtension =
-    vscode.extensions.getExtension<GitExtension>("vscode.git")?.exports;
-  const api = gitExtension?.getAPI(1);
-  if (!api) throw new Error("Git API not available");
-
-  const repo = api.repositories.find((r) => {
-    if (!inputPath) return true;
-    return r.rootUri.fsPath === inputPath;
-  });
+const checkoutBranch = async (branch: string = "", inputPath: string) => {
+  const repo = getCurrentRepo(inputPath);
   if (!repo) throw new Error("Repository not found");
 
   const normalizedBranch = branch.replace(/^origin\//, "");

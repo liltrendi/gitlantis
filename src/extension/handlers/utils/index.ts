@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as path from "path";
 import { DIRECTORY_RESPONSE, ROOT_DIRECTORY_KEY } from "../../config";
+import type { GitExtension, Repository } from "../../types/git";
 
 export const getWorkspaceFolderFromPath = (
   inputPath: string | null | undefined
@@ -33,4 +34,23 @@ export const sendError = (
     path,
     error: { type: errorType, message },
   });
+};
+
+export const getGitApi = () => {
+  const gitExtension =
+    vscode.extensions.getExtension<GitExtension>("vscode.git")?.exports;
+  const api = gitExtension?.getAPI(1);
+
+  return api;
+};
+
+export const getCurrentRepo = (path: string) => {
+  const api = getGitApi();
+
+  const repo = api?.repositories.find((r: Repository) => {
+    if (!path) return true;
+    return r.rootUri.fsPath === path;
+  });
+
+  return repo;
 };

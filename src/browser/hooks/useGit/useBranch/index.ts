@@ -27,7 +27,9 @@ export const useBranches = () => {
           }));
           break;
         case GIT_COMMANDS.checkout_branch:
-          setBranches((prev) => ({ ...prev, current }));
+          if (branches.current !== current) {
+            setBranches((prev) => ({ ...prev, current }));
+          }
           break;
         default:
           break;
