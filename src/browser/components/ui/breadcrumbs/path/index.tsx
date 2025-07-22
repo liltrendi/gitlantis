@@ -6,15 +6,21 @@ export const BreadcrumbPath = () => {
   const { rootLabel, currentPath, setCurrentPath } = useExtensionContext();
   const { baseFolder } = useGameContext();
 
-  if (currentPath.length === 0) return null;
+  if (!currentPath || currentPath.length === 0) return null;
+
+  const containerClasses =
+    "flex flex-wrap max-w-[50vw] break-words rounded-bl-lg rounded-br-lg rounded-tr-lg bg-[#2d302f] px-2 py-1 gap-y-1";
+
+  const segmentButtonClasses =
+    "max-w-[10rem] truncate text-white text-sm hover:text-[#f2bc07] hover:underline focus:outline-none";
 
   if (currentPath === ROOT_DIRECTORY_KEY) {
     if (rootLabel.length > 0) {
       return (
-        <nav className="flex max-w-[50vw] flex-wrap break-words rounded-bl-lg rounded-br-lg rounded-tr-lg bg-[#2d302f] px-3 py-1">
-          <span key={ROOT_DIRECTORY_KEY} className="flex items-center">
-            <span>Exploring:</span>
-            <span className="cursor-pointer pl-1 text-white hover:text-[#f2bc07] hover:underline">
+        <nav className={containerClasses}>
+          <span className="flex items-center text-gray-300">
+            <span className="mr-1">Exploring:</span>
+            <span className="cursor-pointer text-white hover:text-[#f2bc07] hover:underline">
               {rootLabel}
             </span>
           </span>
@@ -26,7 +32,6 @@ export const BreadcrumbPath = () => {
 
   const segments = currentPath.split("/").filter(Boolean);
   const baseFolderSegments = baseFolder.split("/").filter(Boolean);
-
   const baseFolderIndex = segments.findIndex(
     (_, i) =>
       segments.slice(0, i + 1).join("/") === baseFolderSegments.join("/")
@@ -37,37 +42,33 @@ export const BreadcrumbPath = () => {
   const baseFolderChildren = segments.slice(baseFolderIndex);
 
   return (
-    <nav className="flex max-w-[50vw] flex-wrap break-words rounded-bl-lg rounded-br-lg rounded-tr-lg bg-[#2d302f] px-3 py-1">
-      <span className="flex items-center">
-        <span>Exploring:</span>
-        <span className="flex items-center pl-1">
-          {baseFolderChildren.map((segment, index) => {
-            const fullPath = segments
-              .slice(0, baseFolderIndex + index + 1)
-              .join("/");
-            const isLastItem = index === baseFolderChildren.length - 1;
+    <nav className={containerClasses}>
+      <span className="mr-1 text-gray-300">Exploring:</span>
+      {baseFolderChildren.map((segment, index) => {
+        const fullPath = segments
+          .slice(0, baseFolderIndex + index + 1)
+          .join("/");
+        const isLastItem = index === baseFolderChildren.length - 1;
 
-            return (
-              <span
-                key={`route-${index}-${fullPath}`}
-                className="flex items-center"
-              >
-                {index > 0 && <span className="mx-1 text-gray-400">{">"}</span>}
-                <button
-                  onMouseDown={(e) => e.preventDefault()}
-                  onClick={() => {
-                    if (isLastItem) return;
-                    setCurrentPath("/" + fullPath);
-                  }}
-                  className="text-md text-white hover:text-[#f2bc07] hover:underline focus:outline-none"
-                >
-                  {segment}
-                </button>
-              </span>
-            );
-          })}
-        </span>
-      </span>
+        return (
+          <span
+            key={`route-${index}-${fullPath}`}
+            className="flex items-center"
+          >
+            {index > 0 && <span className="mx-1 text-gray-500">{">"}</span>}
+            <button
+              onMouseDown={(e) => e.preventDefault()}
+              onClick={() => {
+                if (!isLastItem) setCurrentPath("/" + fullPath);
+              }}
+              className={segmentButtonClasses}
+              title={segment}
+            >
+              {segment}
+            </button>
+          </span>
+        );
+      })}
     </nav>
   );
 };
