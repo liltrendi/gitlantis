@@ -9,7 +9,7 @@ type TBranchesResponse = {
 };
 
 export const useBranches = () => {
-  const { vscodeApi } = useExtensionContext();
+  const { vscodeApi, currentPath } = useExtensionContext();
   const [branches, setBranches] = useState<TBranchesResponse>({
     all: [],
     current: null,
@@ -39,19 +39,20 @@ export const useBranches = () => {
   );
 
   useEffect(() => {
-    if (!vscodeApi) return;
-
-    vscodeApi.postMessage({
-      type: GIT_COMMANDS.list_branches,
-    });
-
     window.addEventListener("message", handleBranchResponses);
 
     return () => {
       window.removeEventListener("message", handleBranchResponses);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vscodeApi]);
+  }, []);
+
+  useEffect(() => {
+    if (!vscodeApi) return;
+
+    vscodeApi.postMessage({
+      type: GIT_COMMANDS.list_branches,
+    });
+  }, [vscodeApi, currentPath]);
 
   return branches;
 };

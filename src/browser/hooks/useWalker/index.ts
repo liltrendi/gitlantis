@@ -21,10 +21,12 @@ export const useWalker = () => {
     loading: boolean;
     error: null | TDirectoryErrorType;
     response: TDirectoryContent[];
+    baseFolder: string;
   }>({
     loading: true,
     error: null,
     response: [],
+    baseFolder: ROOT_DIRECTORY_KEY,
   });
 
   const { vscodeApi, currentPath, setCurrentPath, setRootLabel } =
@@ -40,12 +42,12 @@ export const useWalker = () => {
         return child;
       });
     },
-    [settings.nodesToShow]
+    [settings.nodesToShow, currentPath]
   );
 
   const handleWalkResponse = useCallback(
     ({ data }: { data: THandlerMessage }) => {
-      const { type, label, children, error } = data;
+      const { type, label, children, error, baseFolder } = data;
       switch (type) {
         case DIRECTORY_RESPONSE.data:
           if (currentPath === ROOT_DIRECTORY_KEY) {
@@ -56,6 +58,7 @@ export const useWalker = () => {
             error: null,
             loading: false,
             response: getFilteredNodes(children),
+            baseFolder: baseFolder!,
           }));
           break;
         case DIRECTORY_RESPONSE.error:
@@ -73,6 +76,7 @@ export const useWalker = () => {
       setWalker,
       settings.nodesToShow,
       git.branches.current,
+      currentPath,
     ]
   );
 
@@ -96,14 +100,16 @@ export const useWalker = () => {
       type: DIRECTORY_COMMANDS.read_directory,
       path: currentPath,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vscodeApi, currentPath, settings.nodesToShow, git.branches.current]);
 
+  useEffect(() => {
     window.addEventListener("message", handleWalkResponse);
 
     return () => {
       window.removeEventListener("message", handleWalkResponse);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [vscodeApi, currentPath, settings.nodesToShow, git.branches.current]);
+  }, []);
 
   const openExplorer = () => {
     if (!vscodeApi) return;

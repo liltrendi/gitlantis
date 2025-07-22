@@ -49,6 +49,7 @@ declare global {
     oceanRef: TOceanRef;
     nodeRef: TNodeRef;
     worldOffsetRef: TWorldOffsetRef;
+    baseFolder: string;
     directories: TDirectoryContent[];
     settings: Pick<TGameStore, "settings">["settings"];
     showSplashScreen: boolean;

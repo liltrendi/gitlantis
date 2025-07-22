@@ -24,6 +24,7 @@ export type THandlerMessage = {
   children: Array<TDirectoryContent>;
   error: TDirectoryErrorType;
   data?: TDefaultSettings;
+  baseFolder?: string;
 };
 
 declare global {

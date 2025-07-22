@@ -1,5 +1,5 @@
-import { SharedSelect } from "@/browser/components/shared/select";
-import { SharedSlider } from "@/browser/components/shared/slider";
+import { SharedSelect } from "@/browser/components/ui/select";
+import { SharedSlider } from "@/browser/components/ui/slider";
 import type { useGameSettings } from "@/browser/hooks/useGame/settings";
 
 export const SettingsGeneral = (

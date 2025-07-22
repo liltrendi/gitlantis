@@ -1,4 +1,4 @@
-import { Tooltip } from "@/browser/components/shared/tooltip";
+import { Tooltip } from "@/browser/components/ui/tooltip";
 
 export const SharedSlider = ({
   label,

@@ -1,6 +1,6 @@
 import { ChevronDown } from "lucide-react";
 import type { ChangeEventHandler } from "react";
-import { Tooltip } from "@/browser/components/shared/tooltip";
+import { Tooltip } from "@/browser/components/ui/tooltip";
 
 export const SharedSelect = ({
   label,

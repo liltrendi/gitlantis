@@ -5,6 +5,7 @@ import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 import type { TDirectoryContent } from "@/extension/types";
 import { DIRECTORY_COMMANDS } from "@/extension/config";
 import { NODE_SHORTCUTS } from "@/browser/config";
+import { useGameContext } from "@/browser/hooks/useGame/context";
 
 export const useNodeShortcuts = ({
   enabled = true,
@@ -16,6 +17,7 @@ export const useNodeShortcuts = ({
   collisionStateRef: RefObject<boolean[]>;
 }) => {
   const { vscodeApi, setCurrentPath } = useExtensionContext();
+  const { baseFolder } = useGameContext();
   const pressedKeys = useRef<Set<string>>(new Set());
 
   const getCollidingNode = useCallback((): TNodeInstance | null => {
@@ -50,6 +52,7 @@ export const useNodeShortcuts = ({
         if (!vscodeApi) return;
         setCurrentPath((prevState) => {
           const newPath = prevState.split("/").slice(0, -1).join("/");
+          if (baseFolder === prevState) return prevState;
           return newPath !== "" ? newPath : prevState;
         });
       },

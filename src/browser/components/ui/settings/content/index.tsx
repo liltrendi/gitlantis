@@ -1,9 +1,9 @@
 import type { useGameSettings } from "@/browser/hooks/useGame/settings";
-import { SettingsGeneral } from "@/browser/components/settings/content/general";
-import { SettingsBehavior } from "@/browser/components/settings/content/behavior";
-import { SettingsControls } from "@/browser/components/settings/content/controls";
-import { SettingsAbout } from "@/browser/components/settings/content/about";
-import { SettingsRestoreDefaults } from "@/browser/components/settings/content/restore";
+import { SettingsGeneral } from "@/browser/components/ui/settings/content/general";
+import { SettingsBehavior } from "@/browser/components/ui/settings/content/behavior";
+import { SettingsControls } from "@/browser/components/ui/settings/content/controls";
+import { SettingsAbout } from "@/browser/components/ui/settings/content/about";
+import { SettingsRestoreDefaults } from "@/browser/components/ui/settings/content/restore";
 
 export const SettingsContent = (
   gameProps: ReturnType<typeof useGameSettings>

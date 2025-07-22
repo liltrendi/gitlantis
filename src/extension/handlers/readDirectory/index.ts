@@ -8,9 +8,11 @@ export const handleReadDirectory = async (
   message: THandlerMessage
 ) => {
   try {
-    const { name: folderLabel, uri: folderUri } = getWorkspaceFolderFromPath(
-      message.path
-    );
+    const {
+      name: folderLabel,
+      uri: folderUri,
+      baseFolder,
+    } = getWorkspaceFolderFromPath(message.path);
     const entries = await vscode.workspace.fs.readDirectory(folderUri);
     const children: TDirectoryContent[] = entries.map(([name, type]) => ({
       name,
@@ -23,6 +25,7 @@ export const handleReadDirectory = async (
       type: DIRECTORY_RESPONSE.data,
       path: message.path,
       children,
+      baseFolder,
     });
   } catch (error: unknown) {
     sendError(

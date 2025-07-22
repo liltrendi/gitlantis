@@ -1,9 +1,9 @@
 import { useGameSettings } from "@/browser/hooks/useGame/settings";
 import { createPortal } from "react-dom";
-import { SettingsContent } from "@/browser/components/settings/content";
-import { SettingsTabs } from "@/browser/components/settings/tabs";
-import { SettingsModal } from "@/browser/components/settings/modal";
-import { SettingsCog } from "@/browser/components/settings/buttons";
+import { SettingsContent } from "@/browser/components/ui/settings/content";
+import { SettingsTabs } from "@/browser/components/ui/settings/tabs";
+import { SettingsModal } from "@/browser/components/ui/settings/modal";
+import { SettingsCog } from "@/browser/components/ui/settings/buttons";
 
 export const GlobalSettings = () => {
   const gameProps = useGameSettings();

@@ -2,7 +2,7 @@ import { useGameContext } from "@/browser/hooks/useGame/context";
 import { Canvas } from "@react-three/fiber";
 import type { ReactNode } from "react";
 
-export const GameCanvas = ({ children }: { children: ReactNode }) => {
+export const WorldCanvas = ({ children }: { children: ReactNode }) => {
   const { showSplashScreen } = useGameContext();
 
   return (

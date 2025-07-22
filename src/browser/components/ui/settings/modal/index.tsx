@@ -1,6 +1,6 @@
 import type { useGameSettings } from "@/browser/hooks/useGame/settings";
 import type { ReactNode } from "react";
-import { SettingsClose } from "@/browser/components/settings/buttons";
+import { SettingsClose } from "@/browser/components/ui/settings/buttons";
 
 export const SettingsModal = (
   gameProps: ReturnType<typeof useGameSettings> & { children: ReactNode }

@@ -1,4 +1,4 @@
-import { SharedSlider } from "@/browser/components/shared/slider";
+import { SharedSlider } from "@/browser/components/ui/slider";
 import type { useGameSettings } from "@/browser/hooks/useGame/settings";
 
 export const SettingsBehavior = (

@@ -1,7 +1,7 @@
 import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 import { useGameContext } from "@/browser/hooks/useGame/context";
-import { BreadcrumbBranch } from "@/browser/components/shared/breadcrumbs/branch";
-import { BreadcrumbPath } from "@/browser/components/shared/breadcrumbs/path";
+import { BreadcrumbBranch } from "@/browser/components/ui/breadcrumbs/branch";
+import { BreadcrumbPath } from "@/browser/components/ui/breadcrumbs/path";
 
 export const Breadcrumbs = () => {
   const { settings, showSplashScreen, isMinimapFullScreen } = useGameContext();
