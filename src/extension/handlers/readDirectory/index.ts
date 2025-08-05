@@ -14,11 +14,19 @@ export const handleReadDirectory = async (
       baseFolder,
     } = getWorkspaceFolderFromPath(message.path);
     const entries = await vscode.workspace.fs.readDirectory(folderUri);
+
     const children: TDirectoryContent[] = entries.map(([name, type]) => ({
       name,
       path: vscode.Uri.joinPath(folderUri, name),
-      type: type === vscode.FileType.Directory ? "folder" : "file",
+      type:
+        type & vscode.FileType.Directory
+          ? "folder"
+          : type & vscode.FileType.File
+            ? "file"
+            : "unknown",
+      isSymlink: Boolean(type & vscode.FileType.SymbolicLink),
     }));
+    console.log(":::entries:::", children);
 
     panel.webview.postMessage({
       label: folderLabel,
