@@ -12,7 +12,7 @@ body:
     id: summary
     attributes:
       label: Feature Summary
-      placeholder: Add author boats, open file with diffs...
+      placeholder: e.g. Add author boats, preview file diffs...
     validations:
       required: true
   - type: textarea
@@ -20,14 +20,14 @@ body:
     attributes:
       label: Why is this needed?
       description: What problem would this solve or improve?
-      placeholder: It would help users who...
+      placeholder: e.g. It would help users who...
   - type: textarea
     id: proposal
     attributes:
       label: How do you imagine it working?
-      placeholder: When the user clicks on X, it should...
+      placeholder: e.g. When the user clicks on X, it should...
   - type: textarea
     id: alternatives
     attributes:
       label: Alternatives considered
-      placeholder: I also considered Y, but...
+      placeholder: e.g. I also considered Y, but...

@@ -13,18 +13,18 @@ body:
     id: os
     attributes:
       label: Operating System
-      placeholder: macOS 14, Windows 11, Ubuntu 22.04, etc.
+      placeholder: e.g. macOS 14, Windows 11, Ubuntu 22.04, etc.
   - type: input
     id: version
     attributes:
-      label: App Version
+      label: Extension Version
       placeholder: e.g. 1.2.3
   - type: textarea
     id: description
     attributes:
       label: What happened?
       description: Describe what you expected vs what actually happened.
-      placeholder: The app crashes when I click on...
+      placeholder: e.g. the extension crashes when I...
     validations:
       required: true
   - type: textarea
@@ -32,6 +32,7 @@ body:
     attributes:
       label: Steps to Reproduce
       placeholder: |
+        e.g.
         1. Run the extension
         2. Sail to a folder
         3. Press `SHIFT+ENTER` to open
