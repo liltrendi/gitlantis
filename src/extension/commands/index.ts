@@ -38,14 +38,6 @@ export const getLauncher = (context: vscode.ExtensionContext) => {
   context.globalState.update(LAUNCH_MARKER, true);
 };
 
-export const registerCommands = (context: vscode.ExtensionContext) => {
-  const launchExtension = vscode.commands.registerCommand(LAUNCH_COMMAND, () =>
-    getLauncher(context)
-  );
-
-  context.subscriptions.push(launchExtension);
-};
-
 const relaunchOnFolderChange = (context: vscode.ExtensionContext) => {
   context.subscriptions.push(
     vscode.workspace.onDidChangeWorkspaceFolders(() => {
@@ -57,6 +49,14 @@ const relaunchOnFolderChange = (context: vscode.ExtensionContext) => {
       }
     })
   );
+};
+
+export const registerCommands = (context: vscode.ExtensionContext) => {
+  const launchExtension = vscode.commands.registerCommand(LAUNCH_COMMAND, () =>
+    getLauncher(context)
+  );
+
+  context.subscriptions.push(launchExtension);
 };
 
 export const launchExtension = (context: vscode.ExtensionContext) => {

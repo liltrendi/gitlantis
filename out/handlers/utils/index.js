@@ -33,23 +33,29 @@ var __importStar = (this && this.__importStar) || (function () {
     };
 })();
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.sendError = exports.getWorkspaceFolderFromPath = void 0;
+exports.getCurrentRepo = exports.getGitApi = exports.sendError = exports.getWorkspaceFolderFromPath = exports.getRelativePath = void 0;
 const vscode = __importStar(require("vscode"));
 const path = __importStar(require("path"));
 const config_1 = require("../../config");
+const getRelativePath = (absolutePath, rootPath) => {
+    const relative = path.relative(rootPath, absolutePath);
+    return relative === "" ? config_1.ROOT_DIRECTORY_KEY : relative;
+};
+exports.getRelativePath = getRelativePath;
 const getWorkspaceFolderFromPath = (inputPath) => {
     if (!inputPath || inputPath === config_1.ROOT_DIRECTORY_KEY) {
         const folders = vscode.workspace.workspaceFolders;
         if (!folders || folders.length === 0) {
             throw new Error("No workspace folder found.");
         }
-        return folders[0];
+        return { ...folders[0], baseFolder: folders[0].uri.path };
     }
     const folderUri = vscode.Uri.file(inputPath);
     return {
         name: path.basename(folderUri.path),
         uri: folderUri,
         index: 0,
+        baseFolder: vscode.workspace.workspaceFolders?.[0].uri.path ?? config_1.ROOT_DIRECTORY_KEY,
     };
 };
 exports.getWorkspaceFolderFromPath = getWorkspaceFolderFromPath;
@@ -61,3 +67,19 @@ const sendError = (panel, path, errorType, message) => {
     });
 };
 exports.sendError = sendError;
+const getGitApi = () => {
+    const gitExtension = vscode.extensions.getExtension("vscode.git")?.exports;
+    const api = gitExtension?.getAPI(1);
+    return api;
+};
+exports.getGitApi = getGitApi;
+const getCurrentRepo = (path) => {
+    const api = (0, exports.getGitApi)();
+    const repo = api?.repositories.find((r) => {
+        if (!path)
+            return true;
+        return r.rootUri.fsPath === path;
+    });
+    return repo;
+};
+exports.getCurrentRepo = getCurrentRepo;

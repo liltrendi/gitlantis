@@ -8,21 +8,32 @@ export const handleReadDirectory = async (
   message: THandlerMessage
 ) => {
   try {
-    const { name: folderLabel, uri: folderUri } = getWorkspaceFolderFromPath(
-      message.path
-    );
+    const {
+      name: folderLabel,
+      uri: folderUri,
+      baseFolder,
+    } = getWorkspaceFolderFromPath(message.path);
     const entries = await vscode.workspace.fs.readDirectory(folderUri);
+
     const children: TDirectoryContent[] = entries.map(([name, type]) => ({
       name,
       path: vscode.Uri.joinPath(folderUri, name),
-      type: type === vscode.FileType.Directory ? "folder" : "file",
+      type:
+        type & vscode.FileType.Directory
+          ? "folder"
+          : type & vscode.FileType.File
+            ? "file"
+            : "unknown",
+      isSymlink: Boolean(type & vscode.FileType.SymbolicLink),
     }));
+    console.log(":::entries:::", children);
 
     panel.webview.postMessage({
       label: folderLabel,
       type: DIRECTORY_RESPONSE.data,
       path: message.path,
       children,
+      baseFolder,
     });
   } catch (error: unknown) {
     sendError(

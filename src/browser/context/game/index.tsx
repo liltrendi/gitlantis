@@ -1,9 +1,9 @@
 import { type FC, type ReactNode } from "react";
 import { Analytics } from "@vercel/analytics/react";
-import { NoOpenProject } from "@/browser/components/shared/no-open-project";
+import { NoOpenProject } from "@/browser/components/ui/no-open-project";
 import { useWalker } from "@/browser/hooks/useWalker";
 import { useGameConfig } from "@/browser/hooks/useGame/config";
-import { Loading } from "@/browser/components/shared/loading";
+import { Loading } from "@/browser/components/ui/loading";
 import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 import { GameContext } from "@/browser/context/game/context";
 
@@ -11,8 +11,8 @@ export const GameContextProvider: FC<{
   children: ReactNode;
 }> = ({ children }) => {
   const { isBrowserEnvironment } = useExtensionContext();
-  const { walker, settings, openExplorer } = useWalker();
-  const { ...gameConfig } = useGameConfig();
+  const { git, walker, settings, openExplorer } = useWalker();
+  const gameConfig = useGameConfig();
 
   if (walker.loading) return <Loading />;
 
@@ -30,9 +30,11 @@ export const GameContextProvider: FC<{
     <GameContext.Provider
       value={{
         ...gameConfig,
-        settings,
+        baseFolder: walker.baseFolder,
         directories: walker.response,
         isBrowserEnvironment,
+        settings,
+        git,
       }}
     >
       {isBrowserEnvironment ? <Analytics /> : null}

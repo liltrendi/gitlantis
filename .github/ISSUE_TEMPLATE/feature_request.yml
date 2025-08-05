@@ -1,0 +1,33 @@
+name: Feature Request
+description: Suggest a new feature or enhancement
+title: "[Feature]: "
+labels: [enhancement]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Got an idea to improve this project? Let us know!
+  - type: input
+    id: summary
+    attributes:
+      label: Feature Summary
+      placeholder: Add author boats, open file with diffs...
+    validations:
+      required: true
+  - type: textarea
+    id: motivation
+    attributes:
+      label: Why is this needed?
+      description: What problem would this solve or improve?
+      placeholder: It would help users who...
+  - type: textarea
+    id: proposal
+    attributes:
+      label: How do you imagine it working?
+      placeholder: When the user clicks on X, it should...
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      placeholder: I also considered Y, but...

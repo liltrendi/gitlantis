@@ -1,1 +1,1 @@
-npx lint-staged
+npm run build && git add . && npx lint-staged
