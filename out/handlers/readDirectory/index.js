@@ -44,12 +44,12 @@ const handleReadDirectory = async (panel, message) => {
         const children = entries.map(([name, type]) => ({
             name,
             path: vscode.Uri.joinPath(folderUri, name),
-            type: (type & vscode.FileType.Directory)
+            type: type & vscode.FileType.Directory
                 ? "folder"
-                : (type & vscode.FileType.File)
+                : type & vscode.FileType.File
                     ? "file"
                     : "unknown",
-            isSymlink: Boolean(type & vscode.FileType.SymbolicLink)
+            isSymlink: Boolean(type & vscode.FileType.SymbolicLink),
         }));
         console.log(":::entries:::", children);
         panel.webview.postMessage({

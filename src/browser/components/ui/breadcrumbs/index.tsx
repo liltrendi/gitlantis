@@ -11,7 +11,7 @@ export const Breadcrumbs = () => {
 
   return (
     <div
-      className={`text-md absolute left-3 top-3 z-50 flex flex-col items-start rounded-t-lg text-gray-500 transition-opacity duration-300 ${
+      className={`text-md absolute left-3 top-8 z-50 flex flex-col items-start rounded-t-lg text-gray-500 transition-opacity duration-300 ${
         showSplashScreen
           ? "pointer-events-none opacity-0"
           : "opacity-100 delay-[1700ms]"
