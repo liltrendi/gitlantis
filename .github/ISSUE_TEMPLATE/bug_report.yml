@@ -1,0 +1,43 @@
+
+name: Bug Report
+description: Report a bug or unexpected behavior
+title: "[Bug]: "
+labels: [bug]
+assignees: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to report a bug. Please fill out the following information.
+  - type: input
+    id: os
+    attributes:
+      label: Operating System
+      placeholder: macOS 14, Windows 11, Ubuntu 22.04, etc.
+  - type: input
+    id: version
+    attributes:
+      label: App Version
+      placeholder: e.g. 1.2.3
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe what you expected vs what actually happened.
+      placeholder: The app crashes when I click on...
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      placeholder: |
+        1. Run the extension
+        2. Sail to a folder
+        3. Press `SHIFT+ENTER` to open
+        4. Extension crashes
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs, Screenshots or Video Recordings
+      description: Paste logs here, attach images or video recordings.
