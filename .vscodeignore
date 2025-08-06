@@ -29,6 +29,7 @@ public/
 # Documentation (optional - keep readme.md)
 README.dev.md
 CONTRIBUTING.md
+CODE-OF-CONDUCT.md
 
 # Any test files
 **/*.test.*
