@@ -1,6 +1,10 @@
-## Gitlantis
+## Getting Started
 
-Visualize your project tree as a gamified experience
+You need to install:
+
+- [Node.js](https://nodejs.org/en/download/)
+- [pnpm](https://pnpm.io/installation)
+- [nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
 
 ### Install
 

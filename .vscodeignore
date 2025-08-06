@@ -26,8 +26,9 @@ index.html
 # Exclude public/ cause files are already copied to out/
 public/
 
-# Documentation (optional - you might want to keep readme.md)
+# Documentation (optional - keep readme.md)
 README.dev.md
+CONTRIBUTING.md
 
 # Any test files
 **/*.test.*
