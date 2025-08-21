@@ -24,7 +24,7 @@ exports.DEFAULT_SETTINGS = {
         hull: "#ffffff",
         rails: "#000000",
         body: "#ffffff",
-        floaters: "#eeeeee"
-    }
+        floaters: "#eeeeee",
+    },
 };
 exports.PERSISTED_SETTINGS_KEY = "__gitlantis_._settings__";

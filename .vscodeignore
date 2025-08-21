@@ -19,6 +19,8 @@ tsconfig*.json
 eslint.config.js
 postcss.config.js
 tailwind.config.js
+commitlint.config.mjs
+eslint.config.mjs
 
 # Development files
 .gitignore
