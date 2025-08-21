@@ -51,7 +51,6 @@ const handleReadDirectory = async (panel, message) => {
                     : "unknown",
             isSymlink: Boolean(type & vscode.FileType.SymbolicLink),
         }));
-        console.log(":::entries:::", children);
         panel.webview.postMessage({
             label: folderLabel,
             type: config_1.DIRECTORY_RESPONSE.data,

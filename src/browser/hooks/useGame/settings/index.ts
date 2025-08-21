@@ -2,7 +2,10 @@ import { useGameStore } from "@/browser/hooks/useGame/store";
 import { useEffect, useRef, useState } from "react";
 
 const SETTINGS_TABS = [
-  { label: "General", description: ["Display", "Audio", "Guides"] },
+  {
+    label: "General",
+    description: ["Display", "Boat colors", "Audio", "Guides"],
+  },
   { label: "Behavior", description: ["Navigation", "Floating", "Collision"] },
   { label: "Keybindings", description: ["Basic controls", "Special keys"] },
   { label: "About", description: ["Overview", "Attribution"] },

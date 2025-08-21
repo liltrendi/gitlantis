@@ -26,7 +26,6 @@ export const handleReadDirectory = async (
             : "unknown",
       isSymlink: Boolean(type & vscode.FileType.SymbolicLink),
     }));
-    console.log(":::entries:::", children);
 
     panel.webview.postMessage({
       label: folderLabel,

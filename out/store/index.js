@@ -18,5 +18,13 @@ exports.DEFAULT_SETTINGS = {
     bobbingAmplitude: 0.2,
     bobbingSpeed: 0.6,
     volume: 0.5,
+    boatColors: {
+        walls: "#222222",
+        roof: "#c99732",
+        hull: "#ffffff",
+        rails: "#000000",
+        body: "#ffffff",
+        floaters: "#eeeeee"
+    }
 };
 exports.PERSISTED_SETTINGS_KEY = "__gitlantis_._settings__";

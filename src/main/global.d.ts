@@ -81,6 +81,10 @@ declare global {
     setBobbingAmplitude: (value: number) => void;
     setBobbingSpeed: (value: number) => void;
     setVolume: (volume: number) => void;
+    setBoatColors: (
+      color: keyof TDefaultSettings["boatColors"],
+      value: string
+    ) => void;
     persistState: () => void;
     restoreDefaults: () => void;
     initializeStore: (persistedSettings?: Partial<TDefaultSettings>) => void;

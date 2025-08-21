@@ -28,7 +28,7 @@
     "paths": {
       "@/*": ["src/*"]
     },
-    "types": ["node"]
+    "types": ["node", "@react-three/fiber", "three"]
   },
   "include": ["src"]
 }

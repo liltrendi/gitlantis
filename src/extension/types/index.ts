@@ -60,5 +60,13 @@ declare global {
     rockingSpeed: number;
     bobbingAmplitude: number;
     bobbingSpeed: number;
+    boatColors: {
+      walls: string;
+      roof: string;
+      hull: string;
+      rails: string;
+      body: string;
+      floaters: string;
+    };
   };
 }

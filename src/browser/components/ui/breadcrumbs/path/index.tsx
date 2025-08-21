@@ -12,7 +12,7 @@ export const BreadcrumbPath = () => {
     "flex flex-wrap max-w-[50vw] break-words rounded-bl-lg rounded-br-lg rounded-tr-lg bg-[#2d302f] px-2 py-1 gap-y-1";
 
   const segmentButtonClasses =
-    "max-w-[10rem] truncate text-white text-sm hover:text-[#f2bc07] hover:underline focus:outline-none";
+    "max-w-[10rem] truncate text-white text-sm focus:outline-none";
 
   if (currentPath === ROOT_DIRECTORY_KEY) {
     if (rootLabel.length > 0) {
@@ -20,9 +20,7 @@ export const BreadcrumbPath = () => {
         <nav className={containerClasses}>
           <span className="flex items-center text-gray-300">
             <span className="mr-1">Exploring:</span>
-            <span className="cursor-pointer text-white hover:text-[#f2bc07] hover:underline">
-              {rootLabel}
-            </span>
+            <span className="text-white">{rootLabel}</span>
           </span>
         </nav>
       );
@@ -61,7 +59,7 @@ export const BreadcrumbPath = () => {
               onClick={() => {
                 if (!isLastItem) setCurrentPath("/" + fullPath);
               }}
-              className={segmentButtonClasses}
+              className={`${segmentButtonClasses} ${isLastItem ? "" : "hover:text-[#f2bc07] hover:underline"}`}
               title={segment}
             >
               {segment}

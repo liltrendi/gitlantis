@@ -152,4 +152,14 @@ export const useGameStore = create<TGameStore>((set, get) => ({
     set((state) => ({ settings: { ...state.settings, volume } }));
     get().persistState();
   },
+
+  setBoatColors: (color, value) => {
+    set((state) => ({
+      settings: {
+        ...state.settings,
+        boatColors: { ...state.settings.boatColors, [color]: value },
+      },
+    }));
+    get().persistState();
+  },
 }));

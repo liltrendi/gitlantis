@@ -10,6 +10,8 @@ src/
 node_modules/
 pnpm-lock.yaml
 .nvmrc
+.husky
+.github
 
 # Build tools and configs
 vite.config.ts
