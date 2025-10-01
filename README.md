@@ -1,8 +1,8 @@
+![Demo](https://s3.us-east-1.amazonaws.com/brayo.co/gitlantis/demo.png)
+
 # 🚢 Gitlantis
 
 [**Gitlantis**](https://gitlantis.brayo.co) transforms the way you explore your project files by turning your codebase into an immersive ocean world. Navigate your folders and files by interacting with the floating lighthouses and buoys — it’s a unique, fun, and creative way to visually explore and manage your code.
-
-![Demo](https://s3.us-east-1.amazonaws.com/brayo.co/gitlantis/demo.png)
 
 ## 🌊 Features
 
