@@ -1,6 +1,6 @@
 import { Clone } from "@react-three/drei";
-import type { Group } from "three";
 import { Backdrop } from "@/browser/components/world/backdrop";
+import type { TNodeProps } from "@/browser/components/world/nodes/";
 
 export const Folder = ({
   instance,
@@ -10,34 +10,47 @@ export const Folder = ({
   nodeRef,
   isColliding,
   isBrowserEnvironment,
-}: {
-  label: string;
-  index: number;
-  model: Group;
-  nodeRef: TNodeRef;
-  instance: TNodeInstance;
-  isColliding: boolean;
-  isBrowserEnvironment: boolean;
-}) => {
+  isMinimapFullScreen,
+  openOnClick,
+}: TNodeProps) => {
   return (
     // @ts-expect-error
-    <group position-y={2.5}>
+    <group position-y={2.5} onClick={openOnClick}>
       <Clone
         ref={(el) => {
-          if (!nodeRef?.current) return;
+          if (!nodeRef?.current || !el) return;
+          el.traverse((child) => {
+            child.userData = { ...child.userData, openOnClick };
+          });
           nodeRef.current[index] = el;
         }}
         position={instance.position}
         object={model}
-        scale={7}
+        scale={isMinimapFullScreen ? 9 : 7}
       >
-        <Backdrop label={label} yPosition={23} fontSize={1.8} />
-        {isColliding ? (
+        <Backdrop
+          label={label}
+          yPosition={isMinimapFullScreen ? 3.5 : 23}
+          fontSize={isMinimapFullScreen ? 2.7 : 1.8}
+          flatten={isMinimapFullScreen}
+          frontOffset={isMinimapFullScreen ? -7 : undefined}
+          maxWidth={isMinimapFullScreen ? undefined : label.length + 15}
+        />
+        {isMinimapFullScreen && isColliding ? (
+          <Backdrop
+            label={"Press SHIFT+ENTER"}
+            yPosition={3.5}
+            fontSize={2.3}
+            flatten={true}
+            frontOffset={7}
+          />
+        ) : null}
+        {isColliding && !isMinimapFullScreen ? (
           <Backdrop
             label={
               isBrowserEnvironment
                 ? "Download the extension to open folders"
-                : "SHIFT+ENTER to explore"
+                : "Press SHIFT + ENTER"
             }
             color="white"
             yPosition={3.5}

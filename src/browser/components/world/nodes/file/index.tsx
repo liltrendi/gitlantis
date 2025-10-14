@@ -1,6 +1,6 @@
 import { Clone } from "@react-three/drei";
-import type { Group } from "three";
 import { Backdrop } from "@/browser/components/world/backdrop";
+import type { TNodeProps } from "@/browser/components/world/nodes/";
 
 export const File = ({
   instance,
@@ -10,38 +10,51 @@ export const File = ({
   nodeRef,
   isColliding,
   isBrowserEnvironment,
-}: {
-  label: string;
-  index: number;
-  model: Group;
-  nodeRef: TNodeRef;
-  instance: TNodeInstance;
-  isColliding: boolean;
-  isBrowserEnvironment: boolean;
-}) => {
+  isMinimapFullScreen,
+  openOnClick,
+}: TNodeProps) => {
   return (
     // @ts-expect-error
-    <group position-y={13}>
+    <group position-y={isMinimapFullScreen ? 20 : 13} onClick={openOnClick}>
       <Clone
         ref={(el) => {
-          if (!nodeRef?.current) return;
+          if (!nodeRef?.current || !el) return;
+          el.traverse((child) => {
+            child.userData = { ...child.userData, openOnClick };
+          });
           nodeRef.current[index] = el;
         }}
         position={instance.position}
         object={model}
-        scale={27}
+        scale={isMinimapFullScreen ? 30 : 27}
       >
-        <Backdrop label={label} yPosition={2.68} fontSize={0.35} />
-        {isColliding ? (
+        <Backdrop
+          label={label}
+          fontSize={isMinimapFullScreen ? 0.8 : 0.35}
+          yPosition={isMinimapFullScreen ? 0.1 : 2.68}
+          frontOffset={isMinimapFullScreen ? -1.9 : undefined}
+          flatten={isMinimapFullScreen}
+          maxWidth={isMinimapFullScreen ? undefined : label.length + 15}
+        />
+        {isMinimapFullScreen && isColliding ? (
+          <Backdrop
+            label={"Press SHIFT+ENTER"}
+            fontSize={0.6}
+            yPosition={0.1}
+            frontOffset={1.9}
+            flatten={true}
+          />
+        ) : null}
+        {isColliding && !isMinimapFullScreen ? (
           <Backdrop
             label={
               isBrowserEnvironment
                 ? "Download the extension to open files"
-                : "SHIFT+ENTER to explore"
+                : "Press SHIFT+ENTER"
             }
             color="white"
             yPosition={0.8}
-            fontSize={isBrowserEnvironment ? 0.25 : 0.25}
+            fontSize={0.25}
             frontOffset={-1}
             maxWidth={isBrowserEnvironment ? 3 : 2.5}
           />

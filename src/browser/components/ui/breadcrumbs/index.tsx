@@ -5,7 +5,7 @@ import { BreadcrumbPath } from "@/browser/components/ui/breadcrumbs/path";
 import { Donate } from "@/browser/components/ui/donate";
 
 export const Breadcrumbs = () => {
-  const { settings, showSplashScreen, isMinimapFullScreen } = useGameContext();
+  const { settings, showSplashScreen } = useGameContext();
   const { currentPath } = useExtensionContext();
 
   return (
@@ -14,7 +14,7 @@ export const Breadcrumbs = () => {
         showSplashScreen
           ? "pointer-events-none opacity-0"
           : "opacity-100 delay-[1700ms]"
-      } ${isMinimapFullScreen ? "hidden" : "block"} select-none`}
+      } block select-none`}
     >
       <Donate />
       {settings.breadcrumbs === "Hide" || currentPath.length === 0 ? null : (

@@ -5,13 +5,17 @@ export const useNodeMovement = ({
   nodes,
   boatRef,
   nodeRef,
+  isMinimapFullScreen,
 }: {
   nodes: TNodeInstances;
   boatRef: TBoatRef;
   nodeRef: TNodeRef;
+  isMinimapFullScreen: boolean;
 }) => {
   const FLOAT_AMPLITUDE = 2.0;
   const FLOAT_SPEED = 3.0;
+
+  const fixedQuat = new Quaternion().setFromEuler(new Euler(0, -Math.PI, 0));
 
   useFrame(({ clock }) => {
     if (!boatRef?.current || !nodeRef?.current) return;
@@ -23,11 +27,15 @@ export const useNodeMovement = ({
       if (!node || !nodes[idx]) return;
 
       const instance = nodes[idx];
-
       const floatOffset =
         Math.sin(time * FLOAT_SPEED + instance.floatPhase) * FLOAT_AMPLITUDE;
 
       node.position.y = -instance.sinkOffset + floatOffset;
+
+      if (isMinimapFullScreen) {
+        node.quaternion.copy(fixedQuat);
+        return;
+      }
 
       const from = node.position.clone();
       const to = boatPos.clone().setY(from.y);

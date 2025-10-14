@@ -124,5 +124,6 @@ export const useNodeShortcuts = ({
 
   return {
     getCollidingNode,
+    throttledOpenNode,
   };
 };
