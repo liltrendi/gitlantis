@@ -1,12 +1,12 @@
 import { GameContextProvider } from "@/browser/context/game";
 import { UILayer } from "@/browser/components/ui";
-import { WorldLayer } from "@/browser/components/world";
+import { MarineLayer } from "@/browser/components/world/marine";
 
 export const World = () => {
   return (
     <GameContextProvider>
       <UILayer />
-      <WorldLayer />
+      <MarineLayer />
     </GameContextProvider>
   );
 };

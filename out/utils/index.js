@@ -101,7 +101,15 @@ const getPublicAssets = (panel, context) => {
         "music",
         "horn.ogg",
     ]);
-    return { oceanUri, boatUri, folderUri, fileUri, wavesUri, faviconUri, hornUri };
+    return {
+        oceanUri,
+        boatUri,
+        folderUri,
+        fileUri,
+        wavesUri,
+        faviconUri,
+        hornUri,
+    };
 };
 exports.getPublicAssets = getPublicAssets;
 const createPanel = (context) => {

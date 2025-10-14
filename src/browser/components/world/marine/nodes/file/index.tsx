@@ -1,8 +1,8 @@
 import { Clone } from "@react-three/drei";
-import { Backdrop } from "@/browser/components/world/backdrop";
-import type { TNodeProps } from "@/browser/components/world/nodes/";
+import { Backdrop } from "@/browser/components/world/marine/backdrop";
+import type { TNodeProps } from "@/browser/components/world/marine/nodes";
 
-export const Folder = ({
+export const File = ({
   instance,
   index,
   label,
@@ -15,7 +15,7 @@ export const Folder = ({
 }: TNodeProps) => {
   return (
     // @ts-expect-error
-    <group position-y={2.5} onClick={openOnClick}>
+    <group position-y={isMinimapFullScreen ? 20 : 13} onClick={openOnClick}>
       <Clone
         ref={(el) => {
           if (!nodeRef?.current || !el) return;
@@ -26,37 +26,37 @@ export const Folder = ({
         }}
         position={instance.position}
         object={model}
-        scale={isMinimapFullScreen ? 9 : 7}
+        scale={isMinimapFullScreen ? 30 : 27}
       >
         <Backdrop
           label={label}
-          yPosition={isMinimapFullScreen ? 3.5 : 23}
-          fontSize={isMinimapFullScreen ? 2.7 : 1.8}
+          fontSize={isMinimapFullScreen ? 0.8 : 0.35}
+          yPosition={isMinimapFullScreen ? 0.1 : 2.68}
+          frontOffset={isMinimapFullScreen ? -1.9 : undefined}
           flatten={isMinimapFullScreen}
-          frontOffset={isMinimapFullScreen ? -7 : undefined}
           maxWidth={isMinimapFullScreen ? undefined : label.length + 15}
         />
         {isMinimapFullScreen && isColliding ? (
           <Backdrop
             label={"Press SHIFT+ENTER"}
-            yPosition={3.5}
-            fontSize={2.3}
+            fontSize={0.6}
+            yPosition={0.1}
+            frontOffset={1.9}
             flatten={true}
-            frontOffset={7}
           />
         ) : null}
         {isColliding && !isMinimapFullScreen ? (
           <Backdrop
             label={
               isBrowserEnvironment
-                ? "Download the extension to open folders"
-                : "Press SHIFT + ENTER"
+                ? "Download the extension to open files"
+                : "Press SHIFT+ENTER"
             }
             color="white"
-            yPosition={3.5}
-            fontSize={0.75}
-            frontOffset={-5}
-            maxWidth={isBrowserEnvironment ? 9 : 7.8}
+            yPosition={0.8}
+            fontSize={0.25}
+            frontOffset={-1}
+            maxWidth={isBrowserEnvironment ? 3 : 2.5}
           />
         ) : null}
       </Clone>

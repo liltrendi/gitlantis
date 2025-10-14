@@ -1,6 +1,6 @@
 import type { Group } from "three";
-import { Folder } from "@/browser/components/world/nodes/folder";
-import { File } from "@/browser/components/world/nodes/file";
+import { Folder } from "@/browser/components/world/marine/nodes/folder";
+import { File } from "@/browser/components/world/marine/nodes/file";
 import { useFolderModel } from "@/browser/hooks/useModels/folder";
 import { useFileModel } from "@/browser/hooks/useModels/file";
 import { useNodeMovement } from "@/browser/hooks/useNode/movement";

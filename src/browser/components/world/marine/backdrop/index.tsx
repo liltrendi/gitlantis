@@ -4,7 +4,7 @@ import {
   getBackdropShape,
   getBackdropTextDimensions,
   type TBackdrop,
-} from "@/browser/components/world/backdrop/utils";
+} from "@/browser/components/world/marine/backdrop/utils";
 
 export const Backdrop = ({
   label,
