@@ -76,7 +76,7 @@ export const useNodeCollision = ({
     boat.position.add(avoidanceVector);
   });
 
-  useNodeShortcuts({ nodes, collisionStateRef });
+  const { throttledOpenNode } = useNodeShortcuts({ nodes, collisionStateRef });
 
-  return { trackedCollisions };
+  return { trackedCollisions, throttledOpenNode };
 };

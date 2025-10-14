@@ -11,10 +11,11 @@ export const Folder = ({
   isColliding,
   isBrowserEnvironment,
   isMinimapFullScreen,
+  openOnClick,
 }: TNodeProps) => {
   return (
     // @ts-expect-error
-    <group position-y={2.5}>
+    <group position-y={2.5} onClick={openOnClick}>
       <Clone
         ref={(el) => {
           if (!nodeRef?.current) return;

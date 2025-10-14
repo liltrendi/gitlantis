@@ -16,6 +16,7 @@ export type TNodeProps = {
   isColliding: boolean;
   isBrowserEnvironment: boolean;
   isMinimapFullScreen: boolean;
+  openOnClick: () => void;
 };
 
 export const Nodes = () => {
@@ -25,7 +26,11 @@ export const Nodes = () => {
   const fileModel = useFileModel(isBrowserEnvironment);
   const folderModel = useFolderModel(isBrowserEnvironment);
 
-  const { trackedCollisions } = useNodeCollision({ nodes, boatRef, nodeRef });
+  const { trackedCollisions, throttledOpenNode } = useNodeCollision({
+    nodes,
+    boatRef,
+    nodeRef,
+  });
   useNodeMovement({ nodes, boatRef, nodeRef, isMinimapFullScreen });
 
   return (
@@ -43,6 +48,7 @@ export const Nodes = () => {
           label: instance.data.name,
           model: isFile ? fileModel : folderModel,
           key: `${instance.data.type}-${instance.key}`,
+          openOnClick: () => throttledOpenNode(instance.data),
         };
         if (isFile) {
           return <File {...sharedProps} />;
