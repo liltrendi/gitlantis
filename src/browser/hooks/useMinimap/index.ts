@@ -105,5 +105,6 @@ export const useMinimapClickHandler = ({
 
     gl.domElement.addEventListener("click", onClick);
     return () => gl.domElement.removeEventListener("click", onClick);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [gl, minimapPosition, minimapSize]);
 };

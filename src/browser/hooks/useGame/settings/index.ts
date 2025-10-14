@@ -7,7 +7,10 @@ const SETTINGS_TABS = [
     description: ["Display", "Boat colors", "Audio", "Guides"],
   },
   { label: "Behavior", description: ["Navigation", "Floating", "Collision"] },
-  { label: "Keybindings", description: ["Basic controls", "Special keys"] },
+  {
+    label: "Keybindings",
+    description: ["Navigation controls", "Special keys"],
+  },
   { label: "About", description: ["Overview", "Attribution"] },
   { label: "Danger zone", description: ["Restore default settings"] },
 ] as const;

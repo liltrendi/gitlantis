@@ -1,8 +1,9 @@
 import { useEffect } from "react";
-import { useGameContext } from "../../useGame/context";
+import { useGameContext } from "@/browser/hooks/useGame/context";
 
 export const useKeyboard = () => {
-  const { directionInputRef } = useGameContext();
+  const { directionInputRef, gameAudio, setMinimapFullscreen } =
+    useGameContext();
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
@@ -22,6 +23,14 @@ export const useKeyboard = () => {
         case "arrowright":
         case "d":
           directionInputRef.current.right = true;
+          break;
+        case "h":
+          if (!gameAudio.horn.current?.isPlaying) {
+            gameAudio.horn.current?.play();
+          }
+          break;
+        case "f":
+          setMinimapFullscreen((prev) => !prev);
           break;
       }
     };
@@ -43,6 +52,11 @@ export const useKeyboard = () => {
         case "arrowright":
         case "d":
           directionInputRef.current.right = false;
+          break;
+        case "h":
+          if (gameAudio.horn.current?.isPlaying) {
+            gameAudio.horn.current?.stop();
+          }
           break;
       }
     };

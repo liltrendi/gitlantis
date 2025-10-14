@@ -18,7 +18,10 @@ export const GameContext = createContext<TGameConfig>({
   directionInputRef: {
     current: { forward: false, backward: false, left: false, right: false },
   },
-  oceanAudioRef: { current: null },
+  gameAudio: {
+    ocean: { current: null },
+    horn: { current: null },
+  },
   git: {
     branches: { all: [], current: null },
   },

@@ -11,16 +11,6 @@ const ATTRIBUTIONS = [
   },
   {
     model: {
-      name: "Audio",
-      link: "https://freesound.org/people/MarleneAyni/sounds/731702/",
-    },
-    creator: {
-      name: "MarleneAyni",
-      link: "https://freesound.org/people/MarleneAyni/",
-    },
-  },
-  {
-    model: {
       name: "Buoy",
       link: "https://sketchfab.com/3d-models/oceanographic-buoy-ems-toroidal-7b0b7cd7fee04717b3cd2183a96e39ad",
     },
@@ -35,6 +25,26 @@ const ATTRIBUTIONS = [
       link: "https://sketchfab.com/3d-models/boat-c6694b9cafe74e7ba46f5612a3e9a7f0",
     },
     creator: { name: "4122", link: "https://sketchfab.com/4122" },
+  },
+  {
+    model: {
+      name: "Ocean sounds",
+      link: "https://freesound.org/people/MarleneAyni/sounds/731702/",
+    },
+    creator: {
+      name: "MarleneAyni",
+      link: "https://freesound.org/people/MarleneAyni/",
+    },
+  },
+  {
+    model: {
+      name: "Ship horn",
+      link: "https://freesound.org/people/monotraum/sounds/208714/",
+    },
+    creator: {
+      name: "monotraum",
+      link: "https://freesound.org/people/monotraum/",
+    },
   },
 ];
 
@@ -78,8 +88,8 @@ export const SettingsAbout = (
       </h3>
       <div className="space-y-5 text-gray-400">
         <span className="mb-6 block text-[16px]">
-          I'm super grateful for the following creators, without whose models
-          this project wouldn't have been successful:
+          I'm super grateful for the following creators, without whose work this
+          project wouldn't have been successful:
         </span>
       </div>
 
