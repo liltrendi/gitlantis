@@ -32,12 +32,21 @@ export const Folder = ({
           frontOffset={isMinimapFullScreen ? -7 : undefined}
           maxWidth={isMinimapFullScreen ? undefined : label.length + 15}
         />
+        {isMinimapFullScreen && isColliding ? (
+          <Backdrop
+            label={"Press SHIFT+ENTER"}
+            yPosition={3.5}
+            fontSize={2.3}
+            flatten={true}
+            frontOffset={7}
+          />
+        ) : null}
         {isColliding && !isMinimapFullScreen ? (
           <Backdrop
             label={
               isBrowserEnvironment
                 ? "Download the extension to open folders"
-                : "SHIFT+ENTER to explore"
+                : "Press SHIFT + ENTER"
             }
             color="white"
             yPosition={3.5}

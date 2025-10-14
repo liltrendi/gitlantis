@@ -26,7 +26,7 @@ export const Nodes = () => {
   const folderModel = useFolderModel(isBrowserEnvironment);
 
   const { trackedCollisions } = useNodeCollision({ nodes, boatRef, nodeRef });
-  useNodeMovement({ nodes, boatRef, nodeRef });
+  useNodeMovement({ nodes, boatRef, nodeRef, isMinimapFullScreen });
 
   return (
     <>
