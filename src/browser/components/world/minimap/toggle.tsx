@@ -17,11 +17,7 @@ export const MinimapToggle = () => {
         setMinimapFullscreen(!isMinimapFullScreen);
       }}
       title={isMinimapFullScreen ? "Minimize minimap" : "Fullscreen minimap"}
-      className={`fixed z-[1001] flex h-11 w-11 cursor-pointer items-center justify-center rounded-lg border border-white/40 bg-gray-800/90 text-white transition-colors transition-opacity duration-300 hover:bg-gray-700/90 ${
-        isMinimapFullScreen
-          ? "bottom-[calc(5.5%+10px)] right-[calc(3.9%+10px)]"
-          : "bottom-[15px] right-[15px]"
-      } ${shouldShow ? "opacity-100 delay-[1700ms]" : "pointer-events-none opacity-0"} `}
+      className={`fixed right-[15px] top-[15px] z-[1001] flex h-8 w-8 cursor-pointer items-center justify-center rounded-lg border border-white/40 bg-gray-800/90 text-white transition-colors transition-opacity duration-300 hover:bg-gray-700/90 ${shouldShow ? "opacity-100 delay-[1700ms]" : "pointer-events-none opacity-0"} `}
     >
       {isMinimapFullScreen ? (
         <svg

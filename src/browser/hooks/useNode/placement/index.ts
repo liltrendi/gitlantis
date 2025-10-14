@@ -9,6 +9,7 @@ export const useNodePlacement = () => {
     nodeRef,
     directories,
     isBrowserEnvironment,
+    isMinimapFullScreen,
     git,
   } = useGameContext();
   const [nodes, setNodes] = useState<TNodeInstances>([]);
@@ -141,5 +142,5 @@ export const useNodePlacement = () => {
     nodeRef.current = nodeRef.current.slice(0, nodes.length);
   }, [nodes.length, nodeRef]);
 
-  return { nodes, boatRef, nodeRef, isBrowserEnvironment };
+  return { nodes, boatRef, nodeRef, isBrowserEnvironment, isMinimapFullScreen };
 };

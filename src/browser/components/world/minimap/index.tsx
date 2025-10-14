@@ -20,7 +20,7 @@ export const Minimap = () => {
   }, [settings.minimap, showSplashScreen]);
 
   const minimapSize = isMinimapFullScreen
-    ? { width: size.width * 0.93, height: size.height * 0.9 }
+    ? { width: size.width, height: size.height }
     : { width: 120, height: 120 };
 
   const minimapPosition = isMinimapFullScreen
