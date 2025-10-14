@@ -26,7 +26,7 @@ const SettingsMovement = (gameProps: ReturnType<typeof useGameSettings>) => {
         {gameProps.activeTab.description[0]}
       </h3>
       <div className="inline-flex flex-col items-center justify-center gap-5 font-mono text-sm text-gray-300">
-        <div className="flex flex-col items-center gap-8">
+        <div className="flex flex-col items-start gap-8">
           <div className="flex flex-col items-center gap-1">
             <span className="text-md mb-2 !self-start text-gray-400">
               WASD (up, left, down, right)
@@ -40,7 +40,7 @@ const SettingsMovement = (gameProps: ReturnType<typeof useGameSettings>) => {
 
           <div className="flex flex-col items-center gap-1 self-start">
             <span className="text-md mb-2 !self-start text-gray-400">
-              Arrow Keys
+              Arrow Keys (up, left, down, right)
             </span>
             <div className="grid grid-cols-3 gap-1 self-start">
               {[" ", "↑", " ", "←", "↓", "→"].map((key, index) => (
@@ -63,18 +63,34 @@ const SettingsCombinations = (
         {gameProps.activeTab.description[1]}
       </h3>
       <div className="flex flex-col items-start gap-2 text-gray-400">
-        <span className="text-md mb-2">Open files and folders</span>
-        <div className="flex items-center gap-1">
-          <Key pad>Shift</Key>
-          <span className="px-2 text-xl">+</span>
-          <Key pad>Enter</Key>
+        <div className="flex items-center justify-center gap-1">
+          <span className="flex items-center gap-1">
+            <Key pad>Shift</Key>
+            <span className="px-2 text-xl">+</span>
+            <Key pad>Enter</Key>
+          </span>
+          <span className="text-md mb-2 ml-2">Open files and folders</span>
         </div>
       </div>
 
       <div className="mt-6 flex flex-col items-start gap-2 text-gray-400">
-        <span className="text-md mb-2">Go back one directory</span>
-        <div className="flex items-center gap-1">
+        <div className="flex items-center justify-center gap-1">
           <Key pad>Escape</Key>
+          <span className="text-md mb-2 ml-2">Go back one directory</span>
+        </div>
+      </div>
+
+      <div className="mt-6 flex flex-col items-start gap-2 text-gray-400">
+        <div className="flex items-center justify-center gap-1">
+          <Key pad>H</Key>
+          <span className="text-md mb-2 ml-2">Sound the ship's horn</span>
+        </div>
+      </div>
+
+      <div className="mt-6 flex flex-col items-start gap-2 text-gray-400">
+        <div className="flex items-center justify-center gap-1">
+          <Key pad>F</Key>
+          <span className="text-md mb-2 ml-2">Toggle minimap fullscreen</span>
         </div>
       </div>
     </>

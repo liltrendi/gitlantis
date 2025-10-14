@@ -14,7 +14,7 @@ export const Splash = () => {
     showSplashScreen,
     setShowSplashScreen,
     isBrowserEnvironment,
-    oceanAudioRef,
+    gameAudio,
     settings,
   } = useGameContext();
 
@@ -26,7 +26,7 @@ export const Splash = () => {
 
   const playOceanAudio = () => {
     const waitForBufferAndContext = () => {
-      const audio = oceanAudioRef.current;
+      const audio = gameAudio.ocean.current;
       if (!audio?.buffer) {
         requestAnimationFrame(waitForBufferAndContext);
         return;

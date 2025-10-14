@@ -86,7 +86,7 @@ const getPublicAssets = (panel, context) => {
         "file",
         "file.glb",
     ]);
-    const audioUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
+    const wavesUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
         "out",
         "music",
         "waves.mp3",
@@ -96,7 +96,12 @@ const getPublicAssets = (panel, context) => {
         "images",
         "favicon.png",
     ]);
-    return { oceanUri, boatUri, folderUri, fileUri, audioUri, faviconUri };
+    const hornUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
+        "out",
+        "music",
+        "horn.ogg",
+    ]);
+    return { oceanUri, boatUri, folderUri, fileUri, wavesUri, faviconUri, hornUri };
 };
 exports.getPublicAssets = getPublicAssets;
 const createPanel = (context) => {
@@ -137,8 +142,9 @@ const getWebviewPage = ({ scripts, publicAssets, }) => {
             boat: "${publicAssets.boatUri}",
             folder: "${publicAssets.folderUri}",
             file: "${publicAssets.fileUri}",
-            audio: "${publicAssets.audioUri}",
+            waves: "${publicAssets.wavesUri}",
             favicon: "${publicAssets.faviconUri}",
+            horn: "${publicAssets.hornUri}",
           };
           window.__GITLANTIS_ROOT__ = "${scripts?.workspaceFoldersUri}";
         </script>

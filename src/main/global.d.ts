@@ -58,7 +58,10 @@ declare global {
     isMinimapFullScreen: boolean;
     setMinimapFullscreen: Dispatch<SetStateAction<boolean>>;
     directionInputRef: RefObject<TDirectionInput>;
-    oceanAudioRef: RefObject<PositionalAudio | null>;
+    gameAudio: {
+      ocean: RefObject<PositionalAudio | null>;
+      horn: RefObject<PositionalAudio | null>;
+    };
     git: ReturnType<typeof useGit>;
   };
 

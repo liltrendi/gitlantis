@@ -15,12 +15,15 @@ export const useGameConfig = () => {
     left: false,
     right: false,
   });
-  const oceanAudioRef = useRef<PositionalAudio | null>(null);
+  const gameAudio = {
+    ocean: useRef<PositionalAudio | null>(null),
+    horn: useRef<PositionalAudio | null>(null),
+  };
 
   return {
     directionInputRef,
     worldOffsetRef,
-    oceanAudioRef,
+    gameAudio,
     boatRef,
     floatingRef,
     oceanRef,

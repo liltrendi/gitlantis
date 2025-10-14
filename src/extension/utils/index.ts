@@ -93,7 +93,7 @@ export const getPublicAssets = (
     "file.glb",
   ]);
 
-  const audioUri = getUri(panel.webview, context.extensionUri, [
+  const wavesUri = getUri(panel.webview, context.extensionUri, [
     "out",
     "music",
     "waves.mp3",
@@ -105,7 +105,21 @@ export const getPublicAssets = (
     "favicon.png",
   ]);
 
-  return { oceanUri, boatUri, folderUri, fileUri, audioUri, faviconUri };
+  const hornUri = getUri(panel.webview, context.extensionUri, [
+    "out",
+    "music",
+    "horn.ogg",
+  ]);
+
+  return {
+    oceanUri,
+    boatUri,
+    folderUri,
+    fileUri,
+    wavesUri,
+    faviconUri,
+    hornUri,
+  };
 };
 
 export const createPanel = (context: vscode.ExtensionContext) => {
@@ -167,8 +181,9 @@ export const getWebviewPage = ({
             boat: "${publicAssets.boatUri}",
             folder: "${publicAssets.folderUri}",
             file: "${publicAssets.fileUri}",
-            audio: "${publicAssets.audioUri}",
+            waves: "${publicAssets.wavesUri}",
             favicon: "${publicAssets.faviconUri}",
+            horn: "${publicAssets.hornUri}",
           };
           window.__GITLANTIS_ROOT__ = "${scripts?.workspaceFoldersUri}";
         </script>
