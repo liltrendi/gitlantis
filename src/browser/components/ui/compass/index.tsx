@@ -9,13 +9,13 @@ export const Compass = () => {
     degreesLabel,
     markerWidth,
   } = useBoatCompass();
-  const { settings, showSplashScreen, isMinimapFullScreen } = useGameContext();
+  const { settings, showSplashScreen } = useGameContext();
 
   if (settings.compass === "Hide") return null;
 
   return (
     <div
-      className={`fixed bottom-4 left-1/2 z-50 -translate-x-1/2 transform transition-opacity duration-300 ${showSplashScreen ? "pointer-events-none opacity-0" : "opacity-100 delay-[1700ms]"} ${isMinimapFullScreen ? "hidden" : "block"} `}
+      className={`fixed bottom-4 left-1/2 z-50 -translate-x-1/2 transform transition-opacity duration-300 ${showSplashScreen ? "pointer-events-none opacity-0" : "opacity-100 delay-[1700ms]"} block`}
     >
       {/* Direction label above on mobile, below on desktop */}
       <div className="mb-1 block text-center sm:hidden">
