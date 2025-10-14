@@ -18,7 +18,10 @@ export const Folder = ({
     <group position-y={2.5} onClick={openOnClick}>
       <Clone
         ref={(el) => {
-          if (!nodeRef?.current) return;
+          if (!nodeRef?.current || !el) return;
+          el.traverse((child) => {
+            child.userData = { ...child.userData, openOnClick };
+          });
           nodeRef.current[index] = el;
         }}
         position={instance.position}
