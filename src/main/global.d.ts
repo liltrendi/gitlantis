@@ -42,6 +42,7 @@ declare global {
     right: boolean;
   };
   type TDirectionInputRef = RefObject<TDirectionInput>;
+  type TActiveWorld = "marine" | "terrestial";
 
   type TGameConfig = {
     boatRef: TBoatRef;
@@ -63,6 +64,8 @@ declare global {
       horn: RefObject<PositionalAudio | null>;
     };
     git: ReturnType<typeof useGit>;
+    activeWorld: "marine" | "terrestial";
+    toggleActiveWorld: (world?: TActiveWorld) => void;
   };
 
   type TGameStore = {

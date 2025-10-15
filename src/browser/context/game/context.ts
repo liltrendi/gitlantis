@@ -25,4 +25,6 @@ export const GameContext = createContext<TGameConfig>({
   git: {
     branches: { all: [], current: null },
   },
+  activeWorld: "marine",
+  toggleActiveWorld: () => {},
 });

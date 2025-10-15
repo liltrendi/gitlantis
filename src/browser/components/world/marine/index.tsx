@@ -1,6 +1,3 @@
-import { Suspense } from "react";
-import { Physics } from "@react-three/cannon";
-import { WorldCanvas } from "@/browser/components/world/marine/canvas";
 import { Camera } from "@/browser/components/world/marine/camera";
 import { Lights } from "@/browser/components/world/marine/lights";
 import { Sky } from "@/browser/components/world/marine/sky";
@@ -10,21 +7,21 @@ import { Boat } from "@/browser/components/world/marine/boat";
 import { Nodes } from "@/browser/components/world/marine/nodes";
 import { Minimap } from "@/browser/components/world/marine/minimap";
 
-export const MarineLayer = () => {
+export const MarineWorld = ({ visible }: { visible: boolean }) => {
   return (
-    <WorldCanvas>
-      <Suspense fallback={null}>
-        <Physics>
-          <Minimap />
-          <Camera />
-          <Lights />
-          <Sky />
-          <Audio />
-          <Ocean />
-          <Boat />
-          <Nodes />
-        </Physics>
-      </Suspense>
-    </WorldCanvas>
+    <>
+      {/* @ts-expect-error group isn't a valid React element */}
+      <group visible={visible}>
+        <Minimap />
+        <Camera />
+        <Lights />
+        <Sky />
+        <Audio />
+        <Ocean />
+        <Boat />
+        <Nodes />
+        {/* @ts-expect-error group isn't a valid React element */}
+      </group>
+    </>
   );
 };

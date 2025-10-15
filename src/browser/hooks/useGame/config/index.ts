@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { PositionalAudio, Vector3 } from "three";
 
 export const useGameConfig = () => {
+  const [activeWorld, setActiveWorld] = useState<TActiveWorld>("marine");
   const [showSplashScreen, setShowSplashScreen] = useState(true);
   const [isMinimapFullScreen, setMinimapFullscreen] = useState(false);
   const boatRef = useRef<TBoatRef>(null);
@@ -20,6 +21,14 @@ export const useGameConfig = () => {
     horn: useRef<PositionalAudio | null>(null),
   };
 
+  const toggleActiveWorld = (world?: TActiveWorld) => {
+    if (world) {
+      setActiveWorld(world);
+      return;
+    }
+    setActiveWorld((prev) => (prev === "marine" ? "terrestial" : "marine"));
+  };
+
   return {
     directionInputRef,
     worldOffsetRef,
@@ -32,5 +41,7 @@ export const useGameConfig = () => {
     setShowSplashScreen,
     isMinimapFullScreen,
     setMinimapFullscreen,
+    activeWorld,
+    toggleActiveWorld,
   };
 };
