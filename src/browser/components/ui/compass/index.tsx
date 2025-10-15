@@ -24,7 +24,7 @@ export const Compass = () => {
         </span>
       </div>
 
-      <div className="relative h-2 w-64 overflow-hidden rounded border border-gray-600 bg-black/50 sm:w-80">
+      <div className="relative h-2 w-48 overflow-hidden rounded border border-gray-600 bg-black/50 sm:w-80">
         <div
           className="absolute top-0 flex h-full items-center"
           style={{

@@ -4,6 +4,7 @@ import { Breadcrumbs } from "@/browser/components/ui/breadcrumbs";
 import { Compass } from "@/browser/components/ui/compass";
 import { MinimapToggle } from "@/browser/components/world/marine/minimap/toggle";
 import { Joystick } from "@/browser/components/world/marine/joystick";
+import { WorldToggle } from "@/browser/components/ui/world-toggle";
 
 export const UILayer = () => {
   return (
@@ -14,6 +15,7 @@ export const UILayer = () => {
       <Joystick />
       <GlobalSettings />
       <MinimapToggle />
+      <WorldToggle />
     </>
   );
 };

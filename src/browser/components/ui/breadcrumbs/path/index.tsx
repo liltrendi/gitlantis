@@ -9,7 +9,7 @@ export const BreadcrumbPath = () => {
   if (!currentPath || currentPath.length === 0) return null;
 
   const containerClasses =
-    "flex flex-wrap max-w-[50vw] break-words rounded-bl-lg rounded-br-lg rounded-tr-lg bg-[#2d302f] px-2 py-1 gap-y-1";
+    "flex flex-wrap max-w-[50vw] break-words rounded-bl-lg rounded-br-lg rounded-tr-lg bg-[#222]/90 px-2 py-1 gap-y-1";
 
   const segmentButtonClasses =
     "max-w-[10rem] truncate text-white text-sm focus:outline-none";

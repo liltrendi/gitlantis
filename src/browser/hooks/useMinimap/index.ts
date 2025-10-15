@@ -26,7 +26,7 @@ export const useMinimapCamera = () => {
       }
     : {
         x: size.width - minimapSize.width - 10,
-        y: size.height - minimapSize.height - 10,
+        y: 10,
       };
 
   useFrame(() => {

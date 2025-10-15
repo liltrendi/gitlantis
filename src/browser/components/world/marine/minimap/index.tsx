@@ -30,13 +30,14 @@ export const Minimap = () => {
     minimapSize,
   });
 
-  if (!shouldFadeIn) return null;
+  if (!shouldFadeIn || !isMinimapFullScreen) return null;
 
   return (
     <MinimapCamera
       ref={virtualCam}
       makeDefault={false}
-      zoom={isMinimapFullScreen ? 0.8 : 3.5}
+      zoom={0.7}
+      visible={false}
     />
   );
 };
