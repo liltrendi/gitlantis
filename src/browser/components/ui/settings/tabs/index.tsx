@@ -2,10 +2,10 @@ import type { useGameSettings } from "@/browser/hooks/useGame/settings";
 import { Settings, Activity, Keyboard, Info, Flame } from "lucide-react";
 
 const tabIcons = {
+  About: <Info className="h-6 w-6" />,
   General: <Settings className="h-6 w-6" />,
   Behavior: <Activity className="h-6 w-6" />,
   Keybindings: <Keyboard className="h-6 w-6" />,
-  About: <Info className="h-6 w-6" />,
   "Danger zone": <Flame className="h-6 w-6 text-red-500" />,
 } as const;
 

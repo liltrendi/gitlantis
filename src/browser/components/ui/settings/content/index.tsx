@@ -13,14 +13,14 @@ export const SettingsContent = (
       {(() => {
         const label = gameProps.activeTab.label;
         switch (label) {
+          case "About":
+            return <SettingsAbout {...gameProps} />;
           case "General":
             return <SettingsGeneral {...gameProps} />;
           case "Behavior":
             return <SettingsBehavior {...gameProps} />;
           case "Keybindings":
             return <SettingsControls {...gameProps} />;
-          case "About":
-            return <SettingsAbout {...gameProps} />;
           case "Danger zone":
             return <SettingsRestoreDefaults {...gameProps} />;
           default:

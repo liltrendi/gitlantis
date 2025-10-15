@@ -2,7 +2,6 @@ import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 import { useGameContext } from "@/browser/hooks/useGame/context";
 import { BreadcrumbBranch } from "@/browser/components/ui/breadcrumbs/branch";
 import { BreadcrumbPath } from "@/browser/components/ui/breadcrumbs/path";
-import { Donate } from "@/browser/components/ui/donate";
 
 export const Breadcrumbs = () => {
   const { settings, showSplashScreen } = useGameContext();
@@ -16,7 +15,6 @@ export const Breadcrumbs = () => {
           : "opacity-100 delay-[1700ms]"
       } block select-none`}
     >
-      <Donate />
       {settings.breadcrumbs === "Hide" || currentPath.length === 0 ? null : (
         <>
           <BreadcrumbBranch />

@@ -25,6 +25,44 @@ export const SettingsGeneral = (
         {gameProps.activeTab.description[1]}
       </h3>
 
+      <SharedSelect
+        label="Minimap"
+        value={gameProps.settings.minimap}
+        options={["Show", "Hide"]}
+        onChange={(e) => gameProps.setMinimap(e.target.value as TShowHide)}
+        tooltip="Toggle overhead view"
+      />
+      <SharedSelect
+        label="Compass"
+        value={gameProps.settings.compass}
+        options={["Show", "Hide"]}
+        onChange={(e) => gameProps.setCompass(e.target.value as TShowHide)}
+        tooltip="Toggle compass visibility"
+      />
+      <SharedSelect
+        label="Breadcrumbs"
+        value={gameProps.settings.breadcrumbs}
+        options={["Show", "Hide"]}
+        onChange={(e) => gameProps.setBreadcrumbs(e.target.value as TShowHide)}
+        tooltip="Toggle navigation visibility"
+      />
+
+      <h3 className="mb-[15px] pt-[15px] text-xl font-semibold text-gray-200">
+        {gameProps.activeTab.description[2]}
+      </h3>
+      <SharedSlider
+        label="Volume"
+        min={0.01}
+        max={1}
+        value={gameProps.settings.volume}
+        setter={gameProps.setVolume}
+        tooltip="How loud the waves are"
+      />
+
+      <h3 className="mb-[15px] pt-[15px] text-xl font-semibold text-gray-200">
+        {gameProps.activeTab.description[3]}
+      </h3>
+
       <SharedColorPicker
         label="Walls"
         value={gameProps.settings.boatColors.walls}
@@ -65,43 +103,6 @@ export const SettingsGeneral = (
         value={gameProps.settings.boatColors.floaters}
         onChangeComplete={(color) => gameProps.setBoatColors("floaters", color)}
         tooltip="Color of the floaters on the side"
-      />
-
-      <h3 className="mb-[15px] pt-[15px] text-xl font-semibold text-gray-200">
-        {gameProps.activeTab.description[2]}
-      </h3>
-      <SharedSlider
-        label="Volume"
-        min={0.01}
-        max={1}
-        value={gameProps.settings.volume}
-        setter={gameProps.setVolume}
-        tooltip="How loud the waves are"
-      />
-
-      <h3 className="mb-[15px] pt-[15px] text-xl font-semibold text-gray-200">
-        {gameProps.activeTab.description[3]}
-      </h3>
-      <SharedSelect
-        label="Minimap"
-        value={gameProps.settings.minimap}
-        options={["Show", "Hide"]}
-        onChange={(e) => gameProps.setMinimap(e.target.value as TShowHide)}
-        tooltip="Toggle overhead view"
-      />
-      <SharedSelect
-        label="Compass"
-        value={gameProps.settings.compass}
-        options={["Show", "Hide"]}
-        onChange={(e) => gameProps.setCompass(e.target.value as TShowHide)}
-        tooltip="Toggle compass visibility"
-      />
-      <SharedSelect
-        label="Breadcrumbs"
-        value={gameProps.settings.breadcrumbs}
-        options={["Show", "Hide"]}
-        onChange={(e) => gameProps.setBreadcrumbs(e.target.value as TShowHide)}
-        tooltip="Toggle navigation visibility"
       />
     </>
   );
