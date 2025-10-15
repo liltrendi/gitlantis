@@ -35,6 +35,7 @@ export const File = ({
           frontOffset={isMinimapFullScreen ? -1.9 : undefined}
           flatten={isMinimapFullScreen}
           maxWidth={isMinimapFullScreen ? undefined : label.length + 15}
+          isFile
         />
         {isMinimapFullScreen && isColliding ? (
           <Backdrop
@@ -43,6 +44,7 @@ export const File = ({
             yPosition={0.1}
             frontOffset={1.9}
             flatten={true}
+            isFile
           />
         ) : null}
         {isColliding && !isMinimapFullScreen ? (
@@ -53,10 +55,12 @@ export const File = ({
                 : "Press SHIFT+ENTER"
             }
             color="white"
+            background="#222"
             yPosition={0.8}
             fontSize={0.25}
             frontOffset={-1}
             maxWidth={isBrowserEnvironment ? 3 : 2.5}
+            isFile
           />
         ) : null}
       </Clone>

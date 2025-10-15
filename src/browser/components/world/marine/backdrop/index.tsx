@@ -9,6 +9,8 @@ import {
 export const Backdrop = ({
   label,
   color,
+  background,
+  isFile = false,
   fontSize = 0.2,
   yPosition = 1.5,
   frontOffset = 0,
@@ -37,12 +39,16 @@ export const Backdrop = ({
         {/* @ts-expect-error */}
         <shapeGeometry args={[shape]} />
         {/* @ts-expect-error */}
-        <meshBasicMaterial color="#222" transparent opacity={0.85} />
+        <meshBasicMaterial
+          color={background ? background : isFile ? "#de921f" : "#222"}
+          transparent
+          opacity={0.85}
+        />
         {/* @ts-expect-error */}
       </mesh>
       <Text
         fontSize={fontSize}
-        color={color ?? "#f2bc07"}
+        color={color ? color : isFile ? "#000" : "#f2bc07"}
         anchorX="center"
         anchorY="middle"
         rotation-y={yRotation}

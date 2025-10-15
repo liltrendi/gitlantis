@@ -5,9 +5,11 @@ export type TBackdrop = {
   yPosition?: number;
   fontSize?: number;
   color?: string;
+  background?: string;
   frontOffset?: number;
   maxWidth?: number;
   flatten?: boolean;
+  isFile?: boolean;
 };
 
 const textDimensionsCache = new Map<

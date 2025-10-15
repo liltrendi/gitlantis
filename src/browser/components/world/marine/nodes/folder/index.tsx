@@ -53,6 +53,7 @@ export const Folder = ({
                 : "Press SHIFT + ENTER"
             }
             color="white"
+            background="#222"
             yPosition={3.5}
             fontSize={0.75}
             frontOffset={-5}
