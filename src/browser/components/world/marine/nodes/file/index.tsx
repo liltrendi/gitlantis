@@ -39,7 +39,7 @@ export const File = ({
         />
         {isMinimapFullScreen && isColliding ? (
           <Backdrop
-            label={"Press SHIFT+ENTER"}
+            label={"Open with SHIFT+ENTER"}
             fontSize={0.6}
             yPosition={0.1}
             frontOffset={1.9}
@@ -52,7 +52,7 @@ export const File = ({
             label={
               isBrowserEnvironment
                 ? "Download the extension to open files"
-                : "Press SHIFT+ENTER"
+                : "Open with SHIFT+ENTER"
             }
             color="white"
             background="#222"

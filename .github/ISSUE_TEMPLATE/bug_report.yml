@@ -35,7 +35,7 @@ body:
         e.g.
         1. Run the extension
         2. Sail to a folder
-        3. Press `SHIFT+ENTER` to open
+        3. Open with `SHIFT+ENTER`
         4. Extension crashes
   - type: textarea
     id: logs
