@@ -1,12 +1,21 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useGameContext } from "@/browser/hooks/useGame/context";
 
 export const useKeyboard = () => {
-  const { directionInputRef, gameAudio, setMinimapFullscreen } =
+  const { directionInputRef, gameAudio, setMinimapFullscreen, activeWorld } =
     useGameContext();
+
+  const activeWorldRef = useRef(activeWorld);
+  useEffect(() => {
+    activeWorldRef.current = activeWorld;
+  }, [activeWorld]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
+      const canPlayHorn =
+        activeWorldRef.current === "marine" &&
+        !gameAudio.horn.current?.isPlaying;
+
       switch (e.key.toLowerCase()) {
         case "arrowup":
         case "w":
@@ -25,7 +34,7 @@ export const useKeyboard = () => {
           directionInputRef.current.right = true;
           break;
         case "h":
-          if (!gameAudio.horn.current?.isPlaying) {
+          if (canPlayHorn) {
             gameAudio.horn.current?.play();
           }
           break;

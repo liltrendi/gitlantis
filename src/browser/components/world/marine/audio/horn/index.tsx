@@ -10,7 +10,7 @@ const globalUris = (window as any).__GLOBAL_URIS__ || {
 
 export const Horn = () => {
   const { settings } = useGameStore();
-  const { showSplashScreen, isBrowserEnvironment, gameAudio } =
+  const { showSplashScreen, isBrowserEnvironment, gameAudio, activeWorld } =
     useGameContext();
 
   useEffect(() => {
@@ -19,6 +19,18 @@ export const Horn = () => {
     audio.setVolume(settings.volume);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settings.volume, showSplashScreen]);
+
+  useEffect(() => {
+    const audio = gameAudio.horn.current;
+    if (showSplashScreen || !audio) return;
+
+    audio.setVolume(settings.volume);
+
+    if (audio.isPlaying && activeWorld !== "marine") {
+      audio.stop();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [settings.volume, showSplashScreen, activeWorld]);
 
   return (
     <PositionalAudio

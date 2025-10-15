@@ -10,15 +10,22 @@ const globalUris = (window as any).__GLOBAL_URIS__ || {
 
 export const Waves = () => {
   const { settings } = useGameStore();
-  const { showSplashScreen, isBrowserEnvironment, gameAudio } =
+  const { showSplashScreen, isBrowserEnvironment, gameAudio, activeWorld } =
     useGameContext();
 
   useEffect(() => {
     const audio = gameAudio.ocean.current;
     if (showSplashScreen || !audio) return;
+
     audio.setVolume(settings.volume);
+
+    if (audio.isPlaying && activeWorld !== "marine") {
+      audio.stop();
+    } else if (!audio.isPlaying && activeWorld === "marine") {
+      audio.play();
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [settings.volume, showSplashScreen]);
+  }, [settings.volume, showSplashScreen, activeWorld]);
 
   return (
     <PositionalAudio
