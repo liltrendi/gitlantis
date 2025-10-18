@@ -21,13 +21,13 @@ export const WorldToggle = () => {
             stiffness: 400,
             damping: 30,
           }}
-          className="absolute top-1 h-6 w-[calc(50%-4px)] rounded-full bg-[#f2bc07] shadow-inner sm:h-8 sm:w-[calc(50%-4px)]"
+          className="absolute top-1 h-6 w-[calc(50%-4px)] cursor-pointer rounded-full bg-[#f2bc07] shadow-inner sm:h-8 sm:w-[calc(50%-4px)]"
           animate={{
             left: isMarine ? "4px" : "calc(50% + 0px)",
           }}
         />
 
-        <div className="z-10 flex w-full select-none text-sm font-medium">
+        <div className="z-[51] flex h-full w-full select-none text-sm font-medium">
           <button
             onClick={() => toggleActiveWorld("marine")}
             className={`flex flex-1 items-center justify-center transition-colors duration-300 ${

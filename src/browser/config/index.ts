@@ -1,4 +1,6 @@
 export const CLOUDFRONT_ROOT_URL = `https://d309f6bqnc919e.cloudfront.net/gitlantis`;
+export const CLOUDFRONT_MEADOW_URL =
+  "https://d309f6bqnc919e.cloudfront.net/meadow";
 
 export const OCEAN_MODEL_PATH = `/models/ocean/ocean.jpeg?v=1`;
 export const BOAT_MODEL_PATH = `/models/boat/boat.glb?v=1`;
@@ -7,6 +9,10 @@ export const FILE_MODEL_PATH = `/models/file/file.glb?v=1`;
 export const OCEAN_AUDIO_PATH = `/music/waves.mp3?v=1`;
 export const FAVICON_PATH = `/images/favicon.png?v=1`;
 export const HORN_AUDIO_PATH = `/music/horn.ogg?v=1`;
+
+export const NOISE_TEXTURE_PATH = `${CLOUDFRONT_MEADOW_URL}/assets/images/noise_texture.jpg`;
+export const GRASS_TEXTURE_PATH = `${CLOUDFRONT_MEADOW_URL}/assets/images/blade_diffuse.jpg`;
+export const ALPHA_MAP_TEXTURE_PATH = `${CLOUDFRONT_MEADOW_URL}/assets/images/blade_alpha.jpg`;
 
 export const NODE_SHORTCUTS: Array<{ label: string; keys: string[] }> = [
   { label: "Shift+Enter to explore", keys: ["Shift", "Enter"] },

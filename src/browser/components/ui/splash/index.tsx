@@ -16,6 +16,7 @@ export const Splash = () => {
     isBrowserEnvironment,
     gameAudio,
     settings,
+    activeWorld,
   } = useGameContext();
 
   const { progress } = useProgress();
@@ -31,6 +32,8 @@ export const Splash = () => {
         requestAnimationFrame(waitForBufferAndContext);
         return;
       }
+
+      if (activeWorld !== "marine") return;
 
       audio.setVolume(settings.volume);
       const context = audio.context;

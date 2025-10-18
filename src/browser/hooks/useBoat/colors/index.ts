@@ -50,6 +50,7 @@ export const useBoatColors = ({
     if (rails) {
       (rails as MeshStandardMaterial).color.set(settings.boatColors.rails);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [materials, settings.boatColors]);
 
   return {

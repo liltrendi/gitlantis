@@ -35,6 +35,7 @@ export const useBranches = () => {
           break;
       }
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );
 
@@ -44,6 +45,7 @@ export const useBranches = () => {
     return () => {
       window.removeEventListener("message", handleBranchResponses);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

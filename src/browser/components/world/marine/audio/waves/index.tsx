@@ -15,15 +15,34 @@ export const Waves = () => {
 
   useEffect(() => {
     const audio = gameAudio.ocean.current;
-    if (showSplashScreen || !audio) return;
+    if (!audio || showSplashScreen) return;
 
-    audio.setVolume(settings.volume);
+    const targetVolume = activeWorld === "marine" ? settings.volume : 0;
 
-    if (audio.isPlaying && activeWorld !== "marine") {
-      audio.stop();
-    } else if (!audio.isPlaying && activeWorld === "marine") {
+    const currentGain = audio.getVolume();
+    const fadeDuration = 0.5;
+    const step = (targetVolume - currentGain) / (fadeDuration * 60);
+
+    let frame: number;
+    const fade = () => {
+      const newVol = audio.getVolume() + step;
+      const done =
+        (step > 0 && newVol >= targetVolume) ||
+        (step < 0 && newVol <= targetVolume);
+      if (!done) {
+        audio.setVolume(newVol);
+        frame = requestAnimationFrame(fade);
+      } else {
+        audio.setVolume(targetVolume);
+      }
+    };
+    fade();
+
+    if (!audio.isPlaying && activeWorld === "marine") {
       audio.play();
     }
+
+    return () => cancelAnimationFrame(frame);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [settings.volume, showSplashScreen, activeWorld]);
 
@@ -33,6 +52,7 @@ export const Waves = () => {
       url={`${isBrowserEnvironment ? CLOUDFRONT_ROOT_URL : ""}${
         globalUris.waves
       }`}
+      loop
     />
   );
 };

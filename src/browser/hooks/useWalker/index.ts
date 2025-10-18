@@ -42,6 +42,7 @@ export const useWalker = () => {
         return child;
       });
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [settings.nodesToShow, currentPath]
   );
 
@@ -109,6 +110,7 @@ export const useWalker = () => {
     return () => {
       window.removeEventListener("message", handleWalkResponse);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const openExplorer = () => {

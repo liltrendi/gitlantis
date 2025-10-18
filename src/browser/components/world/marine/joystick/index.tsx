@@ -55,7 +55,7 @@ export const Joystick = () => {
   return (
     <div
       ref={joystickRef}
-      className={`fixed inset-0 z-50 touch-none transition-opacity duration-300 md:invisible ${
+      className={`fixed inset-0 z-50 transition-opacity duration-300 md:invisible ${
         showSplashScreen
           ? "pointer-events-none opacity-0"
           : "opacity-100 delay-[1700ms]"
