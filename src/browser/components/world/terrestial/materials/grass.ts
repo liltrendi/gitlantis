@@ -8,6 +8,7 @@ import {
   PerspectiveCamera,
   Scene,
   Texture,
+  GLSL3,
 } from "three";
 import { applyBladeGeometry } from "@/browser/components/world/terrestial/materials/blade";
 import {
@@ -48,7 +49,6 @@ export const setupGrassMaterial = ({
   const sunColour = new Vector3(1.0, 1.0, 1.0);
   const specularColour = new Vector3(1.0, 1.0, 1.0);
 
-  // bend blades
   const { instancedGeometry } = applyBladeGeometry({
     width,
   });
@@ -83,6 +83,7 @@ export const setupGrassMaterial = ({
     vertexShader: grassVertexSource,
     fragmentShader: grassFragmentSource,
     side: DoubleSide,
+    glslVersion: GLSL3,
   });
 
   grassScene.add(camera);

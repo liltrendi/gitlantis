@@ -13,5 +13,6 @@ export const setupTerrestialWorldRenderer = ({
   renderer.setPixelRatio(window.devicePixelRatio);
   renderer.setSize(window.innerWidth, window.innerHeight);
   renderer.autoClear = false;
+
   return { renderer };
 };

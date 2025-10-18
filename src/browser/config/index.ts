@@ -10,9 +10,9 @@ export const OCEAN_AUDIO_PATH = `/music/waves.mp3?v=1`;
 export const FAVICON_PATH = `/images/favicon.png?v=1`;
 export const HORN_AUDIO_PATH = `/music/horn.ogg?v=1`;
 
-export const NOISE_TEXTURE_PATH = `${CLOUDFRONT_MEADOW_URL}/assets/images/noise_texture.jpg`;
-export const GRASS_TEXTURE_PATH = `${CLOUDFRONT_MEADOW_URL}/assets/images/blade_diffuse.jpg`;
-export const ALPHA_MAP_TEXTURE_PATH = `${CLOUDFRONT_MEADOW_URL}/assets/images/blade_alpha.jpg`;
+export const NOISE_TEXTURE_PATH = `/assets/images/noise_texture.jpg`;
+export const GRASS_TEXTURE_PATH = `/assets/images/blade_diffuse.jpg`;
+export const ALPHA_MAP_TEXTURE_PATH = `/assets/images/blade_alpha.jpg`;
 
 export const NODE_SHORTCUTS: Array<{ label: string; keys: string[] }> = [
   { label: "Shift+Enter to explore", keys: ["Shift", "Enter"] },

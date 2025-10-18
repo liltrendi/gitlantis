@@ -6,7 +6,6 @@ import type { RefObject } from "react";
 import type {
   Clock,
   PerspectiveCamera,
-  RawShaderMaterial,
   Scene,
   ShaderMaterial,
   WebGLRenderer,
@@ -14,11 +13,11 @@ import type {
 
 export function runGameLoop({
   camera,
-  grassMaterial,
-  skyMaterial,
   renderer,
   rootScene,
   skyScene,
+  grassMaterial,
+  skyMaterial,
   grassScene,
   globalClock,
   animationFrameRef,
@@ -28,9 +27,9 @@ export function runGameLoop({
   getLastFrame,
 }: {
   camera: PerspectiveCamera;
-  grassMaterial: RawShaderMaterial;
-  skyMaterial: ShaderMaterial;
   renderer: WebGLRenderer;
+  grassMaterial: ShaderMaterial;
+  skyMaterial: ShaderMaterial;
   rootScene: Scene;
   skyScene: Scene;
   grassScene: Scene;

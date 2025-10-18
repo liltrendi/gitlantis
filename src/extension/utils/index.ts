@@ -111,6 +111,27 @@ export const getPublicAssets = (
     "horn.ogg",
   ]);
 
+  const noiseTexture = getUri(panel.webview, context.extensionUri, [
+    "out",
+    "images",
+    "textures",
+    "noise_texture.jpg",
+  ]);
+
+  const bladeDiffuse = getUri(panel.webview, context.extensionUri, [
+    "out",
+    "images",
+    "textures",
+    "blade_diffuse.jpg",
+  ]);
+
+  const bladeAlpha = getUri(panel.webview, context.extensionUri, [
+    "out",
+    "images",
+    "textures",
+    "blade_alpha.jpg",
+  ]);
+
   return {
     oceanUri,
     boatUri,
@@ -119,6 +140,9 @@ export const getPublicAssets = (
     wavesUri,
     faviconUri,
     hornUri,
+    noiseTexture,
+    bladeDiffuse,
+    bladeAlpha,
   };
 };
 
@@ -184,6 +208,9 @@ export const getWebviewPage = ({
             waves: "${publicAssets.wavesUri}",
             favicon: "${publicAssets.faviconUri}",
             horn: "${publicAssets.hornUri}",
+            noiseTexture: "${publicAssets.noiseTexture}",
+            bladeDiffuse: "${publicAssets.bladeDiffuse}",
+            bladeAlpha: "${publicAssets.bladeAlpha}",
           };
           window.__GITLANTIS_ROOT__ = "${scripts?.workspaceFoldersUri}";
         </script>

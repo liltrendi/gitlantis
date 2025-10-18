@@ -101,6 +101,24 @@ const getPublicAssets = (panel, context) => {
         "music",
         "horn.ogg",
     ]);
+    const noiseTexture = (0, exports.getUri)(panel.webview, context.extensionUri, [
+        "out",
+        "images",
+        "textures",
+        "noise_texture.jpg"
+    ]);
+    const bladeDiffuse = (0, exports.getUri)(panel.webview, context.extensionUri, [
+        "out",
+        "images",
+        "textures",
+        "blade_diffuse.jpg"
+    ]);
+    const bladeAlpha = (0, exports.getUri)(panel.webview, context.extensionUri, [
+        "out",
+        "images",
+        "textures",
+        "blade_alpha.jpg",
+    ]);
     return {
         oceanUri,
         boatUri,
@@ -109,6 +127,9 @@ const getPublicAssets = (panel, context) => {
         wavesUri,
         faviconUri,
         hornUri,
+        noiseTexture,
+        bladeDiffuse,
+        bladeAlpha,
     };
 };
 exports.getPublicAssets = getPublicAssets;
@@ -153,6 +174,9 @@ const getWebviewPage = ({ scripts, publicAssets, }) => {
             waves: "${publicAssets.wavesUri}",
             favicon: "${publicAssets.faviconUri}",
             horn: "${publicAssets.hornUri}",
+            noiseTexture: "${publicAssets.noiseTexture}",
+            bladeDiffuse: "${publicAssets.bladeDiffuse}",
+            bladeAlpha: "${publicAssets.bladeAlpha}",
           };
           window.__GITLANTIS_ROOT__ = "${scripts?.workspaceFoldersUri}";
         </script>

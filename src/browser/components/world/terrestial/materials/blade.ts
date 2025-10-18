@@ -6,11 +6,7 @@ import {
   InstancedBufferAttribute,
 } from "three";
 
-type TApplyBladeGeometry = {
-  width: number;
-};
-
-export const applyBladeGeometry = ({ width }: TApplyBladeGeometry) => {
+export const applyBladeGeometry = ({ width }: { width: number }) => {
   const joints = 4;
   const bladeWidth = 0.12;
   const bladeHeight = 1;
@@ -92,7 +88,6 @@ export const applyBladeGeometry = ({ width }: TApplyBladeGeometry) => {
   }
   grassBaseGeometry.computeVertexNormals();
 
-  // Build instanced geometry
   const instancedGeometry = new InstancedBufferGeometry();
   instancedGeometry.index = grassBaseGeometry.index;
   instancedGeometry.setAttribute(
@@ -102,13 +97,13 @@ export const applyBladeGeometry = ({ width }: TApplyBladeGeometry) => {
   instancedGeometry.setAttribute("uv", grassBaseGeometry.attributes.uv);
   instancedGeometry.setAttribute("normal", grassBaseGeometry.attributes.normal);
 
-  const indices: number[] = [];
+  const instanceIndices: number[] = [];
   const offsets: number[] = [];
   const scales: number[] = [];
   const halfRootAngles: number[] = [];
 
   for (let i = 0; i < instances; i++) {
-    indices.push(i / instances);
+    instanceIndices.push(i / instances);
     const x = Math.random() * width - width / 2;
     const z = Math.random() * width - width / 2;
     offsets.push(x, 0, z);
@@ -134,9 +129,11 @@ export const applyBladeGeometry = ({ width }: TApplyBladeGeometry) => {
     new InstancedBufferAttribute(new Float32Array(halfRootAngles), 2)
   );
   instancedGeometry.setAttribute(
-    "index",
-    new InstancedBufferAttribute(new Float32Array(indices), 1)
+    "instanceIndex",
+    new InstancedBufferAttribute(new Float32Array(instanceIndices), 1)
   );
+
+  instancedGeometry.instanceCount = instances;
 
   return { instancedGeometry };
 };

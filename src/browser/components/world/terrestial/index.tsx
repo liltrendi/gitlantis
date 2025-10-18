@@ -9,8 +9,12 @@ import { setupGroundMaterial } from "@/browser/components/world/terrestial/mater
 import { setupGrassMaterial } from "@/browser/components/world/terrestial/materials/grass";
 import { runGameLoop } from "@/browser/components/world/terrestial/utils/gameloop";
 import { disposeGameResources } from "@/browser/components/world/terrestial/utils/cleanup";
+import { useExtensionContext } from "@/browser/hooks/useExtension/context";
+import { ResizeHandler } from "@/browser/components/world/terrestial/events/resize";
 
 export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
+  const { isBrowserEnvironment } = useExtensionContext();
+
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
@@ -41,7 +45,7 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
     setupOrbitControls({ camera, renderer });
 
     const { noiseTexture, grassTexture, alphaMapTexture } =
-      setupTerrestialWorldTextures();
+      setupTerrestialWorldTextures({ isBrowserEnvironment });
 
     const { skyMaterial } = setupSkyMaterial({
       azimuth,
@@ -77,6 +81,9 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
       alphaMapTexture,
     });
 
+    const resizeHandler = new ResizeHandler(camera, renderer, FOV);
+    resizeHandler.attach(skyMaterial);
+
     const { cleanup } = runGameLoop({
       camera,
       grassMaterial,
@@ -99,6 +106,7 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
         renderers: [renderer],
         lights: [grassAmbience],
         scenes: [skyScene, grassScene],
+        listeners: [resizeHandler],
         materials: [grassMaterial, skyMaterial],
         textures: [noiseTexture, alphaMapTexture, grassTexture],
       });
