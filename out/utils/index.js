@@ -62,75 +62,25 @@ const getTranspiledScripts = (panel, context) => {
 };
 exports.getTranspiledScripts = getTranspiledScripts;
 const getPublicAssets = (panel, context) => {
-    const oceanUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
-        "out",
-        "models",
-        "ocean",
-        "ocean.jpeg",
-    ]);
-    const boatUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
-        "out",
-        "models",
-        "boat",
-        "boat.glb",
-    ]);
-    const folderUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
-        "out",
-        "models",
-        "folder",
-        "folder.glb",
-    ]);
-    const fileUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
-        "out",
-        "models",
-        "file",
-        "file.glb",
-    ]);
-    const wavesUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
-        "out",
-        "music",
-        "waves.mp3",
-    ]);
-    const faviconUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
-        "out",
-        "images",
-        "favicon.png",
-    ]);
-    const hornUri = (0, exports.getUri)(panel.webview, context.extensionUri, [
-        "out",
-        "music",
-        "horn.ogg",
-    ]);
-    const noiseTexture = (0, exports.getUri)(panel.webview, context.extensionUri, [
-        "out",
-        "images",
-        "textures",
-        "noise_texture.jpg"
-    ]);
-    const bladeDiffuse = (0, exports.getUri)(panel.webview, context.extensionUri, [
-        "out",
-        "images",
-        "textures",
-        "blade_diffuse.jpg"
-    ]);
-    const bladeAlpha = (0, exports.getUri)(panel.webview, context.extensionUri, [
-        "out",
-        "images",
-        "textures",
-        "blade_alpha.jpg",
-    ]);
-    return {
-        oceanUri,
-        boatUri,
-        folderUri,
-        fileUri,
-        wavesUri,
-        faviconUri,
-        hornUri,
-        noiseTexture,
-        bladeDiffuse,
-        bladeAlpha,
+    const assetUris = {
+        ocean: "out/models/ocean/ocean.jpeg",
+        boat: "out/models/boat/boat.glb",
+        folder: "out/models/folder/folder.glb",
+        file: "out/models/file/file.glb",
+        waves: "out/music/waves.mp3",
+        favicon: "out/images/favicon.png",
+        horn: "out/music/horn.ogg",
+        noiseTexture: "out/images/textures/noise_texture.jpg",
+        bladeDiffuse: "out/images/textures/blade_diffuse.jpg",
+        bladeAlpha: "out/images/textures/blade_alpha.jpg",
     };
+    const assetUrisWithUri = Object.entries(assetUris).reduce((acc, [key, url]) => {
+        return {
+            ...acc,
+            [`${key}Uri`]: (0, exports.getUri)(panel.webview, context.extensionUri, url.split("/"))
+        };
+    }, {});
+    return assetUrisWithUri;
 };
 exports.getPublicAssets = getPublicAssets;
 const createPanel = (context) => {
@@ -174,9 +124,9 @@ const getWebviewPage = ({ scripts, publicAssets, }) => {
             waves: "${publicAssets.wavesUri}",
             favicon: "${publicAssets.faviconUri}",
             horn: "${publicAssets.hornUri}",
-            noiseTexture: "${publicAssets.noiseTexture}",
-            bladeDiffuse: "${publicAssets.bladeDiffuse}",
-            bladeAlpha: "${publicAssets.bladeAlpha}",
+            noiseTexture: "${publicAssets.noiseTextureUri}",
+            bladeDiffuse: "${publicAssets.bladeDiffuseUri}",
+            bladeAlpha: "${publicAssets.bladeAlphaUri}",
           };
           window.__GITLANTIS_ROOT__ = "${scripts?.workspaceFoldersUri}";
         </script>

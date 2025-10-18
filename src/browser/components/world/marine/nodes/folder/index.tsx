@@ -38,11 +38,17 @@ export const Folder = ({
         />
         {isMinimapFullScreen && isColliding ? (
           <Backdrop
-            label={"Open with SHIFT+ENTER"}
+            label={
+              isBrowserEnvironment
+                ? "Download the extension"
+                : "Click or SHIFT+ENTER"
+            }
             yPosition={3.5}
             fontSize={2.3}
             flatten={true}
             frontOffset={7}
+            background="#de921f"
+            color="#000"
           />
         ) : null}
         {isColliding && !isMinimapFullScreen ? (
@@ -50,7 +56,7 @@ export const Folder = ({
             label={
               isBrowserEnvironment
                 ? "Download the extension to open folders"
-                : "Open with SHIFT+ENTER"
+                : "Click or SHIFT+ENTER"
             }
             color="white"
             background="#222"

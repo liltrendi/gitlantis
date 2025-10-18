@@ -65,85 +65,36 @@ export const getPublicAssets = (
   panel: vscode.WebviewPanel,
   context: vscode.ExtensionContext
 ) => {
-  const oceanUri = getUri(panel.webview, context.extensionUri, [
-    "out",
-    "models",
-    "ocean",
-    "ocean.jpeg",
-  ]);
-
-  const boatUri = getUri(panel.webview, context.extensionUri, [
-    "out",
-    "models",
-    "boat",
-    "boat.glb",
-  ]);
-
-  const folderUri = getUri(panel.webview, context.extensionUri, [
-    "out",
-    "models",
-    "folder",
-    "folder.glb",
-  ]);
-
-  const fileUri = getUri(panel.webview, context.extensionUri, [
-    "out",
-    "models",
-    "file",
-    "file.glb",
-  ]);
-
-  const wavesUri = getUri(panel.webview, context.extensionUri, [
-    "out",
-    "music",
-    "waves.mp3",
-  ]);
-
-  const faviconUri = getUri(panel.webview, context.extensionUri, [
-    "out",
-    "images",
-    "favicon.png",
-  ]);
-
-  const hornUri = getUri(panel.webview, context.extensionUri, [
-    "out",
-    "music",
-    "horn.ogg",
-  ]);
-
-  const noiseTexture = getUri(panel.webview, context.extensionUri, [
-    "out",
-    "images",
-    "textures",
-    "noise_texture.jpg",
-  ]);
-
-  const bladeDiffuse = getUri(panel.webview, context.extensionUri, [
-    "out",
-    "images",
-    "textures",
-    "blade_diffuse.jpg",
-  ]);
-
-  const bladeAlpha = getUri(panel.webview, context.extensionUri, [
-    "out",
-    "images",
-    "textures",
-    "blade_alpha.jpg",
-  ]);
-
-  return {
-    oceanUri,
-    boatUri,
-    folderUri,
-    fileUri,
-    wavesUri,
-    faviconUri,
-    hornUri,
-    noiseTexture,
-    bladeDiffuse,
-    bladeAlpha,
+  const assetUris = {
+    ocean: "out/models/ocean/ocean.jpeg",
+    boat: "out/models/boat/boat.glb",
+    folder: "out/models/folder/folder.glb",
+    file: "out/models/file/file.glb",
+    waves: "out/music/waves.mp3",
+    favicon: "out/images/favicon.png",
+    horn: "out/music/horn.ogg",
+    noiseTexture: "out/images/textures/noise_texture.jpg",
+    bladeDiffuse: "out/images/textures/blade_diffuse.jpg",
+    bladeAlpha: "out/images/textures/blade_alpha.jpg",
   };
+
+  const assetUrisWithUri = Object.entries(assetUris).reduce(
+    (acc, [key, url]) => {
+      return {
+        ...acc,
+        [`${key}Uri`]: getUri(
+          panel.webview,
+          context.extensionUri,
+          url.split("/")
+        ),
+      };
+    },
+    {} as {
+      [K in keyof typeof assetUris as `${string & K}Uri`]: vscode.Uri;
+    }
+  );
+
+  return assetUrisWithUri;
 };
 
 export const createPanel = (context: vscode.ExtensionContext) => {
@@ -208,9 +159,9 @@ export const getWebviewPage = ({
             waves: "${publicAssets.wavesUri}",
             favicon: "${publicAssets.faviconUri}",
             horn: "${publicAssets.hornUri}",
-            noiseTexture: "${publicAssets.noiseTexture}",
-            bladeDiffuse: "${publicAssets.bladeDiffuse}",
-            bladeAlpha: "${publicAssets.bladeAlpha}",
+            noiseTexture: "${publicAssets.noiseTextureUri}",
+            bladeDiffuse: "${publicAssets.bladeDiffuseUri}",
+            bladeAlpha: "${publicAssets.bladeAlphaUri}",
           };
           window.__GITLANTIS_ROOT__ = "${scripts?.workspaceFoldersUri}";
         </script>
