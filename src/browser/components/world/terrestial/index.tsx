@@ -116,7 +116,7 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
   return (
     <canvas
       ref={canvasRef}
-      className={`absolute inset-0 transition-opacity duration-500 ${visible ? "opacity-100" : "pointer-events-none hidden opacity-0"}`}
+      className={`absolute inset-0 transition-opacity duration-500 ${visible ? "opacity-100" : "pointer-events-none opacity-0"}`}
     />
   );
 };

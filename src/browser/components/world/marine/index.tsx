@@ -7,7 +7,7 @@ import { Ocean } from "@/browser/components/world/marine/ocean";
 import { Boat } from "@/browser/components/world/marine/boat";
 import { Nodes } from "@/browser/components/world/marine/nodes";
 import { Minimap } from "@/browser/components/world/marine/minimap";
-import { MarineCanvas } from "@/browser/components/world/styles";
+import { MarineCanvas } from "@/browser/components/world/marine/canvas";
 
 export const MarineWorld = ({ visible }: { visible: boolean }) => {
   return (

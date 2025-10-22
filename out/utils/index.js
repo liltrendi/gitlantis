@@ -77,7 +77,7 @@ const getPublicAssets = (panel, context) => {
     const assetUrisWithUri = Object.entries(assetUris).reduce((acc, [key, url]) => {
         return {
             ...acc,
-            [`${key}Uri`]: (0, exports.getUri)(panel.webview, context.extensionUri, url.split("/"))
+            [`${key}Uri`]: (0, exports.getUri)(panel.webview, context.extensionUri, url.split("/")),
         };
     }, {});
     return assetUrisWithUri;
