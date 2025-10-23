@@ -1,4 +1,5 @@
 import { animateSkyFromDayToNight } from "@/browser/components/world/terrestial/materials/sky";
+import type { Clock, ShaderMaterial } from "three";
 
 export const setupAnimationRunner = ({
   grassMaterial,
@@ -16,7 +17,13 @@ export const setupAnimationRunner = ({
   return dT;
 };
 
-export const setupSkyAnimation = ({ globalClock, skyMaterial }: any) => {
+export const setupSkyAnimation = ({
+  globalClock,
+  skyMaterial,
+}: {
+  globalClock: Clock;
+  skyMaterial: ShaderMaterial;
+}) => {
   const globalDelta = globalClock.getDelta();
   animateSkyFromDayToNight({ globalDelta, skyMaterial });
   return globalDelta;

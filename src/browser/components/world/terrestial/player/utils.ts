@@ -1,0 +1,218 @@
+import {
+  AnimationMixer,
+  AnimationClip,
+  PerspectiveCamera,
+  Vector2,
+  type ShaderLibShader,
+  Vector3,
+  AnimationAction,
+  ShaderMaterial,
+} from "three";
+import { OrbitControls, type GLTF } from "three-stdlib";
+
+export const PLAYER_ANIMATIONS = {
+  initial: "showUI",
+  idle: "idle",
+  idle1: "idle1",
+  run: "run",
+} as const;
+
+export type TPlayerAnimations =
+  (typeof PLAYER_ANIMATIONS)[keyof typeof PLAYER_ANIMATIONS];
+
+const headOffset = new Vector3(0, 5, 0);
+let currentPlayerAnimationAction: AnimationAction | null = null;
+
+export const getRotationDirection = ({
+  turn,
+  backward,
+}: {
+  backward: boolean;
+  turn: "left" | "right";
+}) => {
+  let rotationDirection: number = 1;
+  if (turn === "left") {
+    rotationDirection = backward ? 1 : -1;
+  } else {
+    rotationDirection = backward ? -1 : 1;
+  }
+  return rotationDirection;
+};
+
+export const turnPlayer = ({
+  dT,
+  turn,
+  camera,
+  backward,
+  playerModel,
+  orbitControls,
+}: {
+  dT: number;
+  backward: boolean;
+  playerModel: GLTF;
+  turn: "left" | "right";
+  camera: PerspectiveCamera;
+  orbitControls: OrbitControls;
+}) => {
+  if (!playerModel?.scene) return;
+
+  const rotationSpeed = 0.25;
+  const playerRotation = dT * rotationSpeed;
+
+  if (turn === "left") {
+    playerModel.scene.rotation.y += playerRotation;
+  } else {
+    playerModel.scene.rotation.y -= playerRotation;
+  }
+
+  const rotationAngle =
+    playerRotation * getRotationDirection({ turn, backward });
+
+  const playerPosition = playerModel.scene.position.clone();
+  const cameraOffsetFromPlayer = camera.position.clone().sub(playerPosition);
+
+  const originalX = cameraOffsetFromPlayer.x;
+  const originalZ = cameraOffsetFromPlayer.z;
+
+  cameraOffsetFromPlayer.x =
+    originalX * Math.cos(rotationAngle) - originalZ * Math.sin(rotationAngle);
+  cameraOffsetFromPlayer.z =
+    originalX * Math.sin(rotationAngle) + originalZ * Math.cos(rotationAngle);
+
+  camera.position.copy(playerPosition.clone().add(cameraOffsetFromPlayer));
+
+  const target = playerPosition.clone().add(headOffset);
+  orbitControls.target.copy(target);
+};
+
+export const playMovementAnimation = ({
+  animationType,
+  playerAnimationMixer,
+  playerModel,
+}: {
+  animationType: TPlayerAnimations | null;
+  playerAnimationMixer: AnimationMixer;
+  playerModel: GLTF;
+}) => {
+  if (!playerAnimationMixer || !animationType) return;
+
+  playerAnimationMixer.timeScale = 1;
+
+  if (animationType === PLAYER_ANIMATIONS.run) {
+    playerAnimationMixer.timeScale = 0.65;
+  }
+
+  const newAction = playerAnimationMixer.clipAction(
+    (playerModel.animations as unknown as { name: TPlayerAnimations }[]).find(
+      (a) => a.name === animationType
+    ) as AnimationClip
+  );
+
+  if (
+    currentPlayerAnimationAction &&
+    currentPlayerAnimationAction !== newAction
+  ) {
+    currentPlayerAnimationAction.stop();
+  }
+
+  newAction.play();
+  currentPlayerAnimationAction = newAction;
+};
+
+export const repositionPlayerRotationWise = ({
+  camera,
+  playerModel,
+  orbitControls,
+  animationType,
+}: {
+  playerModel: GLTF;
+  camera: PerspectiveCamera;
+  orbitControls: OrbitControls;
+  animationType: TPlayerAnimations | null;
+}) => {
+  const target = playerModel.scene.position.clone().add(headOffset);
+  orbitControls.target.copy(target);
+
+  const directionFromPlayerToCamera = new Vector3();
+
+  directionFromPlayerToCamera
+    .subVectors(camera.position, playerModel.scene.position)
+    .normalize();
+
+  // negating initially makes the player look at us while their intro animation plays
+  if (!animationType) {
+    directionFromPlayerToCamera.negate();
+  }
+
+  const currentYAxisRotation = playerModel.scene.rotation.y;
+  const targetYAxisRotation = Math.atan2(
+    -directionFromPlayerToCamera.x,
+    -directionFromPlayerToCamera.z
+  );
+
+  const finalYRotation = (targetYAxisRotation - currentYAxisRotation) * 0.1;
+
+  playerModel.scene.rotation.y += finalYRotation;
+
+  orbitControls.update();
+};
+
+const updatePlayerAnimationMixer = ({
+  globalDelta,
+  playerAnimationMixer,
+}: {
+  playerAnimationMixer: AnimationMixer;
+  globalDelta: number;
+}) => {
+  if (!playerAnimationMixer?.update) return;
+  if (playerAnimationMixer?.update) {
+    playerAnimationMixer.update(globalDelta);
+  }
+};
+
+export const animatePlayerAndManageCamera = ({
+  camera,
+  playerModel,
+  globalDelta,
+  orbitControls,
+  animationType,
+  playerAnimationMixer,
+}: {
+  playerModel: GLTF;
+  globalDelta: number;
+  playerAnimationMixer: AnimationMixer;
+  orbitControls: OrbitControls;
+  camera: PerspectiveCamera;
+  animationType: TPlayerAnimations | null;
+}) => {
+  updatePlayerAnimationMixer({ playerAnimationMixer, globalDelta });
+  repositionPlayerRotationWise({
+    playerModel,
+    orbitControls,
+    camera,
+    animationType,
+  });
+};
+
+export const updateUniformsAfterPlayerMovement = ({
+  radius,
+  grassMaterial,
+  globalCameraPosition,
+  groundShaderRef,
+}: {
+  radius: number;
+  playerModel: GLTF;
+  globalCameraPosition: Vector2;
+  grassMaterial: ShaderMaterial;
+  groundShaderRef: () => ShaderLibShader | null;
+}) => {
+  const groundShader = groundShaderRef();
+  if (groundShader) {
+    const materials = [groundShader, grassMaterial];
+    materials.forEach((material) => {
+      material.uniforms.radius.value = radius;
+      material.uniforms.posX.value = globalCameraPosition.x;
+      material.uniforms.posZ.value = globalCameraPosition.y;
+    });
+  }
+};

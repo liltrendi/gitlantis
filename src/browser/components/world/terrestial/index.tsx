@@ -11,6 +11,8 @@ import { runGameLoop } from "@/browser/components/world/terrestial/utils/gameloo
 import { disposeGameResources } from "@/browser/components/world/terrestial/utils/cleanup";
 import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 import { ResizeHandler } from "@/browser/components/world/terrestial/events/resize";
+import { addPlayerToWorld } from "@/browser/components/world/terrestial/player";
+import { MovementControls } from "@/browser/components/world/terrestial/player/controls";
 
 export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
   const { isBrowserEnvironment } = useExtensionContext();
@@ -32,6 +34,7 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
       elevation,
       resolution,
       globalClock,
+      gltfModelLoader,
       animationFrameRef,
       globalCameraPosition,
       getTime,
@@ -42,7 +45,16 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
 
     const { renderer } = setupTerrestialWorldRenderer({ canvasRef });
     const { camera, FOV } = setupTerrestialWorldCamera();
-    setupOrbitControls({ camera, renderer });
+    const { orbitControls } = setupOrbitControls({ camera, renderer });
+
+    const {
+      playerModelRef,
+      playerAnimationMixerRef,
+      wasInitialAnimationPlayed,
+    } = addPlayerToWorld({
+      grassScene,
+      gltfModelLoader,
+    });
 
     const { noiseTexture, grassTexture, alphaMapTexture } =
       setupTerrestialWorldTextures({ isBrowserEnvironment });
@@ -57,7 +69,7 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
       camera,
     });
 
-    setupGroundMaterial({
+    const { groundShaderRef } = setupGroundMaterial({
       delta,
       globalCameraPosition,
       noiseTexture,
@@ -82,10 +94,14 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
     });
 
     const resizeHandler = new ResizeHandler(camera, renderer, FOV);
+    const movementControls = new MovementControls();
     resizeHandler.attach(skyMaterial);
+    movementControls.attach();
 
     const { cleanup } = runGameLoop({
       camera,
+      radius,
+      orbitControls,
       grassMaterial,
       skyMaterial,
       renderer,
@@ -94,6 +110,12 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
       grassScene,
       globalClock,
       animationFrameRef,
+      movementControls,
+      globalCameraPosition,
+      wasInitialAnimationPlayed,
+      groundShaderRef,
+      playerModelRef,
+      playerAnimationMixerRef,
       getTime,
       setTime,
       setLastFrame,

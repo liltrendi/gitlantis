@@ -1,10 +1,12 @@
 import { Clock, Scene, Vector2 } from "three";
+import { GLTFLoader } from "three-stdlib";
 
 export const setupTerrestialWorldConfiguration = () => {
   const rootScene = new Scene();
   const grassScene = new Scene();
   const skyScene = new Scene();
   const globalClock = new Clock();
+  const gltfModelLoader = new GLTFLoader();
 
   const globalCameraPosition = new Vector2(0.01, 0.01);
   const animationFrameRef = { current: null as number | null };
@@ -37,8 +39,10 @@ export const setupTerrestialWorldConfiguration = () => {
     elevation,
     resolution,
     globalClock,
+    gltfModelLoader,
     animationFrameRef,
     globalCameraPosition,
+
     getTime,
     setTime,
     getLastFrame,
