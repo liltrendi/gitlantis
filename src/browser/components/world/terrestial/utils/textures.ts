@@ -1,16 +1,5 @@
 import { RepeatWrapping, TextureLoader } from "three";
-import {
-  ALPHA_MAP_TEXTURE_PATH,
-  CLOUDFRONT_MEADOW_URL,
-  GRASS_TEXTURE_PATH,
-  NOISE_TEXTURE_PATH,
-} from "@/browser/config";
-
-const globalUris = (window as any).__GLOBAL_URIS__ || {
-  noiseTexture: NOISE_TEXTURE_PATH,
-  bladeDiffuse: GRASS_TEXTURE_PATH,
-  bladeAlpha: ALPHA_MAP_TEXTURE_PATH,
-};
+import { globalUris, CLOUDFRONT_MEADOW_URL } from "@/browser/config";
 
 export const setupTerrestialWorldTextures = ({
   isBrowserEnvironment,

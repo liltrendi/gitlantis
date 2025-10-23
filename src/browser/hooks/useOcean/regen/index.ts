@@ -2,11 +2,7 @@ import { useState } from "react";
 import { useFrame, useLoader } from "@react-three/fiber";
 import { PlaneGeometry, RepeatWrapping, TextureLoader, Vector3 } from "three";
 import { useGameContext } from "@/browser/hooks/useGame/context";
-import { CLOUDFRONT_ROOT_URL, OCEAN_MODEL_PATH } from "@/browser/config";
-
-const globalUris = (window as any).__GLOBAL_URIS__ || {
-  ocean: OCEAN_MODEL_PATH,
-};
+import { CLOUDFRONT_ROOT_URL, globalUris } from "@/browser/config";
 
 export const useOceanRegen = (TILE_SIZE = 10000, TILES_RADIUS = 2) => {
   const [tiles, setTiles] = useState<

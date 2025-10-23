@@ -1,14 +1,10 @@
 // @ts-nocheck
 import { useGLTF } from "@react-three/drei";
-import { BOAT_MODEL_PATH, CLOUDFRONT_ROOT_URL } from "@/browser/config";
+import { globalUris, CLOUDFRONT_ROOT_URL } from "@/browser/config";
 import { useNavigation } from "@/browser/hooks/useBoat/navigation";
 import { useGameContext } from "@/browser/hooks/useGame/context";
 import { useBoatColors } from "@/browser/hooks/useBoat/colors";
 import { Vector3 } from "three";
-
-const globalUris = (window as any).__GLOBAL_URIS__ || {
-  boat: BOAT_MODEL_PATH,
-};
 
 export const Boat = () => {
   const { boatRef, floatingRef, isBrowserEnvironment, isMinimapFullScreen } =

@@ -73,6 +73,7 @@ const getPublicAssets = (panel, context) => {
         noiseTexture: "out/images/textures/noise_texture.jpg",
         bladeDiffuse: "out/images/textures/blade_diffuse.jpg",
         bladeAlpha: "out/images/textures/blade_alpha.jpg",
+        player: "out/models/dino/dino.glb"
     };
     const assetUrisWithUri = Object.entries(assetUris).reduce((acc, [key, url]) => {
         return {
@@ -95,9 +96,10 @@ const createPanel = (context) => {
             vscode.Uri.joinPath(context.extensionUri, "out", "images"),
         ],
     });
+    const faviconPath = vscode.Uri.joinPath(context.extensionUri, "out", "images", "favicon.png");
     panel.iconPath = {
-        light: vscode.Uri.joinPath(context.extensionUri, "out", "images", "favicon.png"),
-        dark: vscode.Uri.joinPath(context.extensionUri, "out", "images", "favicon.png"),
+        light: faviconPath,
+        dark: faviconPath,
     };
     return panel;
 };
@@ -127,6 +129,7 @@ const getWebviewPage = ({ scripts, publicAssets, }) => {
             noiseTexture: "${publicAssets.noiseTextureUri}",
             bladeDiffuse: "${publicAssets.bladeDiffuseUri}",
             bladeAlpha: "${publicAssets.bladeAlphaUri}",
+            player: "${publicAssets.playerUri}"
           };
           window.__GITLANTIS_ROOT__ = "${scripts?.workspaceFoldersUri}";
         </script>

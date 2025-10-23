@@ -1,10 +1,6 @@
-import { CLOUDFRONT_ROOT_URL, FAVICON_PATH } from "@/browser/config";
+import { CLOUDFRONT_ROOT_URL, globalUris } from "@/browser/config";
 import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 import { DIRECTORY_ERRORS } from "@/extension/config";
-
-const globalUris = (window as any).__GLOBAL_URIS__ || {
-  favicon: FAVICON_PATH,
-};
 
 export const NoOpenProject = ({
   type,

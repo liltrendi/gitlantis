@@ -54,6 +54,7 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
     } = addPlayerToWorld({
       grassScene,
       gltfModelLoader,
+      isBrowserEnvironment,
     });
 
     const { noiseTexture, grassTexture, alphaMapTexture } =

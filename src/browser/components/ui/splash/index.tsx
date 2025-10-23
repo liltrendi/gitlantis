@@ -1,11 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useProgress } from "@react-three/drei";
-import { FAVICON_PATH } from "@/browser/config";
 import { useGameContext } from "@/browser/hooks/useGame/context";
-
-const globalUris = (window as any).__GLOBAL_URIS__ || {
-  favicon: FAVICON_PATH,
-};
+import { globalUris } from "@/browser/config";
 
 const MIN_LOAD_TIME = 1000;
 

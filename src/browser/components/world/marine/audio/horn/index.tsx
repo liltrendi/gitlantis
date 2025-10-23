@@ -1,12 +1,8 @@
 import { PositionalAudio } from "@react-three/drei";
-import { CLOUDFRONT_ROOT_URL, HORN_AUDIO_PATH } from "@/browser/config";
+import { CLOUDFRONT_ROOT_URL, globalUris } from "@/browser/config";
 import { useEffect } from "react";
 import { useGameStore } from "@/browser/hooks/useGame/store";
 import { useGameContext } from "@/browser/hooks/useGame/context";
-
-const globalUris = (window as any).__GLOBAL_URIS__ || {
-  horn: HORN_AUDIO_PATH,
-};
 
 export const Horn = () => {
   const { settings } = useGameStore();
