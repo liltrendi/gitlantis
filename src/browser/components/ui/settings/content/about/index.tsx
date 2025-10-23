@@ -46,6 +46,16 @@ const ATTRIBUTIONS = [
       link: "https://freesound.org/people/monotraum/",
     },
   },
+  {
+    model: {
+      name: "Dinosaur",
+      link: "https://sketchfab.com/3d-models/blue-dino-mount-4852b9c09b58426d9d0d41709663de31",
+    },
+    creator: {
+      name: "dinoguy263allo",
+      link: "https://sketchfab.com/dinoguy263allo",
+    },
+  },
 ];
 
 export const SettingsAbout = (

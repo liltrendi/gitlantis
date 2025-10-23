@@ -48,7 +48,7 @@ export const addPlayerToWorld = ({
       );
       initialAnimation.setLoop(LoopOnce, 1);
       initialAnimation.clampWhenFinished = true;
-      initialAnimation.timeScale = 0.9;
+      initialAnimation.timeScale = 0.8;
       initialAnimation.play();
 
       const idleAnimation = playerAnimationMixer.clipAction(

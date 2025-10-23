@@ -73,7 +73,7 @@ const getPublicAssets = (panel, context) => {
         noiseTexture: "out/images/textures/noise_texture.jpg",
         bladeDiffuse: "out/images/textures/blade_diffuse.jpg",
         bladeAlpha: "out/images/textures/blade_alpha.jpg",
-        player: "out/models/dino/dino.glb"
+        player: "out/models/dino/dino.glb",
     };
     const assetUrisWithUri = Object.entries(assetUris).reduce((acc, [key, url]) => {
         return {
