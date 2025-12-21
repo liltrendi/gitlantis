@@ -4,7 +4,8 @@ import {
   AmbientLight,
   Scene,
   LoopRepeat,
-  LoopOnce,
+  Mesh,
+  MeshStandardMaterial,
 } from "three";
 import { GLTFLoader, type GLTF } from "three-stdlib";
 import { PLAYER_ANIMATIONS } from "@/browser/components/world/terrestial/player/utils";
@@ -25,46 +26,56 @@ export const addPlayerToWorld = ({
   let playerModel: GLTF | null = null;
   let playerAnimationMixer: AnimationMixer;
   let initialAnimationPlayed = false;
+  const MODEL_PATH = `${isBrowserEnvironment ? CLOUDFRONT_ROOT_URL : ""}${globalUris.player}`;
 
-  gltfModelLoader.load(
-    `${isBrowserEnvironment ? CLOUDFRONT_ROOT_URL : ""}${globalUris.player}`,
-    (loadedModel: GLTF) => {
-      playerModel = loadedModel;
+  gltfModelLoader.load(MODEL_PATH, (loadedModel: GLTF) => {
+    playerModel = loadedModel;
 
-      playerModel.scene.scale.setScalar(35);
-      playerModel.scene.position.set(-20, -1.75, 18);
-      grassScene.add(
-        playerAmbientLight,
-        playerDirectionalLight,
-        playerModel.scene
-      );
+    playerModel.scene.scale.setScalar(3.5);
+    playerModel.scene.position.set(-20, -1.75, 18);
 
-      playerAnimationMixer = new AnimationMixer(playerModel.scene);
+    playerModel.scene.traverse((child) => {
+      if ((child as Mesh).isMesh) {
+        const mesh = child as Mesh;
+        mesh.castShadow = false;
+        mesh.receiveShadow = false;
 
-      const initialAnimation = playerAnimationMixer.clipAction(
-        playerModel.animations.find(
-          (a) => a.name === PLAYER_ANIMATIONS.initial
-        )!
-      );
-      initialAnimation.setLoop(LoopOnce, 1);
-      initialAnimation.clampWhenFinished = true;
-      initialAnimation.timeScale = 0.8;
-      initialAnimation.play();
+        if (mesh.material) {
+          const materials = Array.isArray(mesh.material)
+            ? mesh.material
+            : [mesh.material];
 
-      const idleAnimation = playerAnimationMixer.clipAction(
-        playerModel.animations.find((a) => a.name === PLAYER_ANIMATIONS.idle)!
-      );
-      idleAnimation.setLoop(LoopRepeat, Infinity);
-
-      playerAnimationMixer.addEventListener("finished", (e) => {
-        if (e.action === initialAnimation) {
-          initialAnimationPlayed = true;
-          initialAnimation.fadeOut(0.3);
-          idleAnimation.reset().fadeIn(0.3).play();
+          materials.forEach((material) => {
+            const mat = material as MeshStandardMaterial;
+            if (mat.map) {
+              mat.emissiveMap = mat.map;
+              mat.emissive.set(0xffffff);
+              mat.emissiveIntensity = 0.08;
+            }
+            mat.metalness = 0.5;
+            mat.roughness = 1;
+          });
         }
-      });
-    }
-  );
+      }
+    });
+
+    grassScene.add(
+      playerAmbientLight,
+      playerDirectionalLight,
+      playerModel.scene
+    );
+
+    playerAnimationMixer = new AnimationMixer(playerModel.scene);
+
+    const idleAnimation = playerAnimationMixer.clipAction(
+      playerModel.animations.find((a) => a.name === PLAYER_ANIMATIONS.idle)!
+    );
+    idleAnimation.setLoop(LoopRepeat, Infinity);
+    idleAnimation.reset().play();
+    setTimeout(() => {
+      initialAnimationPlayed = true;
+    }, 1250);
+  });
 
   return {
     playerDirectionalLight,

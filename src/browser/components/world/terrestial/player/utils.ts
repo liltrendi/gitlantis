@@ -11,10 +11,22 @@ import {
 import { OrbitControls, type GLTF } from "three-stdlib";
 
 export const PLAYER_ANIMATIONS = {
-  initial: "showUI",
-  idle: "idle",
-  idle1: "idle1",
-  run: "run",
+  attack: "bob_rig|attack",
+  die: "bob_rig|die",
+  falling: "bob_rig|falling",
+  falling_col: "bob_rig|falling_col",
+  hurt: "bob_rig|hurt",
+  idle: "bob_rig|idle",
+  in_air: "bob_rig|in_air",
+  jump: "bob_rig|jump",
+  jump_gun: "bob_rig|jump_gun",
+  kick: "bob_rig|kick",
+  rest: "bob_rig|rest",
+  run: "bob_rig|run",
+  run_gun: "bob_rig|run_gun",
+  walk: "bob_rig|walk",
+  walk_gun: "bob_rig|walk_gun",
+  walk_push: "bob_rig|walk_push",
 } as const;
 
 export type TPlayerAnimations =
@@ -98,8 +110,8 @@ export const playMovementAnimation = ({
 
   playerAnimationMixer.timeScale = 1;
 
-  if (animationType === PLAYER_ANIMATIONS.run) {
-    playerAnimationMixer.timeScale = 0.65;
+  if (animationType === PLAYER_ANIMATIONS.walk) {
+    playerAnimationMixer.timeScale = 0.85;
   }
 
   const newAction = playerAnimationMixer.clipAction(

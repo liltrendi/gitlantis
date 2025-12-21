@@ -80,7 +80,7 @@ export const controlPlayerMovement = ({
 
   if (forward !== backward) {
     const direction = forward ? 1 : -1;
-    animationType = PLAYER_ANIMATIONS.run;
+    animationType = PLAYER_ANIMATIONS.walk;
     globalCameraPosition.x += moveSpeed * viewDirection.x * direction;
     globalCameraPosition.y += moveSpeed * viewDirection.z * direction;
   }

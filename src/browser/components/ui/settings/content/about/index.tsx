@@ -48,12 +48,12 @@ const ATTRIBUTIONS = [
   },
   {
     model: {
-      name: "Dinosaur",
-      link: "https://sketchfab.com/3d-models/blue-dino-mount-4852b9c09b58426d9d0d41709663de31",
+      name: "Robot",
+      link: "https://sketchfab.com/3d-models/bob-the-robot-94261177811745deb1c5a11694b5faf3",
     },
     creator: {
-      name: "dinoguy263allo",
-      link: "https://sketchfab.com/dinoguy263allo",
+      name: "manoeldarochadeoliveira",
+      link: "https://sketchfab.com/manoeldarochadeoliveira",
     },
   },
 ];

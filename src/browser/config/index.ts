@@ -12,7 +12,7 @@ export const HORN_AUDIO_PATH = `/music/horn.ogg?v=1`;
 export const NOISE_TEXTURE_PATH = `/assets/images/noise_texture.jpg`;
 export const GRASS_TEXTURE_PATH = `/assets/images/blade_diffuse.jpg`;
 export const ALPHA_MAP_TEXTURE_PATH = `/assets/images/blade_alpha.jpg`;
-export const PLAYER_MODEL_PATH = `/models/dino/dino.glb`;
+export const PLAYER_MODEL_PATH = `/models/bot/bot.glb`;
 
 export const globalUris = (window as any).__GLOBAL_URIS__ || {
   player: PLAYER_MODEL_PATH,

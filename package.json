@@ -25,7 +25,7 @@
     "preview": "vite preview",
     "build:browser": "tsc -b && vite build",
     "build:extension": "tsc -p tsconfig.extension.json",
-    "build": "npm run build:browser && npm run build:extension",
+    "build": "pnpm run build:browser && pnpm run build:extension",
     "watch": "tsc -watch -p tsconfig.extension.json",
     "package": "pnpm vsce package --no-dependencies",
     "publish": "pnpm vsce publish --no-dependencies",
@@ -99,5 +99,20 @@
       "eslint --fix './src/**/*.{js,jsx,ts,tsx}'",
       "prettier --write './src/**/*.{js,jsx,ts,tsx,css}'"
     ]
-  }
+  },
+  "categories": [
+    "Visualization"
+  ],
+  "keywords": [
+    "gitlantis",
+    "explore",
+    "3D",
+    "ocean",
+    "filesystem",
+    "navigate",
+    "folders",
+    "files",
+    "lighthouse",
+    "buoy"
+  ]
 }
