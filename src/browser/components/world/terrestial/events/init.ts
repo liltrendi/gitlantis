@@ -6,19 +6,23 @@ export class InitTerrestialListeners {
   private camera: PerspectiveCamera;
   private renderer: WebGLRenderer;
   private skyMaterial: ShaderMaterial;
+  private activeWorld: TActiveWorld;
 
   constructor({
     camera,
     renderer,
     skyMaterial,
+    activeWorld,
   }: {
     camera: PerspectiveCamera;
     renderer: WebGLRenderer;
     skyMaterial: ShaderMaterial;
+    activeWorld: TActiveWorld;
   }) {
     this.camera = camera;
     this.renderer = renderer;
     this.skyMaterial = skyMaterial;
+    this.activeWorld = activeWorld;
   }
 
   initialize() {
@@ -28,14 +32,22 @@ export class InitTerrestialListeners {
   }
 
   attachResizeListener() {
-    const resizeHandler = new ResizeHandler(this.camera, this.renderer);
-    resizeHandler.attach(this.skyMaterial);
+    const resizeHandler = new ResizeHandler(
+      this.camera,
+      this.renderer,
+      this.skyMaterial
+    );
+    if (this.activeWorld === "terrestial") {
+      resizeHandler.attach();
+    }
     return resizeHandler;
   }
 
   attachMovementListener() {
     const movementControls = new MovementControls();
-    movementControls.attach();
+    if (this.activeWorld === "terrestial") {
+      movementControls.attach();
+    }
     return movementControls;
   }
 }

@@ -7,10 +7,15 @@ export class ResizeHandler {
   private FOV: number;
   private onResize = () => {};
 
-  constructor(camera: PerspectiveCamera, renderer: WebGLRenderer) {
+  constructor(
+    camera: PerspectiveCamera,
+    renderer: WebGLRenderer,
+    skyMaterial: ShaderMaterial
+  ) {
     this.camera = camera;
     this.renderer = renderer;
     this.FOV = camera.fov;
+    this.skyMaterial = skyMaterial;
 
     this.onResize = () => {
       this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -31,8 +36,7 @@ export class ResizeHandler {
     };
   }
 
-  attach(skyMaterial: ShaderMaterial) {
-    this.skyMaterial = skyMaterial;
+  attach() {
     window.addEventListener("resize", this.onResize, false);
     this.onResize();
   }

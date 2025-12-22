@@ -17,7 +17,7 @@ import { useGameContext } from "@/browser/hooks/useGame/context";
 
 export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
   const { isBrowserEnvironment } = useExtensionContext();
-  const { isMinimapFullScreen } = useGameContext();
+  const { isMinimapFullScreen, activeWorld } = useGameContext();
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const isMinimapFullScreenRef = useRef(isMinimapFullScreen);
@@ -104,6 +104,7 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
       camera,
       renderer,
       skyMaterial,
+      activeWorld,
     }).initialize();
 
     const minimap = new TerrestialMinimap();

@@ -12,9 +12,11 @@ export const useKeyboard = () => {
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
-      const canPlayHorn =
-        activeWorldRef.current === "marine" &&
-        !gameAudio.horn.current?.isPlaying;
+      const canNavigate = activeWorldRef.current === "marine";
+
+      if (!canNavigate) return;
+
+      const canPlayHorn = !gameAudio.horn.current?.isPlaying;
 
       switch (e.key.toLowerCase()) {
         case "arrowup":
@@ -41,10 +43,17 @@ export const useKeyboard = () => {
         case "f":
           setMinimapFullscreen((prev) => !prev);
           break;
+        case "escape":
+          setMinimapFullscreen(false);
+          break;
       }
     };
 
     const handleKeyUp = (e: KeyboardEvent) => {
+      const canNavigate = activeWorldRef.current === "marine";
+
+      if (!canNavigate) return;
+
       switch (e.key.toLowerCase()) {
         case "arrowup":
         case "w":
