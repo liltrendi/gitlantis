@@ -10,9 +10,8 @@ import { setupGrassMaterial } from "@/browser/components/world/terrestial/materi
 import { runGameLoop } from "@/browser/components/world/terrestial/utils/gameloop";
 import { disposeGameResources } from "@/browser/components/world/terrestial/utils/cleanup";
 import { useExtensionContext } from "@/browser/hooks/useExtension/context";
-import { ResizeHandler } from "@/browser/components/world/terrestial/events/resize";
 import { addPlayerToWorld } from "@/browser/components/world/terrestial/player";
-import { MovementControls } from "@/browser/components/world/terrestial/player/controls";
+import { InitTerrestialListeners } from "@/browser/components/world/terrestial/events/init";
 
 export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
   const { isBrowserEnvironment } = useExtensionContext();
@@ -44,7 +43,7 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
     } = setupTerrestialWorldConfiguration();
 
     const { renderer } = setupTerrestialWorldRenderer({ canvasRef });
-    const { camera, FOV } = setupTerrestialWorldCamera();
+    const { camera } = setupTerrestialWorldCamera();
     const { orbitControls } = setupOrbitControls({ camera, renderer });
 
     const {
@@ -65,7 +64,6 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
       skyScene,
       elevation,
       fogFade,
-      FOV,
       renderer,
       camera,
     });
@@ -94,10 +92,11 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
       alphaMapTexture,
     });
 
-    const resizeHandler = new ResizeHandler(camera, renderer, FOV);
-    const movementControls = new MovementControls();
-    resizeHandler.attach(skyMaterial);
-    movementControls.attach();
+    const { resizeHandler, movementControls } = new InitTerrestialListeners({
+      camera,
+      renderer,
+      skyMaterial,
+    }).initialize();
 
     const { cleanup } = runGameLoop({
       camera,
@@ -128,7 +127,7 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
         cleanups: [cleanup],
         renderers: [renderer],
         lights: [grassAmbience],
-        scenes: [skyScene, grassScene],
+        scenes: [rootScene, skyScene, grassScene],
         listeners: [resizeHandler],
         materials: [grassMaterial, skyMaterial],
         textures: [noiseTexture, alphaMapTexture, grassTexture],

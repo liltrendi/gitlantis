@@ -10,8 +10,8 @@ import type {
   WebGLRenderer,
 } from "three";
 import type { GLTF, OrbitControls } from "three-stdlib";
-import type { MovementControls } from "@/browser/components/world/terrestial/player/controls";
-import { controlPlayerMovement } from "@/browser/components/world/terrestial/player/movement";
+import type { MovementControls } from "@/browser/components/world/terrestial/events/movement";
+import { controlPlayerMovement } from "@/browser/components/world/terrestial/player/utils";
 import {
   setupAnimationRunner,
   setupSkyAnimation,

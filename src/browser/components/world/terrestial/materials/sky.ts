@@ -40,7 +40,6 @@ export const animateSkyFromDayToNight = ({
 };
 
 export const setupSkyMaterial = ({
-  FOV,
   azimuth,
   skyScene,
   elevation,
@@ -52,7 +51,6 @@ export const setupSkyMaterial = ({
   azimuth: number;
   elevation: number;
   fogFade: number;
-  FOV: number;
   skyScene: Scene;
   camera: PerspectiveCamera;
 }) => {
@@ -72,7 +70,7 @@ export const setupSkyMaterial = ({
         ),
       },
       fogFade: { value: fogFade },
-      fov: { value: FOV },
+      fov: { value: camera.fov },
       nightFactor: { value: 0.0 },
     },
     vertexShader: skyMaterialVertexShader,
