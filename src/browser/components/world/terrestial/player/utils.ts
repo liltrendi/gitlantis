@@ -211,15 +211,14 @@ export const updateUniformsAfterPlayerMovement = ({
   radius,
   grassMaterial,
   globalCameraPosition,
-  groundShaderRef,
+  groundShader,
 }: {
   radius: number;
   playerModel: GLTF;
   globalCameraPosition: Vector2;
   grassMaterial: ShaderMaterial;
-  groundShaderRef: () => ShaderLibShader | null;
+  groundShader: ShaderLibShader;
 }) => {
-  const groundShader = groundShaderRef();
   if (groundShader) {
     const materials = [groundShader, grassMaterial];
     materials.forEach((material) => {
@@ -239,9 +238,9 @@ export const controlPlayerMovement = ({
   radius,
   movementControls,
   globalDelta,
-  playerModelRef,
-  groundShaderRef,
-  playerAnimationMixerRef,
+  playerModel,
+  groundShader,
+  playerAnimationMixer,
   wasInitialAnimationPlayed,
 }: {
   dT: number;
@@ -250,18 +249,14 @@ export const controlPlayerMovement = ({
   radius: number;
   movementControls: MovementControls;
   globalDelta: number;
-  groundShaderRef: () => ShaderLibShader | null;
+  groundShader: ShaderLibShader;
   camera: PerspectiveCamera;
   grassMaterial: ShaderMaterial;
-  playerModelRef: () => GLTF | null;
-  playerAnimationMixerRef: () => AnimationMixer;
+  playerModel: GLTF;
+  playerAnimationMixer: AnimationMixer;
   wasInitialAnimationPlayed: () => boolean;
 }) => {
-  const playerModel: GLTF | null = playerModelRef();
-  const playerAnimationMixer = playerAnimationMixerRef();
   const allowPlayerMovement = wasInitialAnimationPlayed();
-
-  if (!playerModel?.scene) return;
 
   const playerSpeed = 3.5;
 
@@ -309,7 +304,7 @@ export const controlPlayerMovement = ({
     grassMaterial,
     playerModel,
     globalCameraPosition,
-    groundShaderRef,
+    groundShader,
   });
 
   animatePlayerAndManageCamera({

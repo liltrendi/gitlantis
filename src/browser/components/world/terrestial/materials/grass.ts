@@ -95,5 +95,5 @@ export const setupGrassMaterial = ({
   grass.frustumCulled = false;
   grassScene.add(grass);
 
-  return { grassMaterial, grassAmbience };
+  return { grass, grassMaterial, grassAmbience };
 };

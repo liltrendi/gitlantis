@@ -2,7 +2,13 @@ import type { RefObject } from "react";
 import type {
   AnimationMixer,
   Clock,
+  InstancedBufferGeometry,
+  Mesh,
+  MeshPhongMaterial,
+  Object3DEventMap,
   PerspectiveCamera,
+  PlaneGeometry,
+  RawShaderMaterial,
   Scene,
   ShaderLibShader,
   ShaderMaterial,
@@ -16,6 +22,7 @@ import {
   setupAnimationRunner,
   setupSkyAnimation,
 } from "@/browser/components/world/terrestial/utils/animations";
+import type { TerrestialMinimap } from "@/browser/components/world/terrestial/utils/minimap";
 
 export function runGameLoop({
   orbitControls,
@@ -39,6 +46,10 @@ export function runGameLoop({
   setLastFrame,
   getLastFrame,
   groundShaderRef,
+  minimap,
+  isMinimapFullScreenRef,
+  ground,
+  grass,
 }: {
   orbitControls: OrbitControls;
   camera: PerspectiveCamera;
@@ -50,6 +61,7 @@ export function runGameLoop({
   skyScene: Scene;
   grassScene: Scene;
   globalClock: Clock;
+  minimap: TerrestialMinimap;
   wasInitialAnimationPlayed: () => boolean;
   animationFrameRef: RefObject<number | null>;
   playerModelRef: () => GLTF | null;
@@ -61,8 +73,26 @@ export function runGameLoop({
   movementControls: MovementControls;
   globalCameraPosition: Vector2;
   groundShaderRef: () => ShaderLibShader | null;
+  isMinimapFullScreenRef: RefObject<boolean>;
+  ground: Mesh<PlaneGeometry, MeshPhongMaterial, Object3DEventMap>;
+  grass: Mesh<InstancedBufferGeometry, RawShaderMaterial, Object3DEventMap>;
 }) {
   const animate = () => {
+    renderer.clear();
+
+    rootScene.add(grassScene, skyScene);
+    renderer.render(rootScene, camera);
+
+    animationFrameRef.current = requestAnimationFrame(animate);
+
+    const playerModel = playerModelRef();
+    const groundShader = groundShaderRef();
+    const playerAnimationMixer = playerAnimationMixerRef();
+
+    if (!playerModel || !groundShader || !playerAnimationMixer) {
+      return;
+    }
+
     const dT = setupAnimationRunner({
       grassMaterial,
       getTime,
@@ -85,18 +115,20 @@ export function runGameLoop({
       grassMaterial,
       movementControls,
       globalCameraPosition,
-      groundShaderRef,
-      playerModelRef,
-      playerAnimationMixerRef,
+      groundShader,
+      playerModel,
+      playerAnimationMixer,
       wasInitialAnimationPlayed,
     });
 
-    renderer.clear();
-
-    rootScene.add(grassScene, skyScene);
-    renderer.render(rootScene, camera);
-
-    animationFrameRef.current = requestAnimationFrame(animate);
+    minimap.render({
+      renderer,
+      scene: grassScene,
+      playerModel,
+      isFullScreen: isMinimapFullScreenRef.current,
+      ground,
+      grass,
+    });
   };
 
   const cleanup = () => {

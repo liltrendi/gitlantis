@@ -94,6 +94,7 @@ export const setupGroundMaterial = ({
   grassScene.add(ground);
 
   return {
+    ground,
     groundShaderRef: () => groundShader,
   };
 };

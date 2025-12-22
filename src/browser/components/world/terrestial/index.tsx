@@ -12,11 +12,19 @@ import { disposeGameResources } from "@/browser/components/world/terrestial/util
 import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 import { addPlayerToWorld } from "@/browser/components/world/terrestial/player";
 import { InitTerrestialListeners } from "@/browser/components/world/terrestial/events/init";
+import { TerrestialMinimap } from "@/browser/components/world/terrestial/utils/minimap";
+import { useGameContext } from "@/browser/hooks/useGame/context";
 
 export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
   const { isBrowserEnvironment } = useExtensionContext();
+  const { isMinimapFullScreen } = useGameContext();
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
+  const isMinimapFullScreenRef = useRef(isMinimapFullScreen);
+
+  useEffect(() => {
+    isMinimapFullScreenRef.current = isMinimapFullScreen;
+  }, [isMinimapFullScreen]);
 
   useEffect(() => {
     if (!canvasRef.current || !visible) return;
@@ -68,7 +76,7 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
       camera,
     });
 
-    const { groundShaderRef } = setupGroundMaterial({
+    const { ground, groundShaderRef } = setupGroundMaterial({
       delta,
       globalCameraPosition,
       noiseTexture,
@@ -78,7 +86,7 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
       grassScene,
     });
 
-    const { grassMaterial, grassAmbience } = setupGrassMaterial({
+    const { grass, grassMaterial, grassAmbience } = setupGrassMaterial({
       azimuth,
       camera,
       delta,
@@ -98,6 +106,8 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
       skyMaterial,
     }).initialize();
 
+    const minimap = new TerrestialMinimap();
+
     const { cleanup } = runGameLoop({
       camera,
       radius,
@@ -112,6 +122,10 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
       animationFrameRef,
       movementControls,
       globalCameraPosition,
+      minimap,
+      isMinimapFullScreenRef,
+      ground,
+      grass,
       wasInitialAnimationPlayed,
       groundShaderRef,
       playerModelRef,
