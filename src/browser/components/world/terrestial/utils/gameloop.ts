@@ -131,7 +131,7 @@ export function runGameLoop({
     });
   };
 
-  const cleanup = () => {
+  const gameLoopCleanup = () => {
     if (animationFrameRef.current) {
       cancelAnimationFrame(animationFrameRef.current);
     }
@@ -139,5 +139,5 @@ export function runGameLoop({
 
   animate();
 
-  return { cleanup };
+  return { gameLoopCleanup };
 }

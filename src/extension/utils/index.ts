@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
+import { GLOBAL_MODEL_URLS } from "../config/models";
 
 export const getHashedAssetUri = (
   webview: vscode.Webview,
@@ -65,35 +66,24 @@ export const getPublicAssets = (
   panel: vscode.WebviewPanel,
   context: vscode.ExtensionContext
 ) => {
-  const assetUris = {
-    ocean: "out/models/ocean/ocean.jpeg",
-    boat: "out/models/boat/boat.glb",
-    folder: "out/models/folder/folder.glb",
-    file: "out/models/file/file.glb",
-    waves: "out/music/waves.mp3",
-    favicon: "out/images/favicon.png",
-    horn: "out/music/horn.ogg",
-    noiseTexture: "out/images/textures/noise_texture.jpg",
-    bladeDiffuse: "out/images/textures/blade_diffuse.jpg",
-    bladeAlpha: "out/images/textures/blade_alpha.jpg",
-    player: "out/models/bot/bot.glb",
-  };
+  const assetUrisWithUri = Object.entries(GLOBAL_MODEL_URLS).reduce(
+    (acc, [key, value]) => {
+      const typedKey = key as keyof typeof GLOBAL_MODEL_URLS;
 
-  const assetUrisWithUri = Object.entries(assetUris).reduce(
-    (acc, [key, url]) => {
-      return {
-        ...acc,
-        [`${key}Uri`]: getUri(
-          panel.webview,
-          context.extensionUri,
-          url.split("/")
-        ),
-      };
+      acc[`${typedKey}Uri` as `${string & typeof typedKey}Uri`] = getUri(
+        panel.webview,
+        context.extensionUri,
+        [`out`, ...value.split("/")]
+      );
+
+      return acc;
     },
     {} as {
-      [K in keyof typeof assetUris as `${string & K}Uri`]: vscode.Uri;
+      [K in keyof typeof GLOBAL_MODEL_URLS as `${string & K}Uri`]: vscode.Uri;
     }
   );
+
+  console.log("____", assetUrisWithUri);
 
   return assetUrisWithUri;
 };
@@ -135,6 +125,13 @@ export const getWebviewPage = ({
   scripts: ReturnType<typeof getTranspiledScripts>;
   publicAssets: ReturnType<typeof getPublicAssets>;
 }) => {
+  const serializedAssets = Object.fromEntries(
+    Object.entries(publicAssets).map(([key, uri]) => {
+      const baseKey = key.endsWith("Uri") ? key.slice(0, -3) : key;
+      return [baseKey, uri.toString()];
+    })
+  );
+
   return `
       <!DOCTYPE html>
       <html lang="en">
@@ -148,19 +145,7 @@ export const getWebviewPage = ({
       <body>
         <div id="root"></div>
         <script>
-          window.__GLOBAL_URIS__ = {
-            ocean: "${publicAssets.oceanUri}",
-            boat: "${publicAssets.boatUri}",
-            folder: "${publicAssets.folderUri}",
-            file: "${publicAssets.fileUri}",
-            waves: "${publicAssets.wavesUri}",
-            favicon: "${publicAssets.faviconUri}",
-            horn: "${publicAssets.hornUri}",
-            noiseTexture: "${publicAssets.noiseTextureUri}",
-            bladeDiffuse: "${publicAssets.bladeDiffuseUri}",
-            bladeAlpha: "${publicAssets.bladeAlphaUri}",
-            player: "${publicAssets.playerUri}"
-          };
+          window.__GLOBAL_URIS__ = ${JSON.stringify(serializedAssets, null, 2)};
           window.__GITLANTIS_ROOT__ = "${scripts?.workspaceFoldersUri}";
         </script>
         <script type="module" src="${scripts?.scriptUri}"></script>

@@ -69,4 +69,20 @@ declare global {
       floaters: string;
     };
   };
+
+  type TGlobalUris = {
+    player: string;
+    ocean: string;
+    boat: string;
+    folder: string;
+    file: string;
+    waves: string;
+    favicon: string;
+    horn: string;
+    noiseTexture: string;
+    bladeDiffuse: string;
+    bladeAlpha: string;
+    meadow: string;
+    footsteps: string;
+  };
 }

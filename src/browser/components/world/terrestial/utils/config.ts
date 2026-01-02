@@ -42,7 +42,6 @@ export const setupTerrestialWorldConfiguration = () => {
     gltfModelLoader,
     animationFrameRef,
     globalCameraPosition,
-
     getTime,
     setTime,
     getLastFrame,

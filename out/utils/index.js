@@ -37,6 +37,7 @@ exports.getWebviewPage = exports.createPanel = exports.getPublicAssets = exports
 const vscode = __importStar(require("vscode"));
 const fs = __importStar(require("fs"));
 const path = __importStar(require("path"));
+const models_1 = require("../config/models");
 const getHashedAssetUri = (webview, extensionUri, assetFolder, filenamePrefix, extension) => {
     const dirPath = path.join(vscode.Uri.joinPath(extensionUri, assetFolder).fsPath, "assets");
     const files = fs.readdirSync(dirPath);
@@ -62,25 +63,12 @@ const getTranspiledScripts = (panel, context) => {
 };
 exports.getTranspiledScripts = getTranspiledScripts;
 const getPublicAssets = (panel, context) => {
-    const assetUris = {
-        ocean: "out/models/ocean/ocean.jpeg",
-        boat: "out/models/boat/boat.glb",
-        folder: "out/models/folder/folder.glb",
-        file: "out/models/file/file.glb",
-        waves: "out/music/waves.mp3",
-        favicon: "out/images/favicon.png",
-        horn: "out/music/horn.ogg",
-        noiseTexture: "out/images/textures/noise_texture.jpg",
-        bladeDiffuse: "out/images/textures/blade_diffuse.jpg",
-        bladeAlpha: "out/images/textures/blade_alpha.jpg",
-        player: "out/models/bot/bot.glb",
-    };
-    const assetUrisWithUri = Object.entries(assetUris).reduce((acc, [key, url]) => {
-        return {
-            ...acc,
-            [`${key}Uri`]: (0, exports.getUri)(panel.webview, context.extensionUri, url.split("/")),
-        };
+    const assetUrisWithUri = Object.entries(models_1.GLOBAL_MODEL_URLS).reduce((acc, [key, value]) => {
+        const typedKey = key;
+        acc[`${typedKey}Uri`] = (0, exports.getUri)(panel.webview, context.extensionUri, [`out`, ...value.split("/")]);
+        return acc;
     }, {});
+    console.log("____", assetUrisWithUri);
     return assetUrisWithUri;
 };
 exports.getPublicAssets = getPublicAssets;
@@ -105,6 +93,10 @@ const createPanel = (context) => {
 };
 exports.createPanel = createPanel;
 const getWebviewPage = ({ scripts, publicAssets, }) => {
+    const serializedAssets = Object.fromEntries(Object.entries(publicAssets).map(([key, uri]) => {
+        const baseKey = key.endsWith("Uri") ? key.slice(0, -3) : key;
+        return [baseKey, uri.toString()];
+    }));
     return `
       <!DOCTYPE html>
       <html lang="en">
@@ -118,19 +110,7 @@ const getWebviewPage = ({ scripts, publicAssets, }) => {
       <body>
         <div id="root"></div>
         <script>
-          window.__GLOBAL_URIS__ = {
-            ocean: "${publicAssets.oceanUri}",
-            boat: "${publicAssets.boatUri}",
-            folder: "${publicAssets.folderUri}",
-            file: "${publicAssets.fileUri}",
-            waves: "${publicAssets.wavesUri}",
-            favicon: "${publicAssets.faviconUri}",
-            horn: "${publicAssets.hornUri}",
-            noiseTexture: "${publicAssets.noiseTextureUri}",
-            bladeDiffuse: "${publicAssets.bladeDiffuseUri}",
-            bladeAlpha: "${publicAssets.bladeAlphaUri}",
-            player: "${publicAssets.playerUri}"
-          };
+          window.__GLOBAL_URIS__ = ${JSON.stringify(serializedAssets, null, 2)};
           window.__GITLANTIS_ROOT__ = "${scripts?.workspaceFoldersUri}";
         </script>
         <script type="module" src="${scripts?.scriptUri}"></script>

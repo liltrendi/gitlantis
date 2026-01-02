@@ -63,7 +63,7 @@ export const Folder = ({
             yPosition={3.5}
             fontSize={0.75}
             frontOffset={-5}
-            maxWidth={isBrowserEnvironment ? 9 : 7.8}
+            maxWidth={isBrowserEnvironment ? 9 : 13}
           />
         ) : null}
       </Clone>

@@ -1,4 +1,4 @@
-import { CLOUDFRONT_ROOT_URL, globalUris } from "@/browser/config";
+import { globalUris, CLOUDFRONT_ROOT_URL } from "@/browser/config";
 import { useExtensionContext } from "@/browser/hooks/useExtension/context";
 import { DIRECTORY_ERRORS } from "@/extension/config";
 

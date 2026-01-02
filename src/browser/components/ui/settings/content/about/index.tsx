@@ -56,6 +56,26 @@ const ATTRIBUTIONS = [
       link: "https://sketchfab.com/manoeldarochadeoliveira",
     },
   },
+  {
+    model: {
+      name: "Nature sounds",
+      link: "https://freesound.org/people/BurghRecords/sounds/506838/",
+    },
+    creator: {
+      name: "BurghRecords",
+      link: "https://freesound.org/people/BurghRecords/",
+    },
+  },
+  {
+    model: {
+      name: "Footsteps",
+      link: "https://freesound.org/people/marb7e/sounds/620336/",
+    },
+    creator: {
+      name: "marb7e",
+      link: "https://freesound.org/people/marb7e/",
+    },
+  },
 ];
 
 export const SettingsAbout = (

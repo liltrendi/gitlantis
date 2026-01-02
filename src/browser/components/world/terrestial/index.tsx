@@ -14,6 +14,8 @@ import { addPlayerToWorld } from "@/browser/components/world/terrestial/player";
 import { InitTerrestialListeners } from "@/browser/components/world/terrestial/events/init";
 import { TerrestialMinimap } from "@/browser/components/world/terrestial/utils/minimap";
 import { useGameContext } from "@/browser/hooks/useGame/context";
+import { registerMeadowSounds } from "@/browser/components/world/terrestial/audio/meadow";
+import { registerFootstepsSounds } from "@/browser/components/world/terrestial/audio/footsteps";
 
 export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
   const { isBrowserEnvironment } = useExtensionContext();
@@ -53,11 +55,13 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
     const { renderer } = setupTerrestialWorldRenderer({ canvasRef });
     const { camera } = setupTerrestialWorldCamera();
     const { orbitControls } = setupOrbitControls({ camera, renderer });
+    const minimap = new TerrestialMinimap();
 
     const {
       playerModelRef,
       playerAnimationMixerRef,
       wasInitialAnimationPlayed,
+      playerDirectionalLight,
     } = addPlayerToWorld({
       grassScene,
       gltfModelLoader,
@@ -107,9 +111,14 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
       activeWorld,
     }).initialize();
 
-    const minimap = new TerrestialMinimap();
+    const meadowSoundsCleanup = registerMeadowSounds(isBrowserEnvironment);
+    const footstepsSoundCleanup = registerFootstepsSounds({
+      movementControls,
+      wasInitialAnimationPlayed,
+      isBrowserEnvironment,
+    });
 
-    const { cleanup } = runGameLoop({
+    const { gameLoopCleanup } = runGameLoop({
       camera,
       radius,
       orbitControls,
@@ -139,11 +148,11 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
 
     return () => {
       disposeGameResources({
-        cleanups: [cleanup],
+        cleanups: [gameLoopCleanup, meadowSoundsCleanup, footstepsSoundCleanup],
         renderers: [renderer],
-        lights: [grassAmbience],
+        lights: [grassAmbience, playerDirectionalLight],
         scenes: [rootScene, skyScene, grassScene],
-        listeners: [resizeHandler],
+        listeners: [resizeHandler, movementControls],
         materials: [grassMaterial, skyMaterial],
         textures: [noiseTexture, alphaMapTexture, grassTexture],
       });
