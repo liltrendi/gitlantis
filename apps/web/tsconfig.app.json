@@ -1,0 +1,13 @@
+{
+  "extends": "@gitlantis/config-typescript/web-app.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@extension/*": ["../extension/src/*"]
+    },
+    "types": ["node", "@react-three/fiber", "@gitlantis/types"]
+  },
+  "include": ["src"]
+}

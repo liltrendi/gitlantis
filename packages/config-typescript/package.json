@@ -1,0 +1,11 @@
+{
+  "name": "@gitlantis/config-typescript",
+  "private": true,
+  "version": "0.0.0",
+  "exports": {
+    "./base.json": "./base.json",
+    "./web-app.json": "./web-app.json",
+    "./web-node.json": "./web-node.json",
+    "./extension.json": "./extension.json"
+  }
+}

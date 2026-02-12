@@ -13,6 +13,15 @@ nvm use
 pnpm i
 ```
 
+### Workspace Layout
+
+- `apps/web`: React + Vite webview app
+- `apps/extension`: VS Code extension host code and packaging manifest
+- `packages/config-eslint`: shared ESLint config factory
+- `packages/config-typescript`: shared TypeScript base configs
+- `packages/config-tailwind`: shared Tailwind preset and PostCSS config
+- `packages/types`: shared cross-app type system
+
 ### Develop
 
 ```bash
@@ -21,20 +30,20 @@ pnpm dev
 
 ### Build
 
-#### Browser
+#### Web App
 
 ```bash
-pnpm run build:browser
+pnpm --filter @gitlantis/web build
 ```
 
 #### Extension
 
 ```bash
-pnpm run build:extension
+pnpm --filter @gitlantis/extension build
 ```
 
 #### Both
 
 ```bash
-pnpm run build
+pnpm build
 ```

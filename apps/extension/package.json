@@ -1,0 +1,67 @@
+{
+  "name": "@gitlantis/extension",
+  "description": "Transform your project into an explorable 3D world",
+  "publisher": "brian-njogu",
+  "displayName": "Gitlantis",
+  "main": "./out/index.js",
+  "icon": "logo.png",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "contributes": {
+    "commands": [
+      {
+        "command": "gitlantis.start",
+        "title": "Gitlantis"
+      }
+    ]
+  },
+  "private": true,
+  "version": "0.0.7",
+  "type": "commonjs",
+  "scripts": {
+    "build:extension": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "build": "pnpm run build:extension",
+    "build:all": "pnpm --filter @gitlantis/web build && pnpm run build:extension",
+    "watch": "tsc -watch -p tsconfig.json",
+    "package": "pnpm run build:all && pnpm vsce package --no-dependencies",
+    "publish": "pnpm run build:all && pnpm vsce publish --no-dependencies",
+    "release": "pnpm run package && pnpm run publish",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix './src/**/*.{js,jsx,ts,tsx}'",
+    "format": "prettier --check './src/**/*.{js,jsx,ts,tsx,css}'",
+    "format:fix": "prettier --write './src/**/*.{js,jsx,ts,tsx,css}'"
+  },
+  "devDependencies": {
+    "@gitlantis/config-eslint": "workspace:*",
+    "@gitlantis/config-typescript": "workspace:*",
+    "@gitlantis/types": "workspace:*",
+    "@types/node": "^22.15.24",
+    "@types/vscode": "^1.80.0",
+    "tsc-alias": "^1.8.16",
+    "typescript": "~5.8.3"
+  },
+  "activationEvents": [
+    "onCommand:gitlantis.start",
+    "onStartupFinished"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/liltrendi/gitlantis"
+  },
+  "categories": [
+    "Visualization"
+  ],
+  "keywords": [
+    "gitlantis",
+    "explore",
+    "3D",
+    "ocean",
+    "filesystem",
+    "navigate",
+    "folders",
+    "files",
+    "lighthouse",
+    "buoy"
+  ]
+}

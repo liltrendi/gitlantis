@@ -1,0 +1,15 @@
+{
+  "extends": "./base.json",
+  "compilerOptions": {
+    "target": "ES2022",
+    "lib": ["ES2023"],
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "allowImportingTsExtensions": true,
+    "verbatimModuleSyntax": true,
+    "moduleDetection": "force",
+    "erasableSyntaxOnly": true,
+    "noUncheckedSideEffectImports": true,
+    "noEmit": true
+  }
+}

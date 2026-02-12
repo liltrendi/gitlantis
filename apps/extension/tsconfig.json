@@ -1,0 +1,13 @@
+{
+  "extends": "@gitlantis/config-typescript/extension.json",
+  "compilerOptions": {
+    "outDir": "out",
+    "rootDir": "src",
+    "baseUrl": ".",
+    "paths": {
+      "@extension/*": ["src/*"]
+    },
+    "types": ["vscode", "node", "@gitlantis/types"]
+  },
+  "include": ["src"]
+}

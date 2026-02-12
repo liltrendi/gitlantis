@@ -1,0 +1,9 @@
+{
+  "name": "@gitlantis/types",
+  "private": true,
+  "version": "0.0.0",
+  "types": "./index.d.ts",
+  "exports": {
+    ".": "./index.d.ts"
+  }
+}

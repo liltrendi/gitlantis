@@ -1,0 +1,48 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "tasks": {
+    "build": {
+      "dependsOn": ["^build"],
+      "outputs": ["out/**", "dist/**", "../extension/out/**"]
+    },
+    "@gitlantis/web#build": {
+      "outputs": ["../extension/out/**"]
+    },
+    "@gitlantis/extension#build": {
+      "dependsOn": ["@gitlantis/web#build"],
+      "outputs": ["out/**"]
+    },
+    "dev": {
+      "cache": false,
+      "persistent": true
+    },
+    "watch": {
+      "cache": false,
+      "persistent": true
+    },
+    "preview": {
+      "cache": false
+    },
+    "lint": {
+      "outputs": []
+    },
+    "lint:fix": {
+      "outputs": []
+    },
+    "format": {
+      "outputs": []
+    },
+    "format:fix": {
+      "outputs": []
+    },
+    "package": {
+      "outputs": ["*.vsix"]
+    },
+    "publish": {
+      "outputs": []
+    },
+    "release": {
+      "outputs": ["*.vsix"]
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "name": "@gitlantis/config-tailwind",
+  "private": true,
+  "version": "0.0.0",
+  "type": "commonjs",
+  "exports": {
+    ".": "./index.cjs",
+    "./tailwind-preset": "./tailwind-preset.cjs",
+    "./postcss": "./postcss.cjs"
+  },
+  "peerDependencies": {
+    "autoprefixer": "^10.4.21",
+    "tailwindcss": "^3.4.1"
+  }
+}

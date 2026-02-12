@@ -1,73 +1,29 @@
 {
   "name": "gitlantis",
-  "description": "Transform your project into an explorable 3D world",
-  "publisher": "brian-njogu",
-  "displayName": "Gitlantis",
-  "main": "./out/index.js",
-  "icon": "logo.png",
-  "engines": {
-    "vscode": "^1.80.0"
-  },
-  "contributes": {
-    "commands": [
-      {
-        "command": "gitlantis.start",
-        "title": "Gitlantis"
-      }
-    ]
-  },
   "private": true,
-  "version": "0.0.7",
-  "type": "commonjs",
+  "packageManager": "pnpm@10.13.1",
   "scripts": {
-    "dev": "vite",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "build:browser": "tsc -b && vite build",
-    "build:extension": "tsc -p tsconfig.extension.json",
-    "build": "pnpm run build:browser && pnpm run build:extension",
-    "watch": "tsc -watch -p tsconfig.extension.json",
-    "package": "pnpm vsce package --no-dependencies",
-    "publish": "pnpm vsce publish --no-dependencies",
-    "release": "pnpm run build && pnpm run package && pnpm run publish",
-    "prepare": "husky",
-    "format": "prettier --check './src/**/*.{js,jsx,ts,tsx,css}'",
-    "format:fix": "prettier --write './src/**/*.{js,jsx,ts,tsx,css}'",
-    "lint:fix": "eslint --fix './src/**/*.{js,jsx,ts,tsx}'"
-  },
-  "dependencies": {
-    "@react-three/cannon": "^6.6.0",
-    "@react-three/drei": "^9.82.0",
-    "@react-three/fiber": "^8.14.1",
-    "@vercel/analytics": "^1.5.0",
-    "framer-motion": "^12.23.24",
-    "lodash.throttle": "^4.1.1",
-    "lucide-react": "^0.513.0",
-    "nipplejs": "^0.10.2",
-    "react": "18.2.0",
-    "react-color": "^2.19.3",
-    "react-dom": "18.2.0",
-    "simplex-noise": "^4.0.3",
-    "three": "^0.156.1",
-    "three-stdlib": "^2.25.1",
-    "zustand": "^5.0.5"
+    "dev": "turbo run dev --filter=@gitlantis/web",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "lint:fix": "turbo run lint:fix",
+    "format": "turbo run format",
+    "format:fix": "turbo run format:fix",
+    "preview": "turbo run preview --filter=@gitlantis/web",
+    "watch": "turbo run watch --filter=@gitlantis/extension",
+    "package": "turbo run package --filter=@gitlantis/extension",
+    "publish": "turbo run publish --filter=@gitlantis/extension",
+    "release": "turbo run release --filter=@gitlantis/extension",
+    "prepare": "husky"
   },
   "devDependencies": {
     "@commitlint/cli": "^19.8.1",
     "@commitlint/config-conventional": "^19.8.1",
+    "@gitlantis/config-eslint": "workspace:*",
     "@eslint/eslintrc": "^3.3.1",
     "@eslint/js": "^9.25.0",
-    "@types/lodash.throttle": "^4.1.9",
-    "@types/node": "^22.15.24",
-    "@types/react": "^19.1.6",
-    "@types/react-color": "^3.0.13",
-    "@types/react-dom": "^19.1.5",
-    "@types/three": "^0.176.0",
-    "@types/vscode": "^1.80.0",
     "@typescript-eslint/eslint-plugin": "^8.37.0",
     "@typescript-eslint/parser": "^8.37.0",
-    "@vitejs/plugin-react-swc": "^3.9.0",
-    "autoprefixer": "^10.4.21",
     "eslint": "^9.25.0",
     "eslint-config-prettier": "^10.1.5",
     "eslint-plugin-prettier": "^5.5.1",
@@ -77,42 +33,18 @@
     "globals": "^16.0.0",
     "husky": "^9.1.7",
     "lint-staged": "^16.1.2",
-    "postcss": "^8.5.4",
     "prettier": "^3.6.2",
     "prettier-plugin-tailwindcss": "^0.6.14",
-    "tailwindcss": "3.4.1",
-    "typescript": "~5.8.3",
-    "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5",
-    "vite-plugin-eslint": "^1.8.1"
-  },
-  "activationEvents": [
-    "onCommand:gitlantis.openWebview",
-    "onStartupFinished"
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/liltrendi/gitlantis"
+    "turbo": "^2.2.3",
+    "typescript-eslint": "^8.30.1"
   },
   "lint-staged": {
-    "*.{js,jsx,ts,tsx}": [
-      "eslint --fix './src/**/*.{js,jsx,ts,tsx}'",
-      "prettier --write './src/**/*.{js,jsx,ts,tsx,css}'"
+    "*.{ts,tsx}": [
+      "pnpm exec eslint --fix",
+      "pnpm exec prettier --write"
+    ],
+    "*.{js,jsx,cjs,mjs,json,md,yml,yaml,css}": [
+      "pnpm exec prettier --write"
     ]
-  },
-  "categories": [
-    "Visualization"
-  ],
-  "keywords": [
-    "gitlantis",
-    "explore",
-    "3D",
-    "ocean",
-    "filesystem",
-    "navigate",
-    "folders",
-    "files",
-    "lighthouse",
-    "buoy"
-  ]
+  }
 }
