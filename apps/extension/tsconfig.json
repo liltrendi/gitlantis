@@ -5,6 +5,7 @@
     "rootDir": "src",
     "baseUrl": ".",
     "paths": {
+      "@/packages/shared/*": ["node_modules/@gitlantis/shared/dist/*"],
       "@extension/*": ["src/*"]
     },
     "types": ["vscode", "node", "@gitlantis/types"]

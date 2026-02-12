@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import * as fs from "fs";
 import * as path from "path";
-import { GLOBAL_MODEL_URLS } from "@extension/config/models";
+import { GLOBAL_MODEL_URLS } from "@/packages/shared/models";
 
 export const getHashedAssetUri = (
   webview: vscode.Webview,
@@ -66,11 +66,16 @@ export const getPublicAssets = (
   panel: vscode.WebviewPanel,
   context: vscode.ExtensionContext
 ) => {
-  const assetUrisWithUri = Object.entries(GLOBAL_MODEL_URLS).reduce(
-    (acc, [key, value]) => {
-      const typedKey = key as keyof typeof GLOBAL_MODEL_URLS;
+  const modelEntries = Object.entries(GLOBAL_MODEL_URLS) as Array<
+    [
+      keyof typeof GLOBAL_MODEL_URLS,
+      (typeof GLOBAL_MODEL_URLS)[keyof typeof GLOBAL_MODEL_URLS],
+    ]
+  >;
 
-      acc[`${typedKey}Uri` as `${string & typeof typedKey}Uri`] = getUri(
+  const assetUrisWithUri = modelEntries.reduce(
+    (acc, [key, value]) => {
+      acc[`${String(key)}Uri` as `${string & typeof key}Uri`] = getUri(
         panel.webview,
         context.extensionUri,
         [`out`, ...value.split("/")]
@@ -79,11 +84,9 @@ export const getPublicAssets = (
       return acc;
     },
     {} as {
-      [K in keyof typeof GLOBAL_MODEL_URLS as `${string & K}Uri`]: vscode.Uri;
+      -readonly [K in keyof typeof GLOBAL_MODEL_URLS as `${string & K}Uri`]: vscode.Uri;
     }
   );
-
-  console.log("____", assetUrisWithUri);
 
   return assetUrisWithUri;
 };

@@ -1,0 +1,19 @@
+{
+  "extends": "@gitlantis/config-typescript/web-app.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "baseUrl": ".",
+    "paths": {
+      "@/packages/components": [
+        "node_modules/@gitlantis/components/src/index.tsx"
+      ],
+      "@/packages/components/*": ["node_modules/@gitlantis/components/src/*"],
+      "@/packages/shared/global.css": ["../../packages/shared/src/global.css"],
+      "@/packages/shared/*": ["node_modules/@gitlantis/shared/dist/*"],
+      "@/browser/*": ["src/*"],
+      "@/*": ["src/*"]
+    },
+    "types": ["node", "@react-three/fiber", "@gitlantis/types"]
+  },
+  "include": ["src", "../../packages/shared/src/global.d.ts"]
+}

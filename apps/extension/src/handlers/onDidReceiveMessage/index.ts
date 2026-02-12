@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { type THandlerMessage } from "@gitlantis/types";
-import { DIRECTORY_COMMANDS, GIT_COMMANDS } from "@extension/config";
+import { DIRECTORY_COMMANDS, GIT_COMMANDS } from "@/packages/shared/config";
 import { handleReadDirectory } from "@extension/handlers/readDirectory";
 import { handleOpenFile } from "@extension/handlers/openFile";
 import { handleOpenExplorer } from "@extension/handlers/openExplorer";

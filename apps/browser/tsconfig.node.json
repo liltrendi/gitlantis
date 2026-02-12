@@ -1,0 +1,15 @@
+{
+  "extends": "@gitlantis/config-typescript/web-node.json",
+  "compilerOptions": {
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
+    "baseUrl": ".",
+    "paths": {
+      "@/packages/components/*": ["node_modules/@gitlantis/components/src/*"],
+      "@/packages/shared/*": ["node_modules/@gitlantis/shared/dist/*"],
+      "@/browser/*": ["src/*"],
+      "@/*": ["src/*"]
+    },
+    "types": ["node", "@gitlantis/types"]
+  },
+  "include": ["vite.config.ts"]
+}

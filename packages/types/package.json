@@ -4,6 +4,7 @@
   "version": "0.0.0",
   "types": "./index.d.ts",
   "exports": {
-    ".": "./index.d.ts"
+    ".": "./index.d.ts",
+    "./git": "./git.d.ts"
   }
 }

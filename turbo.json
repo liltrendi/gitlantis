@@ -5,11 +5,11 @@
       "dependsOn": ["^build"],
       "outputs": ["out/**", "dist/**", "../extension/out/**"]
     },
-    "@gitlantis/web#build": {
+    "@gitlantis/browser#build": {
       "outputs": ["../extension/out/**"]
     },
     "@gitlantis/extension#build": {
-      "dependsOn": ["@gitlantis/web#build"],
+      "dependsOn": ["@gitlantis/browser#build"],
       "outputs": ["out/**"]
     },
     "dev": {

@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
-import { DIRECTORY_COMMANDS } from "@extension/config";
-import { PERSISTED_SETTINGS_KEY } from "@extension/store";
+import { DIRECTORY_COMMANDS } from "@/packages/shared/config";
+import { PERSISTED_SETTINGS_KEY } from "@/packages/shared/settings";
 
 export const handlePersistSettings = async (
   context: vscode.ExtensionContext,

@@ -8,6 +8,7 @@ src/
 
 # Development dependencies
 node_modules/
+!out/node_modules/**
 pnpm-lock.yaml
 .nvmrc
 .husky

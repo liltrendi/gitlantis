@@ -20,9 +20,9 @@
   "version": "0.0.7",
   "type": "commonjs",
   "scripts": {
-    "build:extension": "tsc -p tsconfig.json && tsc-alias -p tsconfig.json",
+    "build:extension": "pnpm --filter @gitlantis/shared build && tsc -p tsconfig.json && tsc-alias -p tsconfig.json && node ./scripts/stage-shared-runtime.mjs",
     "build": "pnpm run build:extension",
-    "build:all": "pnpm --filter @gitlantis/web build && pnpm run build:extension",
+    "build:all": "pnpm --filter @gitlantis/browser build && pnpm run build:extension",
     "watch": "tsc -watch -p tsconfig.json",
     "package": "pnpm run build:all && pnpm vsce package --no-dependencies",
     "publish": "pnpm run build:all && pnpm vsce publish --no-dependencies",
@@ -31,6 +31,9 @@
     "lint:fix": "eslint --fix './src/**/*.{js,jsx,ts,tsx}'",
     "format": "prettier --check './src/**/*.{js,jsx,ts,tsx,css}'",
     "format:fix": "prettier --write './src/**/*.{js,jsx,ts,tsx,css}'"
+  },
+  "dependencies": {
+    "@gitlantis/shared": "workspace:*"
   },
   "devDependencies": {
     "@gitlantis/config-eslint": "workspace:*",

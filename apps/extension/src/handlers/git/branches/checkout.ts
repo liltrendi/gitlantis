@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { GIT_COMMANDS } from "@extension/config";
+import { GIT_COMMANDS } from "@/packages/shared/config";
 import type { THandlerMessage } from "@gitlantis/types";
 import { getCurrentRepo } from "@extension/handlers/utils";
 

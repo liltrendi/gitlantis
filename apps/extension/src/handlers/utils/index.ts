@@ -1,7 +1,10 @@
 import * as vscode from "vscode";
 import * as path from "path";
-import { DIRECTORY_RESPONSE, ROOT_DIRECTORY_KEY } from "@extension/config";
-import type { GitExtension, Repository } from "@extension/types/git";
+import {
+  DIRECTORY_RESPONSE,
+  ROOT_DIRECTORY_KEY,
+} from "@/packages/shared/config";
+import type { GitExtension, Repository } from "@gitlantis/types/git";
 
 export const getRelativePath = (
   absolutePath: string,

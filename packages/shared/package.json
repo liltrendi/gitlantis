@@ -1,0 +1,71 @@
+{
+  "name": "@gitlantis/shared",
+  "private": true,
+  "version": "0.0.0",
+  "type": "commonjs",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup src/index.ts src/config.ts src/models.ts src/settings.ts src/browser-config.ts --format cjs,esm --dts --out-dir dist --clean --tsconfig tsconfig.build.json",
+    "clean": "rm -rf dist"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./config": {
+      "types": "./dist/config.d.ts",
+      "import": "./dist/config.mjs",
+      "require": "./dist/config.js",
+      "default": "./dist/config.js"
+    },
+    "./models": {
+      "types": "./dist/models.d.ts",
+      "import": "./dist/models.mjs",
+      "require": "./dist/models.js",
+      "default": "./dist/models.js"
+    },
+    "./settings": {
+      "types": "./dist/settings.d.ts",
+      "import": "./dist/settings.mjs",
+      "require": "./dist/settings.js",
+      "default": "./dist/settings.js"
+    },
+    "./browser-config": {
+      "types": "./dist/browser-config.d.ts",
+      "import": "./dist/browser-config.mjs",
+      "require": "./dist/browser-config.js",
+      "default": "./dist/browser-config.js"
+    }
+  },
+  "typesVersions": {
+    "*": {
+      "browser-config": [
+        "dist/browser-config.d.ts"
+      ],
+      "config": [
+        "dist/config.d.ts"
+      ],
+      "models": [
+        "dist/models.d.ts"
+      ],
+      "settings": [
+        "dist/settings.d.ts"
+      ],
+      "*": [
+        "dist/index.d.ts"
+      ]
+    }
+  },
+  "devDependencies": {
+    "@gitlantis/config-typescript": "workspace:*",
+    "tsup": "^8.5.0",
+    "typescript": "~5.8.3"
+  }
+}

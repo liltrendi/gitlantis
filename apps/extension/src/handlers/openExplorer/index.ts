@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
-import { DIRECTORY_ERRORS, ROOT_DIRECTORY_KEY } from "@extension/config";
+import { DIRECTORY_ERRORS, ROOT_DIRECTORY_KEY } from "@/packages/shared/config";
 import { sendError } from "@extension/handlers/utils";
-import { LAUNCH_MARKER } from "@extension/commands";
+import { LAUNCH_MARKER } from "@/packages/shared/config";
 
 export const handleOpenExplorer = async (
   context: vscode.ExtensionContext,

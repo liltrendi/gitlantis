@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { DIRECTORY_RESPONSE, DIRECTORY_ERRORS } from "@extension/config";
+import { DIRECTORY_RESPONSE, DIRECTORY_ERRORS } from "@/packages/shared/config";
 import type { TDirectoryContent, THandlerMessage } from "@gitlantis/types";
 import {
   getWorkspaceFolderFromPath,

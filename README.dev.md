@@ -15,7 +15,7 @@ pnpm i
 
 ### Workspace Layout
 
-- `apps/web`: React + Vite webview app
+- `apps/browser`: React + Vite webview app
 - `apps/extension`: VS Code extension host code and packaging manifest
 - `packages/config-eslint`: shared ESLint config factory
 - `packages/config-typescript`: shared TypeScript base configs
@@ -33,7 +33,7 @@ pnpm dev
 #### Web App
 
 ```bash
-pnpm --filter @gitlantis/web build
+pnpm --filter @gitlantis/browser build
 ```
 
 #### Extension

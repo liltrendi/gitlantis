@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
-import { GIT_COMMANDS } from "@extension/config";
+import { GIT_COMMANDS } from "@/packages/shared/config";
 import type { THandlerMessage } from "@gitlantis/types";
-import type { Repository } from "@extension/types/git";
+import type { Repository } from "@gitlantis/types/git";
 import { getCurrentRepo } from "@extension/handlers/utils";
 
 const getBranches = async (panel: vscode.WebviewPanel, repo: Repository) => {
