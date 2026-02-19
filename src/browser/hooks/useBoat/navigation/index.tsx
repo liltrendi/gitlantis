@@ -95,6 +95,9 @@ export const useNavigation = ({
         currentState.intendedDirection = INTENDED_DIRECTION.FORWARD;
       } else if (currentState.speed < -0.001) {
         currentState.intendedDirection = INTENDED_DIRECTION.BACKWARD;
+      } else {
+        // Default to forward if speed is very low but not exactly zero
+        currentState.intendedDirection = INTENDED_DIRECTION.FORWARD; 
       }
     }
 
