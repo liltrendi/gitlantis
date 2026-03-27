@@ -93,6 +93,24 @@ const SettingsCombinations = (
           <span className="text-md mb-2 ml-2">Toggle minimap fullscreen</span>
         </div>
       </div>
+
+      <h3 className="mb-[15px] pt-[40px] text-xl font-semibold text-gray-200">
+        Movement
+      </h3>
+
+      <div className="flex flex-col items-start gap-2 text-gray-400">
+        <div className="flex items-center justify-center gap-1">
+          <Key pad>Shift</Key>
+          <span className="text-md mb-2 ml-2">Sprint (Hold)</span>
+        </div>
+      </div>
+
+      <div className="mt-6 flex flex-col items-start gap-2 text-gray-400">
+        <div className="flex items-center justify-center gap-1">
+          <Key pad>Space</Key>
+          <span className="text-md mb-2 ml-2">Jump</span>
+        </div>
+      </div>
     </>
   );
 };

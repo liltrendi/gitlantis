@@ -1,9 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { setupTerrestialWorldTextures } from "@/components/terrestial/utils/textures";
 import { setupOrbitControls } from "@/components/terrestial/utils/controls";
 import { setupTerrestialWorldRenderer } from "@/components/terrestial/utils/renderer";
 import { setupTerrestialWorldCamera } from "@/components/terrestial/utils/camera";
 import { setupTerrestialWorldConfiguration } from "@/components/terrestial/utils/config";
+import { HeightMap } from "@/components/terrestial/utils/height";
+import {
+  globalUris,
+  CLOUDFRONT_ROOT_URL,
+} from "@/packages/shared/browser-config";
 import { setupSkyMaterial } from "@/components/terrestial/materials/sky";
 import { setupGroundMaterial } from "@/components/terrestial/materials/ground";
 import { setupGrassMaterial } from "@/components/terrestial/materials/grass";
@@ -16,6 +21,7 @@ import { TerrestialMinimap } from "@/components/terrestial/utils/minimap";
 import { useGameContext } from "@/hooks/useGame/context";
 import { registerMeadowSounds } from "@/components/terrestial/audio/meadow";
 import { registerFootstepsSounds } from "@/components/terrestial/audio/footsteps";
+import { setupHouses, type HouseUIState } from "@/components/terrestial/houses";
 
 export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
   const { isBrowserEnvironment } = useExtensionContext();
@@ -23,6 +29,7 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
   const isMinimapFullScreenRef = useRef(isMinimapFullScreen);
+  const [housesUI, setHousesUI] = useState<HouseUIState[]>([]);
 
   useEffect(() => {
     isMinimapFullScreenRef.current = isMinimapFullScreen;
@@ -56,6 +63,10 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
     const { camera } = setupTerrestialWorldCamera();
     const { orbitControls } = setupOrbitControls({ camera, renderer });
     const minimap = new TerrestialMinimap();
+
+    const rootUrl = isBrowserEnvironment ? CLOUDFRONT_ROOT_URL : "";
+    const noiseTexturePath = `${rootUrl}${globalUris.noiseTexture}`;
+    const heightMap = new HeightMap(noiseTexturePath);
 
     const {
       playerModelRef,
@@ -118,9 +129,21 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
       isBrowserEnvironment,
     });
 
+    const housesController = setupHouses({
+      grassScene,
+      gltfModelLoader,
+      setHousesUI,
+      heightMap,
+      isBrowserEnvironment,
+    });
+
     const { gameLoopCleanup } = runGameLoop({
       camera,
       radius,
+      housesController,
+      heightMap,
+      delta,
+      width,
       orbitControls,
       grassMaterial,
       skyMaterial,
@@ -160,9 +183,42 @@ export const TerrestialWorld = ({ visible }: { visible: boolean }) => {
   }, [visible, activeWorld, isBrowserEnvironment]);
 
   return (
-    <canvas
-      ref={canvasRef}
-      className={`absolute inset-0 transition-opacity duration-500 ${visible ? "opacity-100" : "pointer-events-none opacity-0"}`}
-    />
+    <div
+      className={`absolute inset-0 transition-opacity duration-500 ${
+        visible ? "opacity-100" : "pointer-events-none opacity-0"
+      }`}
+    >
+      <canvas ref={canvasRef} className="absolute inset-0" />
+      <div className="pointer-events-none absolute inset-0 overflow-hidden">
+        {housesUI.map((house) => (
+          <div
+            key={house.id}
+            className="pointer-events-auto absolute flex min-w-[200px] flex-col items-center gap-2 whitespace-nowrap rounded-xl border-[1.5px] border-[#fbd348] bg-black/80 p-4 px-6 text-white shadow-xl backdrop-blur-md transition-transform hover:scale-105"
+            style={{
+              left: house.x,
+              top: house.y,
+              transform: `translate(-50%, -100%) scale(${house.scale})`,
+              opacity: house.visible ? 1 : 0,
+              display: house.visible ? "flex" : "none",
+            }}
+          >
+            <a
+              href={house.url}
+              target="_blank"
+              rel="noreferrer"
+              className="text-xl font-bold text-[#fbd348] hover:underline"
+            >
+              Buy me a coffee - {house.name}
+            </a>
+            <div className="text-lg font-medium text-gray-300">
+              "{house.message}"
+            </div>
+            <div className="mt-1 flex items-center gap-2 text-base font-bold text-[#fbd348]">
+              <span className="text-2xl">☕</span> {house.amount}
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
   );
 };

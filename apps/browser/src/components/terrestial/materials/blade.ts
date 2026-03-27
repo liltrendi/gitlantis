@@ -11,10 +11,8 @@ export const applyBladeGeometry = ({ width }: { width: number }) => {
   const bladeWidth = 0.12;
   const bladeHeight = 1;
 
-  // Number of grass blades
   let instances = 40000;
 
-  // Create the base geometry for a grass blade and bend it.
   const grassBaseGeometry = new PlaneGeometry(
     bladeWidth,
     bladeHeight,
@@ -23,7 +21,6 @@ export const applyBladeGeometry = ({ width }: { width: number }) => {
   );
   grassBaseGeometry.translate(0, bladeHeight / 2, 0);
 
-  // Apply a series of quaternion rotations to simulate bending
   const vertex = new Vector3();
   const quaternion0 = new Quaternion();
   const quaternion1 = new Quaternion();

@@ -27,12 +27,9 @@ export const useNodePlacement = () => {
 
     const positionsToPlaceNodes: TNodeInstances = [];
 
-    // create a grid-based approach for even distribution
-    const GENERATION_RADIUS = TILE_SIZE * 1.5; // total generation area
-    const GRID_SIZE = Math.ceil(Math.sqrt(NODE_COUNT * 1.5)); // slightly larger grid for better distribution
+    const GENERATION_RADIUS = TILE_SIZE * 1.5;
+    const GRID_SIZE = Math.ceil(Math.sqrt(NODE_COUNT * 1.5));
     const CELL_SIZE = (GENERATION_RADIUS * 2) / GRID_SIZE;
-
-    // create grid cells and shuffle them for random selection
     const gridCells: Array<{ x: number; z: number }> = [];
     for (let i = 0; i < GRID_SIZE; i++) {
       for (let j = 0; j < GRID_SIZE; j++) {
@@ -43,7 +40,6 @@ export const useNodePlacement = () => {
       }
     }
 
-    // shuffle the grid cells for random selection
     for (let i = gridCells.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1));
       [gridCells[i], gridCells[j]] = [gridCells[j], gridCells[i]];
@@ -54,7 +50,6 @@ export const useNodePlacement = () => {
       boatPos: Vector3,
       existingPositions: Array<[number, number]>
     ) => {
-      // check distance from boat
       const distanceFromBoat = Math.hypot(
         pos[0] - boatPos.x,
         pos[1] - boatPos.z
@@ -63,7 +58,6 @@ export const useNodePlacement = () => {
         return false;
       }
 
-      // check distance from other nodes
       return !existingPositions.some(
         ([x, z]) =>
           Math.hypot(pos[0] - x, pos[1] - z) < MIN_DISTANCE_BETWEEN_NODES
@@ -72,7 +66,6 @@ export const useNodePlacement = () => {
 
     let nodeIndex = 0;
 
-    // try to place nodes in shuffled grid cells
     for (const cell of gridCells) {
       if (nodeIndex >= NODE_COUNT) break;
 
@@ -80,7 +73,6 @@ export const useNodePlacement = () => {
       let placed = false;
 
       while (attempts < MAX_GENERATION_ATTEMPTS && !placed) {
-        // add some randomness within the cell
         const offsetX = (Math.random() - 0.5) * CELL_SIZE * 0.8;
         const offsetZ = (Math.random() - 0.5) * CELL_SIZE * 0.8;
 

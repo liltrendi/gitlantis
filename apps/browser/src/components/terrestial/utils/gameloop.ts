@@ -23,6 +23,8 @@ import {
   setupSkyAnimation,
 } from "@/components/terrestial/utils/animations";
 import type { TerrestialMinimap } from "@/components/terrestial/utils/minimap";
+import type { setupHouses } from "@/components/terrestial/houses";
+import { HeightMap } from "@/components/terrestial/utils/height";
 
 export function runGameLoop({
   orbitControls,
@@ -50,6 +52,10 @@ export function runGameLoop({
   isMinimapFullScreenRef,
   ground,
   grass,
+  housesController,
+  heightMap,
+  delta,
+  width,
 }: {
   orbitControls: OrbitControls;
   camera: PerspectiveCamera;
@@ -76,6 +82,10 @@ export function runGameLoop({
   isMinimapFullScreenRef: RefObject<boolean>;
   ground: Mesh<PlaneGeometry, MeshPhongMaterial, Object3DEventMap>;
   grass: Mesh<InstancedBufferGeometry, RawShaderMaterial, Object3DEventMap>;
+  housesController: ReturnType<typeof setupHouses>;
+  heightMap: HeightMap;
+  delta: number;
+  width: number;
 }) {
   const animate = () => {
     renderer.clear();
@@ -119,6 +129,9 @@ export function runGameLoop({
       playerModel,
       playerAnimationMixer,
       wasInitialAnimationPlayed,
+      heightMap,
+      delta,
+      housesController,
     });
 
     minimap.render({
@@ -128,6 +141,18 @@ export function runGameLoop({
       isFullScreen: isMinimapFullScreenRef.current,
       ground,
       grass,
+    });
+
+    const activeCamera = isMinimapFullScreenRef.current
+      ? minimap.camera
+      : camera;
+
+    housesController.update({
+      globalCameraPosition,
+      camera: activeCamera,
+      delta,
+      radius,
+      width,
     });
   };
 

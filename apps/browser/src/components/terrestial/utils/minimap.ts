@@ -10,7 +10,7 @@ import {
 import type { GLTF } from "three-stdlib";
 
 export class TerrestialMinimap {
-  private camera: OrthographicCamera;
+  public camera: OrthographicCamera;
   private viewSize: number;
 
   private storedViewport = new Vector4();

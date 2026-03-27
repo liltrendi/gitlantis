@@ -11,6 +11,7 @@ const ALPHA_MAP_TEXTURE_PATH = "/images/textures/blade_alpha.jpg";
 const PLAYER_MODEL_PATH = "/models/bot/bot.glb";
 const MEADOW_AUDIO_PATH = "/music/meadow.mp3";
 const FOOTSTEPS_AUDIO_PATH = "/music/footsteps.mp3";
+const BASELINE_HOUSE_PATH = "/models/house/baseline.glb";
 
 export const GLOBAL_MODEL_URLS = {
   player: PLAYER_MODEL_PATH,
@@ -26,4 +27,5 @@ export const GLOBAL_MODEL_URLS = {
   bladeAlpha: ALPHA_MAP_TEXTURE_PATH,
   meadow: MEADOW_AUDIO_PATH,
   footsteps: FOOTSTEPS_AUDIO_PATH,
+  baselineHouse: BASELINE_HOUSE_PATH,
 } as const;

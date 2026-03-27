@@ -20,8 +20,8 @@ export const Sky = () => {
   }, [sunWorldPosition, worldOffsetRef]);
 
   const skyParams = {
-    rayleigh: 2, // Controls blue scattering (higher = more blue)
-    turbidity: 5, // Atmospheric haze (lower = clearer)
+    rayleigh: 2,
+    turbidity: 5,
     mieDirectionalG: 0.8,
     mieCoefficient: 0.05,
   };

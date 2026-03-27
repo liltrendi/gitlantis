@@ -7,6 +7,8 @@ const KEYS = {
   left2: 37, // Left
   right1: 68, // D
   right2: 39, // Right
+  shift: 16, // Shift
+  space: 32, // Space
 };
 
 export class MovementControls {
@@ -14,6 +16,9 @@ export class MovementControls {
   backward = false;
   left = false;
   right = false;
+  sprint = false;
+  jump = false;
+  jumpPressed = false;
   isPlayerMoving = false;
   isPlayerMovingVertically = false;
 
@@ -42,6 +47,15 @@ export class MovementControls {
       case KEYS.right2:
         this.right = true;
         this.isPlayerMoving = true;
+        break;
+      case KEYS.shift:
+        this.sprint = true;
+        break;
+      case KEYS.space:
+        if (!e.repeat) {
+          this.jumpPressed = true;
+        }
+        this.jump = true;
         break;
     }
   };
@@ -75,6 +89,12 @@ export class MovementControls {
         this.isPlayerMoving =
           this.forward || this.backward || this.left || this.right;
         this.isPlayerMovingVertically = this.forward || this.backward;
+        break;
+      case KEYS.shift:
+        this.sprint = false;
+        break;
+      case KEYS.space:
+        this.jump = false;
         break;
     }
   };
@@ -110,6 +130,8 @@ export class MovementControls {
     this.backward = false;
     this.left = false;
     this.right = false;
+    this.sprint = false;
+    this.jump = false;
     this.isPlayerMoving = false;
     this.isPlayerMovingVertically = false;
   }

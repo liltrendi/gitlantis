@@ -1,6 +1,5 @@
 import { sharedShaderPrefix } from "@/components/terrestial/shaders/grass";
 
-// Ground vertex shader prefix
 export const groundVertexPrefix =
   sharedShaderPrefix +
   `

@@ -57,7 +57,7 @@ export const setupGroundMaterial = ({
   });
 
   let groundShader: Shader | null = null;
-  groundMaterial.onBeforeCompile = (shader) => {
+  groundMaterial.onBeforeCompile = (shader: Shader) => {
     shader.uniforms.delta = { value: delta };
     shader.uniforms.posX = { value: globalCameraPosition.x };
     shader.uniforms.posZ = { value: globalCameraPosition.y };

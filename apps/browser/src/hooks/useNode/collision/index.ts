@@ -57,7 +57,6 @@ export const useNodeCollision = ({
       const isColliding =
         distance < settings.collisionRadius && distance > 0.01;
 
-      // notify only when state changes
       if (previousState !== isColliding) {
         collisionStateRef.current[i] = isColliding;
         trackCollisions?.(i, isColliding);

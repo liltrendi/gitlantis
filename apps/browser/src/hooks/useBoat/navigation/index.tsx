@@ -63,13 +63,10 @@ export const useNavigation = ({
       config.bobbingAmplitude *
       movementFactor;
 
-    // Handle forward/backward input and track intent
     let targetSpeed = 0;
     let activeInput = INTENDED_DIRECTION.NEUTRAL;
 
-    // Make input handling symmetrical - last pressed key wins
     if (keys.forward && keys.backward) {
-      // If both keys pressed, prioritize stopping/neutral
       targetSpeed = 0;
       activeInput = INTENDED_DIRECTION.NEUTRAL;
     } else if (keys.forward) {
@@ -80,17 +77,11 @@ export const useNavigation = ({
       activeInput = INTENDED_DIRECTION.BACKWARD;
     }
 
-    // Update intended direction logic:
-    // - If there's active input, use that direction
-    // - If no input but still moving, preserve the direction based on current movement
-    // - Only reset to neutral when truly stationary
     if (activeInput !== INTENDED_DIRECTION.NEUTRAL) {
       currentState.intendedDirection = activeInput;
     } else if (Math.abs(currentState.speed) < 0.001) {
-      // Only reset to neutral when actually stopped
       currentState.intendedDirection = INTENDED_DIRECTION.NEUTRAL;
     } else {
-      // Preserve direction based on current movement when coasting
       if (currentState.speed > 0.001) {
         currentState.intendedDirection = INTENDED_DIRECTION.FORWARD;
       } else if (currentState.speed < -0.001) {
@@ -105,7 +96,6 @@ export const useNavigation = ({
       currentState.speed *= 1 - config.deceleration;
     }
 
-    // Use intended direction for turning logic
     let targetTurn = 0;
     const isStationary = Math.abs(currentState.speed) < 0.001;
 

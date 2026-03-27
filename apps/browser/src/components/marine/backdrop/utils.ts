@@ -27,17 +27,15 @@ export const getBackdropTextDimensions = (
     return textDimensionsCache.get(cacheKey)!;
 
   const averageCharWidth = 0.7;
-  const lineHeight = fontSize * 1.7; // typical line height multiplier
+  const lineHeight = fontSize * 1.7;
 
   if (!maxWidth) {
-    // no wrapping
     const width = text.length * averageCharWidth * fontSize;
     const result = { width, height: lineHeight, lines: 1 };
     textDimensionsCache.set(cacheKey, result);
     return result;
   }
 
-  // calculate wrapping
   const words = text.split(" ");
   const maxCharsPerLine = Math.floor(maxWidth / (averageCharWidth * fontSize));
 
@@ -47,13 +45,12 @@ export const getBackdropTextDimensions = (
 
   for (const word of words) {
     const wordLength = word.length;
-    const spaceNeeded = currentLineLength === 0 ? wordLength : wordLength + 1; // +1 for space
+    const spaceNeeded = currentLineLength === 0 ? wordLength : wordLength + 1;
 
     if (
       currentLineLength + spaceNeeded > maxCharsPerLine &&
       currentLineLength > 0
     ) {
-      // word doesn't fit, start new line
       maxLineWidth = Math.max(
         maxLineWidth,
         currentLineLength * averageCharWidth * fontSize
@@ -65,13 +62,10 @@ export const getBackdropTextDimensions = (
     }
   }
 
-  // account for the last line
   maxLineWidth = Math.max(
     maxLineWidth,
     currentLineLength * averageCharWidth * fontSize
   );
-
-  // use maxWidth if text doesn't fill it completely
   const actualWidth = Math.min(maxWidth, maxLineWidth);
   const totalHeight = lines * lineHeight;
 

@@ -58,6 +58,16 @@ const ATTRIBUTIONS = [
   },
   {
     model: {
+      name: "House",
+      link: "https://sketchfab.com/3d-models/house-low-poly-3f2431b6c0a8440a87ec0fb1f40798e2",
+    },
+    creator: {
+      name: "basti_931",
+      link: "https://sketchfab.com/basti_931",
+    },
+  },
+  {
+    model: {
       name: "Nature sounds",
       link: "https://freesound.org/people/BurghRecords/sounds/506838/",
     },
